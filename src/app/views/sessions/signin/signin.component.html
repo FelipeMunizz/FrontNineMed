@@ -1,28 +1,26 @@
 <div class="page-wrap h-full slate">
-  <div class="session-form-hold">
+  <div class="session-form-hold">    
     <mat-progress-bar mode="determinate" class="session-progress"></mat-progress-bar>
-    <mat-card>
+    <mat-card class="card-login">
       <mat-card-content>
         <div class="text-center pt-8 pb-16">
-          <img width="60px" src="assets/images/logo.png" alt="">
-          <p class="text-muted m-0">Sign in to your account</p>
+          <img src="assets/images/logoLogin.png" alt="">
+          <p class="text-muted m-0">Eficiência que Cuida, Gestão que Transforma.</p>
         </div>
-
-        <p *ngIf="errorMsg" class="text-center"><small class="text-red">{{errorMsg}}</small></p>
-        
+                
         <form [formGroup]="signinForm" (ngSubmit)="signin()">
           <div class="">
             <mat-form-field class="full-width">
               <input
                 matInput
-                name="username"
-                [formControl]="signinForm.controls['username']"
-                placeholder="Username"
+                name="email"
+                [formControl]="signinForm.controls['email']"
+                placeholder="Email"
                 value="">
             </mat-form-field>
             <small 
-              *ngIf="signinForm.controls['username'].hasError('required') && signinForm.controls['username'].touched" 
-              class="form-error-msg"> Username is required </small>
+              *ngIf="signinForm.controls['email'].hasError('required') && signinForm.controls['email'].touched" 
+              class="form-error-msg"> Digite o Email </small>
           </div>
 
           <div class="">
@@ -32,29 +30,28 @@
                 name="password"
                 matInput
                 [formControl]="signinForm.controls['password']"
-                placeholder="Password" 
+                placeholder="Senha" 
                 value="">
             </mat-form-field>
             <small 
               *ngIf="signinForm.controls['password'].hasError('required') && signinForm.controls['password'].touched" 
-              class="form-error-msg"> Password is required </small>
+              class="form-error-msg"> Digite a senha </small>
           </div>
           
           <div class="pb-16">
             <mat-checkbox
               name="rememberMe"
               [formControl]="signinForm.controls['rememberMe']"
-              class="pb-16">Remember this computer</mat-checkbox>
+              class="pb-16">Lembrar este dispositivo</mat-checkbox>
           </div>
           
-          <button mat-raised-button class="mat-primary full-width mb-16" [disabled]="signinForm.invalid">Sign in</button>
+          <button mat-raised-button class="mat-primary full-width mb-16" [disabled]="signinForm.invalid">Entrar</button>
           <div class="text-center">
-            <a [routerLink]="'/sessions/forgot-password'" class="mat-primary text-center full-width">Forgot password</a>
+            <a [routerLink]="'/sessions/forgot-password'" class="mat-primary text-center full-width">Esqueceu a Senha?</a>
             <span fxFlex></span>
-            <a [routerLink]="'/sessions/signup'" class="mat-primary text-center full-width">Create a new account</a>
           </div>
         </form>
-      </mat-card-content>
+      </mat-card-content>      
     </mat-card>
   </div>
 </div>

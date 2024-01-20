@@ -4,7 +4,6 @@ import { MatButton } from '@angular/material/button';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { AppLoaderService } from '../../../shared/services/app-loader/app-loader.service';
 import { JwtAuthService } from '../../../shared/services/auth/jwt-auth.service';
 
@@ -34,14 +33,10 @@ export class SigninComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.signinForm = new UntypedFormGroup({
-      username: new UntypedFormControl('Watson', Validators.required),
-      password: new UntypedFormControl('12345678', Validators.required),
+      email: new UntypedFormControl('', Validators.required),
+      password: new UntypedFormControl('', Validators.required),
       rememberMe: new UntypedFormControl(true)
     });
-
-    // this.route.queryParams
-    //   .pipe(takeUntil(this._unsubscribeAll))
-    //   .subscribe(params => this.return = params['return'] || '/');
   }
 
   ngAfterViewInit() {
@@ -55,30 +50,27 @@ export class SigninComponent implements OnInit, AfterViewInit, OnDestroy {
 
   signin() {
     const signinData = this.signinForm.value
-
     this.submitButton.disabled = true;
     this.progressBar.mode = 'indeterminate';
     
-    this.jwtAuth.signin(signinData.username, signinData.password)
+    this.jwtAuth.signin(signinData.email, signinData.password)
     .subscribe(response => {
       this.router.navigateByUrl(this.jwtAuth.return);
     }, err => {
       this.submitButton.disabled = false;
       this.progressBar.mode = 'determinate';
       this.errorMsg = err.message;
-      // console.log(err);
-    })
+    });
   }
 
   autoSignIn() {    
     if(this.jwtAuth.return === '/') {
       return
     }
-    this.matxLoader.open(`Automatically Signing you in! \n Return url: ${this.jwtAuth.return.substring(0, 20)}...`, {width: '320px'});
+    this.matxLoader.open(`Aguarde...`, {width: '320px'});
     setTimeout(() => {
       this.signin();
-      console.log('autoSignIn');
-      this.matxLoader.close()
+      this.matxLoader.close();
     }, 2000);
   }
 

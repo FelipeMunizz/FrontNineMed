@@ -6,8 +6,8 @@ import { RoutePartsService } from './shared/services/route-parts.service';
 
 import { filter } from 'rxjs/operators';
 import { UILibIconService } from './shared/services/ui-lib-icon.service';
-import { ThemeService } from './shared/services/theme.service';
 import { LayoutService } from './shared/services/layout.service';
+import { ThemeService } from 'app/shared/services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ import { LayoutService } from './shared/services/layout.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  appTitle = 'Matx';
+  appTitle = 'Nine Med';
   pageTitle = '';
 
   constructor(
@@ -24,14 +24,15 @@ export class AppComponent implements OnInit, AfterViewInit {
     private activeRoute: ActivatedRoute,
     private routePartsService: RoutePartsService,
     private iconService: UILibIconService,
-    private layoutService: LayoutService
+    private layoutService: LayoutService,
+    public themeService: ThemeService
   ) {
     iconService.init()
   }
 
   ngOnInit() {
     this.changePageTitle();
-    // this.themeService.applyMatTheme(this.layoutService.layoutConf.matTheme);
+    this.themeService.applyMatTheme(this.layoutService.layoutConf.matTheme);
   }
 
   ngAfterViewInit() {
@@ -47,7 +48,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.pageTitle = routeParts
                       .reverse()
                       .map((part) => part.title )
-                      .reduce((partA, partI) => {return `${partA} > ${partI}`});
+                      .reduce((partA, partI) => {return `${partI}`});
       this.pageTitle += ` | ${this.appTitle}`;
       this.title.setTitle(this.pageTitle);
     });

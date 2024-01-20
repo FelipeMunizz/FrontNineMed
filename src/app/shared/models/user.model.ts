@@ -1,5 +1,6 @@
 export interface User {
-  id?: string;
+  idFuncionario?: string;
   displayName?: string;
   role?: string
+  idClinica?: string
 }

@@ -1,0 +1,14 @@
+.card-login{
+    border-radius: 5%;
+}
+
+.session-progress{
+    margin-left: 2%;
+    width: 95%;
+}
+
+.text-muted{
+    font-style: italic;
+    font-size: 14px;
+    font-weight: 900;
+}

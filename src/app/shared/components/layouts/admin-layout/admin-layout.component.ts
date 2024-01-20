@@ -36,8 +36,6 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
     private cdr: ChangeDetectorRef,
     private jwtAuth: JwtAuthService
   ) {
-    // Check Auth Token is valid
-    this.jwtAuth.checkTokenIsValid().subscribe();
 
     // Close sidenav after route change in mobile
     this.routerEventSub = router.events.pipe(filter(event => event instanceof NavigationEnd))

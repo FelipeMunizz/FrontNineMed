@@ -9,7 +9,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { SigninComponent } from './signin/signin.component';
-import { SignupComponent } from './signup/signup.component';
 import { SessionsRoutes } from "./sessions.routing";
 import { NotFoundComponent } from './not-found/not-found.component';
 
@@ -25,6 +24,6 @@ import { NotFoundComponent } from './not-found/not-found.component';
     PerfectScrollbarModule,
     RouterModule.forChild(SessionsRoutes)
   ],
-  declarations: [SigninComponent, SignupComponent, NotFoundComponent]
+  declarations: [SigninComponent, NotFoundComponent]
 })
 export class SessionsModule { }
