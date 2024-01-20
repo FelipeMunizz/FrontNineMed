@@ -1,31 +1,61 @@
-# MatxAngularLatestTest
+# NineMed
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.3.
+Este é um sistema de gerenciamento de clínicas médicas desenvolvido para auxiliar profissionais de saúde e administradores a gerenciar eficazmente suas clínicas médicas. Com recursos abrangentes que abrangem desde o toten para geração de senhas, o agendamento de consultas até o registro de pacientes e gestão de finanças, este sistema foi projetado para otimizar as operações das clínicas médicas e melhorar a qualidade do atendimento ao paciente.
 
-## Development server
+## Funcionalidades Principais
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### 1. Agendamento de Consultas
 
-## Code scaffolding
+- Agende consultas de forma eficiente, permitindo que os pacientes escolham datas e horários disponíveis.
+- Visualize os horários ocupados e disponíveis dos médicos em um calendário prático.
+- Envie lembretes automáticos de consulta aos pacientes por e-mail ou SMS.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### 2. Registro de Pacientes
 
-## Build
+- Registre informações detalhadas sobre os pacientes, incluindo histórico médico, dados pessoais e informações de contato.
+- Armazene documentos e imagens médicas digitalizadas com segurança.
+- Mantenha um registro completo de todas as consultas e procedimentos realizados.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### 3. Gerenciamento de Médicos e Equipe
 
-## Running unit tests
+- Cadastre e atualize informações sobre médicos, enfermeiros e outros profissionais de saúde.
+- Atribua horários de trabalho e especialidades a cada membro da equipe.
+- Acompanhe as horas de trabalho, férias e licenças da equipe.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 4. Faturamento e Financeiro
 
-## Running end-to-end tests
+- Registre as informações de faturamento para consultas e procedimentos.
+- Gere faturas automaticamente e envie-as aos pacientes.
+- Acompanhe os pagamentos e mantenha o controle das finanças da clínica.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### 5. Estoque e Suprimentos
 
-## Further help
+- Mantenha um registro de estoque de suprimentos médicos e medicamentos.
+- Receba alertas automáticos quando os níveis de estoque estiverem baixos.
+- Registre a entrada e saída de suprimentos para controle eficaz.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### 6. Relatórios e Análises
 
+- Gere relatórios detalhados sobre o desempenho da clínica, como agendamentos, faturamento e utilização de recursos.
+- Analise os dados para tomar decisões informadas e melhorar a eficiência da clínica.
 
-## TODO
-1. update navigation links
+### 7. Gerador de Senhas
+
+- Organize sua sala de espera com nosso eficiente gerador de senhas integrado ao sistema de gestão.
+
+## Requisitos do Sistema
+
+Para executar este sistema de gerenciamento de clínicas médicas, você precisará do seguinte:
+
+- Navegador da web (recomendado: Google Chrome, Mozilla Firefox)
+Para obter instruções detalhadas sobre a instalação e configuração, consulte o arquivo `INSTALL.md`.
+
+## Suporte
+
+Se você tiver alguma dúvida ou encontrar problemas ao usar o sistema, entre em contato conosco em [lipe.baterra@gmail.com](mailto:lipe.baterra@gmail.com) para obter suporte.
+
+## Licença
+
+Este sistema é licenciado sob a Licença MIT. Consulte o arquivo `LICENSE` para obter detalhes.
+
+Agradecemos por escolher o NineMed. Esperamos que ele seja uma ferramenta valiosa para melhorar a eficiência e a qualidade do atendimento em sua clínica médica.
