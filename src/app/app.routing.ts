@@ -31,6 +31,11 @@ export const rootRouterConfig: Routes = [
         data: { title: 'Dashboard', breadcrumb: 'DASHBOARD'}
       },
       {
+        path: 'cadastros',
+        loadChildren: () => import('./views/cadastros/cadastros.module').then(m => m.CadastrosModule),
+        data: { title: 'Cadastros', breadcrumb: 'Cadastros'}
+      },
+      {
         path: 'others',
         loadChildren: () => import('./views/others/others.module').then(m => m.OthersModule),
         data: { title: 'Others', breadcrumb: 'OTHERS'}

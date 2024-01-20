@@ -36,6 +36,19 @@ export class NavigationService {
       icon: 'dashboard',
     },
     {
+      name: 'Cadastros',
+      type: 'separator'
+    },
+    {
+      name: 'Cadastros',
+      type: 'dropDown',
+      tooltip: 'Pages',
+      icon: 'library_add',
+      sub: [
+        { name: 'Clinica', state: 'cadastros/clinica', icon: 'store' }
+      ]
+    },
+    {
       name: 'FORMS',
       type: 'separator'
     },
