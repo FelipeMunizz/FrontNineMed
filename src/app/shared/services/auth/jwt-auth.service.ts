@@ -37,10 +37,7 @@ export class JwtAuthService {
       .pipe(
         map((res: any) => {
           debugger
-          this.user.idFuncionario = res.idFuncionario;
-          this.user.displayName = res.nome;
-          this.user.role = res.role;
-          this.user.idClinica = res.idClinica;
+          this.user.displayName = res.email;
           this.setUserAndToken(res.token, this.user, !!res);
           this.signingIn = false;
           return res;
