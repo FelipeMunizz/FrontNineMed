@@ -2,6 +2,7 @@ import {  Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ClinicaService } from 'app/shared/services/app-models/clinica.service';
 
 @Component({
   selector: 'app-clinica',
@@ -17,9 +18,13 @@ export class ClinicaComponent implements OnInit {
   checked = false;
 
   constructor(
-    private snac: MatSnackBar) { }
+    private snac: MatSnackBar,
+    private clinicaService: ClinicaService
+    ) { }
 
   ngOnInit() {
+    debugger
+    var tes = this.clinicaService.ListaClinicasUsuario('lipe.baterra@gmail.com')
     this.clinicaForm = new UntypedFormGroup({
       nome: new UntypedFormControl('', [        
         Validators.required,
