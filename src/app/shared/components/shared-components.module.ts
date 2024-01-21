@@ -24,9 +24,6 @@ import { AppComfirmComponent } from '../services/app-confirm/app-confirm.compone
 import { AppLoaderComponent } from '../services/app-loader/app-loader.component';
 import { ButtonLoadingComponent } from './button-loading/button-loading.component';
 import { MatxSidebarComponent, MatxSidebarTogglerDirective } from './matx-sidebar/matx-sidebar.component';
-import { MatxExampleViewerComponent } from './example-viewer/example-viewer.component';
-import { MatxExampleViewerTemplateComponent } from './example-viewer-template/example-viewer-template.component';
-import { MatxNotifications2Component } from './matx-notifications2/matx-notifications2.component';
 
 
 const components = [
@@ -38,13 +35,10 @@ const components = [
   BreadcrumbComponent,
   AppComfirmComponent,
   AppLoaderComponent,
-  MatxNotifications2Component,
   ButtonLoadingComponent,
   MatxSidebarComponent,
   FooterComponent,
   MatxSidebarTogglerDirective,
-  MatxExampleViewerComponent,
-  MatxExampleViewerTemplateComponent
 ]
 
 @NgModule({

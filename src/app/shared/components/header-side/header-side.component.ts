@@ -3,7 +3,6 @@ import { ThemeService } from '../../services/theme.service';
 import { LayoutService } from '../../services/layout.service';
 import { TranslateService } from '@ngx-translate/core';
 import { JwtAuthService } from '../../services/auth/jwt-auth.service';
-import { MatxNotifications2Component } from '../matx-notifications2/matx-notifications2.component';
 
 @Component({
   selector: 'app-header-side',
@@ -11,7 +10,6 @@ import { MatxNotifications2Component } from '../matx-notifications2/matx-notific
 })
 export class HeaderSideComponent implements OnInit {
   @Input() notificPanel;
-  @ViewChildren(MatxNotifications2Component) noti;
   public availableLangs = [{
     name: 'EN',
     code: 'en',
