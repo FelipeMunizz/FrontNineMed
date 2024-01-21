@@ -6,3 +6,4 @@ export const config = {
     editor: ['Administrador', 'Recpcao'], 
   }
 }
+
