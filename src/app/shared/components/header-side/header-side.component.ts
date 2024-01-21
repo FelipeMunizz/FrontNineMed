@@ -47,6 +47,16 @@ export class HeaderSideComponent implements OnInit {
   toggleNotific() {
     this.notificPanel.toggle();
   }
+  toggleSidenav() {
+    if (this.layoutConf.sidebarStyle === 'closed') {
+      return this.layout.publishLayoutChange({
+        sidebarStyle: 'full'
+      });
+    }
+    this.layout.publishLayoutChange({
+      sidebarStyle: 'closed'
+    });
+  }
   
   toggleCollapse() {
     // compact --> full

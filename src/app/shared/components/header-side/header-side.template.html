@@ -1,5 +1,13 @@
 <mat-toolbar class="topbar mat-bg-card">
-
+  <button
+  *ngIf="layoutConf.sidebarStyle !== 'compact'"
+  mat-icon-button
+  id="sidenavToggle"
+  (click)="toggleSidenav()"
+  matTooltip="Toggle Hide/Open"
+  >
+  <mat-icon>menu</mat-icon>
+</button>
   <span fxFlex></span>
   <!-- Language Switcher -->
   <mat-menu #menu="matMenu">
@@ -15,7 +23,7 @@
     [matMenuTriggerFor]="accountMenu"
     class="topbar-button-right"
   >
-  <mat-icon> format_align_justify</mat-icon>
+  <mat-icon> build</mat-icon>
   </button>
 
   <mat-menu #accountMenu="matMenu">
