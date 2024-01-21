@@ -1,5 +1,5 @@
 export const config = {
-  apiUrl: 'https://localhost:7017',
+  apiUrl: 'http://ninemed.somee.com/',
   authRoles: {
     sa: ['Administrador'], 
     medico: ['Administrador', 'ProfissionalSaude'], 
