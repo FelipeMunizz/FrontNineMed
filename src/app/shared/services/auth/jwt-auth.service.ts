@@ -7,8 +7,6 @@ import { User } from "../../models/user.model";
 import { of, BehaviorSubject, throwError } from "rxjs";
 import { environment } from "environments/environment";
 
-// ================= you will get those data from server =======
-
 @Injectable({
   providedIn: "root",
 })

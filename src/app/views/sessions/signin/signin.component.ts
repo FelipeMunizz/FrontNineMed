@@ -6,6 +6,7 @@ import { Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms
 import { Subject } from 'rxjs';
 import { AppLoaderService } from '../../../shared/services/app-loader/app-loader.service';
 import { JwtAuthService } from '../../../shared/services/auth/jwt-auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-signin',
@@ -26,7 +27,8 @@ export class SigninComponent implements OnInit, AfterViewInit, OnDestroy {
     private jwtAuth: JwtAuthService,
     private matxLoader: AppLoaderService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private snac: MatSnackBar
   ) {
     this._unsubscribeAll = new Subject();
   }
@@ -60,6 +62,7 @@ export class SigninComponent implements OnInit, AfterViewInit, OnDestroy {
       this.submitButton.disabled = false;
       this.progressBar.mode = 'determinate';
       this.errorMsg = err.message;
+      this.snac.open(this.errorMsg, '',{duration: 3000})
     });
   }
 

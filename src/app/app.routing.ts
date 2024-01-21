@@ -36,11 +36,6 @@ export const rootRouterConfig: Routes = [
         data: { title: 'Cadastros', breadcrumb: 'Cadastros'}
       },
       {
-        path: 'others',
-        loadChildren: () => import('./views/others/others.module').then(m => m.OthersModule),
-        data: { title: 'Others', breadcrumb: 'OTHERS'}
-      },
-      {
         path: 'forms',
         loadChildren: () => import('./views/forms/forms.module').then(m => m.AppFormsModule),
         data: { title: 'Forms', breadcrumb: 'FORMS'}

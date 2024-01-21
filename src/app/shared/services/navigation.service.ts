@@ -75,46 +75,6 @@ export class NavigationService {
       state: 'forms/wizard',
       type: 'link',
       icon: 'grain',
-    },
-    {
-      name: 'PAGES',
-      type: 'separator'
-    },
-    {
-      name: 'SESSIONS',
-      type: 'dropDown',
-      tooltip: 'Pages',
-      icon: 'view_carousel',
-      sub: [
-        { name: 'SIGNUP', state: 'sessions/signup' },
-        { name: 'SIGNIN', state: 'sessions/signin' },
-        { name: 'NOTFOUND', state: 'sessions/404' },
-      ]
-    },
-    {
-      name: 'OTHERS',
-      type: 'dropDown',
-      tooltip: 'Others',
-      icon: 'blur_on',
-      sub: [
-        { name: 'GALLERY', state: 'others/gallery' },
-        { name: 'PRICINGS', state: 'others/pricing' },
-        { name: 'USERS', state: 'others/users' },
-        { name: 'BLANK', state: 'others/blank' }
-      ]
-    },
-    {
-      name: 'Pro',
-      type: 'extLink',
-      icon: 'upgrade',
-      state: 'http://matx-angular.ui-lib.com/'
-    },
-    {
-      name: 'DOC',
-      type: 'extLink',
-      tooltip: 'Documentation',
-      icon: 'library_books',
-      state: 'http://demos.ui-lib.com/matx-doc/'
     }
   ];
 
@@ -126,21 +86,4 @@ export class NavigationService {
   // navigation component has subscribed to this Observable
   menuItems$ = this.menuItems.asObservable();
   constructor() { }
-
-  // Customizer component uses this method to change menu.
-  // You can remove this method and customizer component.
-  // Or you can customize this method to supply different menu for
-  // different user type.
-  publishNavigationChange(menuType: string) {
-    // switch (menuType) {
-    //   case 'separator-menu':
-    //     this.menuItems.next(this.separatorMenu);
-    //     break;
-    //   case 'icon-menu':
-    //     this.menuItems.next(this.iconMenu);
-    //     break;
-    //   default:
-    //     this.menuItems.next(this.plainMenu);
-    // }
-  }
 }

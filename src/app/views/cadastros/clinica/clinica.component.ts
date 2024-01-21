@@ -14,33 +14,12 @@ export class ClinicaComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    let password = new UntypedFormControl('', Validators.required);
-    let confirmPassword = new UntypedFormControl('');
-
     this.clinicaForm = new UntypedFormGroup({
-      nome: new UntypedFormControl('', [
-        Validators.minLength(4)
-      ]),
-      firstname: new UntypedFormControl('', [
-        Validators.required
-      ]),
-      email: new UntypedFormControl('', [
+      nome: new UntypedFormControl('', [        
         Validators.required,
-        Validators.email
-      ]),
-      website: new UntypedFormControl(''),
-      date: new UntypedFormControl(),
-      cardno: new UntypedFormControl(''),
-      password: password,
-      confirmPassword: confirmPassword,
-      gender: new UntypedFormControl(''),
-      agreed: new UntypedFormControl('', (control: UntypedFormControl) => {
-        const agreed = control.value;
-        if(!agreed) {
-          return { agreed: true }
-        }
-        return null;
-      })
+        Validators.minLength(4),
+        Validators.maxLength(50)
+      ])
     })
   };
 
