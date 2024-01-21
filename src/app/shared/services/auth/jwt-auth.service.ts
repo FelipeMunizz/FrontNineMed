@@ -33,7 +33,7 @@ export class JwtAuthService {
   public signin(email, password) {    
     // FOLLOWING CODE SENDS SIGNIN REQUEST TO SERVER
     this.signingIn = true;
-    return this.http.post(`${environment.apiURL}/api/Account/CreateToken`, { email, password })
+    return this.http.post(`${environment.apiURL}/Account/CreateToken`, { email, password })
       .pipe(
         map((res: any) => {
           debugger
