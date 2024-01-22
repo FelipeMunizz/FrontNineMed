@@ -1,8 +1,15 @@
-import {  Component, OnInit } from '@angular/core';
+import {  Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ClinicaService } from 'app/shared/services/app-models/clinica.service';
+import { LocalStoreService } from 'app/shared/services/local-store.service';
+import { User } from './../../../shared/models/user.model';
+import { JwtAuthService } from 'app/shared/services/auth/jwt-auth.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { Clinica } from 'app/shared/models/clinica.model';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-clinica',
@@ -10,21 +17,28 @@ import { ClinicaService } from 'app/shared/services/app-models/clinica.service';
   styleUrls: ['./clinica.component.scss']
 })
 export class ClinicaComponent implements OnInit {
-  formData = {}
+  formData = {};
+  user: User = {};
   logoBase64: string | undefined;
   console = console;
   clinicaForm: UntypedFormGroup;
   color: ThemePalette = 'accent';
   checked = false;
+  dataSource: MatTableDataSource<Clinica>;
+  displayedColumns: string[] = ['id', 'razaoSocial', 'cnpj', 'simplesNacional'];
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
 
   constructor(
     private snac: MatSnackBar,
-    private clinicaService: ClinicaService
+    private clinicaService: ClinicaService,
+    private auth: JwtAuthService
     ) { }
 
-  ngOnInit() {
-    debugger
-    var tes = this.clinicaService.ListaClinicasUsuario('lipe.baterra@gmail.com')
+  ngOnInit() {    
+    this.ListaClinicas();
     this.clinicaForm = new UntypedFormGroup({
       nome: new UntypedFormControl('', [        
         Validators.required,
@@ -41,6 +55,20 @@ export class ClinicaComponent implements OnInit {
       fantasia: new UntypedFormControl('',[])
     })
   };
+
+  private ListaClinicas(){
+    this.user = this.auth.getUser();
+    this.clinicaService.ListaClinicasUsuario(this.user.displayName).subscribe(
+      (clinicas) => {
+        this.dataSource = new MatTableDataSource(clinicas);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      (error) => {
+        console.error(error);
+      }
+    )
+  }
 
   onKeyPress(event: any): void {
     const keyCode = event.keyCode;

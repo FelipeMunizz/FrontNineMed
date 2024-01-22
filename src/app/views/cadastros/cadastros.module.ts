@@ -20,6 +20,9 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { ClinicaComponent } from './clinica/clinica.component';
 import { CadastrosRoutes } from './cadastros.routing';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+
 
 @NgModule({
   imports: [
@@ -39,6 +42,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatStepperModule,
     FlexLayoutModule,
     MatSlideToggleModule,
+    MatPaginatorModule,
+    MatTableModule,
     QuillModule.forRoot(),
     FileUploadModule,
     RouterModule.forChild(CadastrosRoutes),

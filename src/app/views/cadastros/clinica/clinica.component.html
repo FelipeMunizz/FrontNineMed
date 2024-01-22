@@ -3,6 +3,57 @@
         <div class="card-title-text">Clinica</div>
         <mat-divider></mat-divider>
     </mat-card-title>
+    <div class="demo-button-container">
+        <button mat-raised-button color="primary" class="btn-card">
+          Adicionar Clinica
+        </button>
+    </div>
+
+    <mat-card-content>
+        <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-xs="100">
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" matSort>
+                      <!-- ID Column -->
+                      <ng-container  matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Cod. Clinica</th>
+                        <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+                      </ng-container>
+                  
+                      <!-- Razão Social Column -->
+                      <ng-container matColumnDef="razaoSocial">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Razão Social</th>
+                        <td mat-cell *matCellDef="let row">{{ row.razaoSocial }}</td>
+                      </ng-container>
+                  
+                      <!-- CNPJ Column -->
+                      <ng-container matColumnDef="cnpj">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>CNPJ</th>
+                        <td mat-cell *matCellDef="let row">{{ row.cnpj }}</td>
+                      </ng-container>
+                  
+                      <!-- Simples Nacional Column -->
+                      <ng-container matColumnDef="simplesNacional">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Simples Nacional</th>
+                        <td mat-cell *matCellDef="let row">{{ row.simplesNacional }}</td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="acoes">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ações</th>
+                        <td mat-cell *matCellDef="let row">Edit | Delete</td>
+                      </ng-container>
+                  
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                    </table>      
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                </div>          
+            </div>
+        </div>
+    </mat-card-content>
+
+    
+    
     <mat-card-content>
         <form [formGroup]="clinicaForm" (ngSubmit)="submit()" >
             <div fxLayout="row wrap">
