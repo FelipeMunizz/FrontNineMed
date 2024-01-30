@@ -46,7 +46,7 @@ import { MatTableModule } from '@angular/material/table';
     MatTableModule,
     QuillModule.forRoot(),
     FileUploadModule,
-    RouterModule.forChild(CadastrosRoutes),
+    RouterModule.forChild(CadastrosRoutes)
   ],
   declarations: [ClinicaComponent],
 })

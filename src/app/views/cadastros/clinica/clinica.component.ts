@@ -17,6 +17,7 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./clinica.component.scss']
 })
 export class ClinicaComponent implements OnInit {
+  tipoTela : number = 1
   formData = {};
   user: User = {};
   logoBase64: string | undefined;
@@ -25,7 +26,7 @@ export class ClinicaComponent implements OnInit {
   color: ThemePalette = 'accent';
   checked = false;
   dataSource: MatTableDataSource<Clinica>;
-  displayedColumns: string[] = ['id', 'razaoSocial', 'cnpj', 'simplesNacional'];
+  displayedColumns: string[] = ['id', 'razaoSocial', 'cnpj', 'simplesNacional', 'acoes'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -56,7 +57,8 @@ export class ClinicaComponent implements OnInit {
     })
   };
 
-  private ListaClinicas(){
+  ListaClinicas(){
+    this.tipoTela = 1;
     this.user = this.auth.getUser();
     this.clinicaService.ListaClinicasUsuario(this.user.displayName).subscribe(
       (clinicas) => {
@@ -68,6 +70,11 @@ export class ClinicaComponent implements OnInit {
         console.error(error);
       }
     )
+  }
+
+  Cadastro(){
+    this.tipoTela = 2;
+    this.clinicaForm.reset();
   }
 
   onKeyPress(event: any): void {
