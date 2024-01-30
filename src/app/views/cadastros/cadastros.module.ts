@@ -22,6 +22,7 @@ import { CadastrosRoutes } from './cadastros.routing';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { MatTableModule } from '@angular/material/table';
     MatTableModule,
     QuillModule.forRoot(),
     FileUploadModule,
-    RouterModule.forChild(CadastrosRoutes)
+    RouterModule.forChild(CadastrosRoutes),
+    MatTooltipModule
   ],
   declarations: [ClinicaComponent],
 })

@@ -52,13 +52,21 @@
 
                       <ng-container matColumnDef="acoes">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Ações</th>
-                        <td mat-cell *matCellDef="let row">Edit | Delete</td>
+                        <td mat-cell *matCellDef="let row">
+                            <a matTooltip="Editar">
+                                <mat-icon>edit</mat-icon>
+                            </a>
+                            &nbsp;
+                            <a matTooltip="Deletar">
+                                <mat-icon>delete</mat-icon>
+                            </a>
+                        </td>
                       </ng-container>
                   
                       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
                     </table>      
-                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20, 100]" showFirstLastButtons></mat-paginator>
                 </div>          
             </div>
         </div>
@@ -66,81 +74,86 @@
     
     <mat-card-content *ngIf="tipoTela == 2">
         <form [formGroup]="clinicaForm" (ngSubmit)="submit()" >
-            <div fxLayout="row wrap" style="padding: 10px;">
-                <div fxFlex="100" fxFlex.gt-xs="50">
-                    <div class="pb-16">
-                        <mat-form-field class="full-width">
-                            <input
-                            matInput
-                            name="nome"
-                            formControlName="nome"
-                            placeholder="Razão Social"
-                            value="">
-                        </mat-form-field>
-                        <small 
-                        *ngIf="clinicaForm.controls['nome'].hasError('minlength') && clinicaForm.controls['nome'].touched" 
-                        class="form-error-msg"> A razão social deve conter no minimo:  {{basicForm.controls['nome'].errors.minlength.requiredLength}} caracteres </small>
-                        <small 
-                        *ngIf="clinicaForm.controls['nome'].hasError('maxlength') && clinicaForm.controls['nome'].touched" 
-                        class="form-error-msg"> A razão social deve conter no maximo: {{clinicaForm.controls['nome'].errors.maxlength.requiredLength}} caracteres </small>
-                    </div>
+            <div class="row">
+                <div class="col col-lg-6 col-md-6 col-sm-6">
+                    <mat-form-field class="full-width">
+                        <input
+                        matInput
+                        name="nome"
+                        formControlName="nome"
+                        placeholder="Razão Social"
+                        value="">
+                    </mat-form-field>
+                    <small 
+                    *ngIf="clinicaForm.controls['nome'].hasError('minlength') && clinicaForm.controls['nome'].touched" 
+                    class="form-error-msg"> A razão social deve conter no minimo:  {{basicForm.controls['nome'].errors.minlength.requiredLength}} caracteres </small>
+                    <small 
+                    *ngIf="clinicaForm.controls['nome'].hasError('maxlength') && clinicaForm.controls['nome'].touched" 
+                    class="form-error-msg"> A razão social deve conter no maximo: {{clinicaForm.controls['nome'].errors.maxlength.requiredLength}} caracteres </small>
+                </div>
+                <div class="col col-lg-6 col-md-6 col-sm-6">
+                    <mat-form-field class="full-width">
+                        <input
+                        matInput
+                        name="fantasia"
+                        formControlName="fantasia"
+                        placeholder="Nome Fantasia"
+                        value="">
+                    </mat-form-field>
+                </div>
+            </div>
 
-                    <div class="pb-16">
-                        <mat-form-field class="full-width">
-                            <input
-                            matInput
-                            name="fantasia"
-                            formControlName="fantasia"
-                            placeholder="Nome Fantasia"
-                            value="">
-                        </mat-form-field>
-                    </div>
+            <div class="row">
+                <div class="col col-lg-6 col-md-6 col-sm-6">
+                    <mat-form-field class="full-widtf">
+                        <input                             
+                        matInput
+                        name="inscricaoMunicipal"
+                        formControlName="inscricaoMunicipal"                            
+                        placeholder="Inscrição Municipal"
+                        value=""
+                        (keypress)="onKeyPress($event)"
+                        >
+                    </mat-form-field>
+                    <small 
+                    *ngIf="clinicaForm.controls['inscricaoMunicipal'].hasError('maxlength') && clinicaForm.controls['inscricaoMunicipal'].touched" 
+                    class="form-error-msg"> A Inscrição Municipal deve conter no maximo: {{clinicaForm.controls['inscricaoMunicipal'].errors.maxlength.requiredLength}} caracteres </small>
+                </div>
+                <div class="col col-lg-6 col-md-6 col-sm-6">
+                    <mat-form-field class="full-widtf">
+                        <input 
+                        matInput
+                        name="inscricaoEstadual"
+                        formControlName="inscricaoEstadual"                            
+                        placeholder="Inscrição Estadual"
+                        value=""
+                        (keypress)="onKeyPress($event)"
+                        >
+                    </mat-form-field>
+                    <small 
+                    *ngIf="clinicaForm.controls['inscricaoEstadual'].hasError('maxlength') && clinicaForm.controls['inscricaoEstadual'].touched" 
+                    class="form-error-msg"> A Inscrição Estadual deve conter no maximo: {{clinicaForm.controls['inscricaoEstadual'].errors.maxlength.requiredLength}} caracteres </small>
+                </div>
+            </div>
 
-                    <div class="pb-16">
-                        <mat-form-field class="full-widtf">
-                            <input                             
-                            matInput
-                            name="inscricaoMunicipal"
-                            formControlName="inscricaoMunicipal"                            
-                            placeholder="Inscrição Municipal"
-                            value=""
-                            (keypress)="onKeyPress($event)"
-                            >
-                        </mat-form-field>
-                        <small 
-                        *ngIf="clinicaForm.controls['inscricaoMunicipal'].hasError('maxlength') && clinicaForm.controls['inscricaoMunicipal'].touched" 
-                        class="form-error-msg"> A Inscrição Municipal deve conter no maximo: {{clinicaForm.controls['inscricaoMunicipal'].errors.maxlength.requiredLength}} caracteres </small>
-                    </div>
-
-                    <div class="pb-16">
-                        <mat-form-field class="full-widtf">
-                            <input 
-                            matInput
-                            name="inscricaoEstadual"
-                            formControlName="inscricaoEstadual"                            
-                            placeholder="Inscrição Estadual"
-                            value=""
-                            (keypress)="onKeyPress($event)"
-                            >
-                        </mat-form-field>
-                        <small 
-                        *ngIf="clinicaForm.controls['inscricaoEstadual'].hasError('maxlength') && clinicaForm.controls['inscricaoEstadual'].touched" 
-                        class="form-error-msg"> A Inscrição Estadual deve conter no maximo: {{clinicaForm.controls['inscricaoEstadual'].errors.maxlength.requiredLength}} caracteres </small>
-                    </div>
-
-                    <div class="pb-16">
-                        <mat-label>Empresa optante do Simples Nascional?</mat-label>
+            <div class="row">
+                <div class="col col-lg-6 col-md-6 col-sm-6">
+                    <mat-label>Empresa optante do Simples Nascional?</mat-label>
                         <mat-slide-toggle
                         class="margin-toggle"
                         [color]="color"
                         [checked]="checked">
                         </mat-slide-toggle>
-                    </div>
-
-                    <div class="pb-16">
-                        <mat-label>Envie seu Logo</mat-label>
+                </div>
+                <div class="col col-lg-6 col-md-6 col-sm-6">
+                    <mat-label>Envie seu Logo</mat-label>
                         <input type="file" class="margin-toggle" (change)="onFileSelected($event)">
-                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col align-self-end">
+                    <input type="submit" class="btn btn-primary btn-clinica-submit" value="Salvar">
                 </div>
             </div>
         </form>
