@@ -15,7 +15,7 @@ export class AdicionarClinica{
   fantasia: string;
   inscricaoEstadual: string;
   inscricaoMunicipal: string;
-  simplesNacional: boolean;
+  simplesNacional: boolean = false;
   logo: string;
 
   logradouro: string;
@@ -30,6 +30,6 @@ export class AdicionarClinica{
   numeroContato: string;
   tipoContato: number;
   email: string;
-  horarioComercial: boolean;
-  lembretes: boolean;
+  horarioComercial: boolean = false;
+  lembretes: boolean = false;
 }

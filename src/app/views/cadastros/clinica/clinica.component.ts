@@ -163,32 +163,36 @@ export class ClinicaComponent implements OnInit {
     item.cnpj = dados['cnpj'].value
     item.razaoSocial = dados['nome'].value
     item.fantasia = dados['fantasia'].value
-    item.inscricaoEstadual = dados['inscricaoEstadual'].value
+    item.inscricaoEstadual = dados['inscricaoEstadual'].value ? dados['inscricaoEstadual'].value : ''
     item.inscricaoMunicipal = dados['inscricaoMunicipal'].value
     item.simplesNacional = dados['simplesNacional'].value
-    item.logo = this.logoBase64
+    item.logo = this.logoBase64 ? this.logoBase64 : ''
   
     item.logradouro = dados['logradouro'].value;
     item.numero = dados['numero'].value;
     item.complemento = dados['complemento'].value;
-    item.bairro = dados['bairro'].value;
+    item.bairro = dados['bairro'].value;  
     item.cep = dados['cep'].value;
-    item.estado = dados['estado'].value;
+    item.estado = dados['uf'].value;
     item.cidade = dados['cidade'].value;
   
     item.nomeContato = dados['nomeContato'].value;
     item.numeroContato = dados['numeroContato'].value;
     item.tipoContato = dados['tipoContato'].value;
     item.email = dados['email'].value;
-    item.horarioComercial = dados['horarioComercial'].value;
-    item.lembretes = dados['lembretes'].value;
-    console.log(item);
-  }
+    item.horarioComercial = dados['horarioComercial'].value ? dados['horarioComercial'].value : false;
+    item.lembretes = dados['lembretes'].value ? dados['lembretes'].value : false;
+
+    this.clinicaService.AdicionarClinica(item)    
+      .subscribe((response : any) => {
+        this.clinicaForm.reset();
+        this.ListaClinicas();
+      })
+}
 
   BuscaEndereco(cep: string){
     this.utilityService.BuscaEndereco(cep).subscribe(
       (endereco) => {
-        debugger
         this.clinicaForm.get('logradouro')?.setValue(endereco.logradouro);
         this.clinicaForm.get('bairro')?.setValue(endereco.bairro);
         this.clinicaForm.get('cidade')?.setValue(endereco.localidade);
@@ -209,11 +213,12 @@ export class ClinicaComponent implements OnInit {
   BuscaCnpj(cnpj: string){
     this.utilityService.BuscaCnpj(cnpj).subscribe(
       (cadastro) => {
-        debugger
         this.clinicaForm.get('nome')?.setValue(cadastro.razao_social);
         this.clinicaForm.get('fantasia')?.setValue(cadastro.nome_fantasia);  
         if(cadastro.simples.optante_simples === 'S')
           this.clinicaForm.get('simplesNacional')?.setValue(true);
+        else
+          this.clinicaForm.get('simplesNacional')?.setValue(false);
 
         this.clinicaForm.get('logradouro')?.setValue(cadastro.endereco.logradouro);
         this.clinicaForm.get('bairro')?.setValue(cadastro.endereco.bairro);
