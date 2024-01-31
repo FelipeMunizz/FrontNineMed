@@ -38,13 +38,6 @@
               class="form-error-msg"> Digite a senha </small>
           </div>
           
-          <div class="pb-16">
-            <mat-checkbox
-              name="rememberMe"
-              [formControl]="signinForm.controls['rememberMe']"
-              class="pb-16">Lembrar este dispositivo</mat-checkbox>
-          </div>
-          
           <button mat-raised-button class="mat-primary full-width mb-16" [disabled]="signinForm.invalid">Entrar</button>
           <div class="text-center">
             <a [routerLink]="'/sessions/forgot-password'" class="mat-primary text-center full-width">Esqueceu a Senha?</a>

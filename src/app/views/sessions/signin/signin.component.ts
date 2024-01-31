@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatButton } from '@angular/material/button';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { AppLoaderService } from '../../../shared/services/app-loader/app-loader.service';
 import { JwtAuthService } from '../../../shared/services/auth/jwt-auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -25,9 +24,7 @@ export class SigninComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private jwtAuth: JwtAuthService,
-    private matxLoader: AppLoaderService,
     private router: Router,
-    private route: ActivatedRoute,
     private snac: MatSnackBar
   ) {
     this._unsubscribeAll = new Subject();
@@ -36,13 +33,11 @@ export class SigninComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.signinForm = new UntypedFormGroup({
       email: new UntypedFormControl('', Validators.required),
-      password: new UntypedFormControl('', Validators.required),
-      rememberMe: new UntypedFormControl(true)
+      password: new UntypedFormControl('', Validators.required)
     });
   }
 
   ngAfterViewInit() {
-    this.autoSignIn();
   }
 
   ngOnDestroy() {
@@ -65,16 +60,4 @@ export class SigninComponent implements OnInit, AfterViewInit, OnDestroy {
       this.snac.open(this.errorMsg, '',{duration: 3000})
     });
   }
-
-  autoSignIn() {    
-    if(this.jwtAuth.return === '/') {
-      return
-    }
-    this.matxLoader.open(`Aguarde...`, {width: '320px'});
-    setTimeout(() => {
-      this.signin();
-      this.matxLoader.close();
-    }, 2000);
-  }
-
 }
