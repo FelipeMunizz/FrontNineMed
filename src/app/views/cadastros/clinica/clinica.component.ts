@@ -24,8 +24,6 @@ export class ClinicaComponent implements OnInit {
   logoBase64: string | undefined;
   console = console;
   clinicaForm: UntypedFormGroup;
-  color: ThemePalette = 'accent';
-  checked = false;
   dataSource: MatTableDataSource<Clinica>;
   displayedColumns: string[] = ['id', 'razaoSocial', 'cnpj', 'simplesNacional', 'acoes'];
   estados: { value: number; label: string }[] = [];
@@ -98,6 +96,7 @@ export class ClinicaComponent implements OnInit {
       ]),
       horarioComercial: new UntypedFormControl('',[]),
       lembretes: new UntypedFormControl('',[]),
+      simplesNascional: new UntypedFormControl('',[]),
     })
     this.estados = this.ufService.getEstados();
   };

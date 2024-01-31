@@ -157,12 +157,11 @@
         
                     <div class="row">
                         <div class="col col-lg-6 col-md-6 col-sm-6">
-                            <mat-label>Optante do Simples Nascional?</mat-label>
-                                <mat-slide-toggle
-                                class="margin-toggle"
-                                [color]="color"
-                                [checked]="checked">
-                                </mat-slide-toggle>
+                                <mat-checkbox
+                                    name="simplesNacional"
+                                    formControlName="simplesNacional" 
+                                    class="pb-16">Simples Nacional
+                                </mat-checkbox>
                         </div>
                         <div class="col col-lg-6 col-md-6 col-sm-6">
                             <mat-label>Envie seu Logo</mat-label>
@@ -340,9 +339,10 @@
                         </div>
                         <div class="col col-lg-3 col-md-3 col-sm-12">
                                 <mat-checkbox
-                                name="horarioComercial"
-                                formControlName="horarioComercial" 
-                                class="pb-16">Horário Comercial</mat-checkbox>
+                                    name="horarioComercial"
+                                    formControlName="horarioComercial" 
+                                    class="pb-16">Horário Comercial
+                                </mat-checkbox>
                         </div>
                         <div class="col col-lg-3 col-md-3 col-sm-12">
                             <mat-checkbox
