@@ -11,6 +11,7 @@ import { Clinica, AdicionarClinica } from 'app/shared/models/clinica.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { EstadosService } from 'app/shared/services/uf.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-clinica',
@@ -229,6 +230,9 @@ export class ClinicaComponent implements OnInit {
         this.clinicaForm.get('nomeContato')?.setValue(cadastro.nome_fantasia); 
         this.clinicaForm.get('tipoContato')?.setValue('1'); 
         this.clinicaForm.get('horarioComercial')?.setValue(true);
+      },
+      (error) => {
+        this.clinicaForm.reset();
       }
     )
   }
