@@ -24,7 +24,7 @@
     <app-sidebar-top *ngIf="layoutConf.navigationPos === 'top' && layoutConf.isMobile"></app-sidebar-top>
 
     <!-- App content -->
-    <div class="main-content-wrap" id="main-content-wrap" [perfectScrollbar]="" [disabled]="layoutConf.topbarFixed || !layoutConf.perfectScrollbar">
+    <div class="main-content-wrap" id="main-content-wrap">
       <!-- Header for side navigation layout -->
       <!-- ONLY REQUIRED FOR **SIDE** NAVIGATION LAYOUT -->
       <app-header-side 
@@ -32,7 +32,7 @@
         [notificPanel]="notificationPanel">
       </app-header-side>
 
-      <div class="rightside-content-hold" id="rightside-content-hold" [perfectScrollbar]="scrollConfig" [disabled]="!layoutConf.topbarFixed || !layoutConf.perfectScrollbar">
+      <div class="rightside-content-hold" id="rightside-content-hold" >
         <!-- View Loader -->
         <div class="view-loader" *ngIf="isModuleLoading" style="position:fixed;"
         fxLayout="column" fxLayoutAlign="center center">

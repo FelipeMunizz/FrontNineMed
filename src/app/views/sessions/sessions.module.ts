@@ -1,4 +1,3 @@
-import { PerfectScrollbarModule } from 'app/shared/components/perfect-scrollbar';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -21,7 +20,6 @@ import { NotFoundComponent } from './not-found/not-found.component';
     ReactiveFormsModule,
     SharedMaterialModule,
     FlexLayoutModule,
-    PerfectScrollbarModule,
     RouterModule.forChild(SessionsRoutes)
   ],
   declarations: [SigninComponent, NotFoundComponent]
