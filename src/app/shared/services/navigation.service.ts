@@ -45,7 +45,9 @@ export class NavigationService {
       tooltip: 'Pages',
       icon: 'library_add',
       sub: [
-        { name: 'Clinica', state: 'cadastros/clinica', icon: 'store' }
+        { name: 'Clinica', state: 'cadastros/clinica', icon: 'store' },
+        { name: 'Paciente', state: 'cadastros/paciente', icon: 'person' },
+        { name: 'Funcionario', state: 'cadastros/funcionario', icon: 'support_agent' },
       ]
     },
     {

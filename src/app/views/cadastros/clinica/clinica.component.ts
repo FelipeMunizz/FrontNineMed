@@ -12,6 +12,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { EstadosService } from 'app/shared/services/uf.service';
 import { error } from 'console';
+import { FuncionarioService } from 'app/shared/services/app-models/funcionario.service';
 
 @Component({
   selector: 'app-clinica',
@@ -36,6 +37,7 @@ export class ClinicaComponent implements OnInit {
   constructor(
     private snac: MatSnackBar,
     private clinicaService: ClinicaService,
+    private funcionarioService: FuncionarioService,
     private auth: JwtAuthService,
     private utilityService: UtilityService,
     private ufService: EstadosService
@@ -117,7 +119,7 @@ export class ClinicaComponent implements OnInit {
     )
   }
 
-  Cadastro(){
+  TelaCadastro(){
     this.tipoTela = 2;
     this.clinicaForm.reset();
   }
@@ -157,7 +159,7 @@ export class ClinicaComponent implements OnInit {
     return this.clinicaForm.controls
   }
 
-  submit(){
+  Cadastro(){
     var dados = this.dadosForm()
     var item = new AdicionarClinica();
     item.cnpj = dados['cnpj'].value
@@ -190,6 +192,13 @@ export class ClinicaComponent implements OnInit {
       })
 }
 
+  DeletarClinica(id: number){
+    this.clinicaService.DeletarClinica(id)
+      .subscribe((response: any) => {
+        
+      })
+  }
+
   BuscaEndereco(cep: string){
     this.utilityService.BuscaEndereco(cep).subscribe(
       (endereco) => {
@@ -211,34 +220,34 @@ export class ClinicaComponent implements OnInit {
   };
 
   BuscaCnpj(cnpj: string){
-    this.utilityService.BuscaCnpj(cnpj).subscribe(
-      (cadastro) => {
-        this.clinicaForm.get('nome')?.setValue(cadastro.razao_social);
-        this.clinicaForm.get('fantasia')?.setValue(cadastro.nome_fantasia);  
-        if(cadastro.simples.optante_simples === 'S')
-          this.clinicaForm.get('simplesNacional')?.setValue(true);
-        else
-          this.clinicaForm.get('simplesNacional')?.setValue(false);
+    // this.utilityService.BuscaCnpj(cnpj).subscribe(
+    //   (cadastro) => {
+    //     this.clinicaForm.get('nome')?.setValue(cadastro.razao_social);
+    //     this.clinicaForm.get('fantasia')?.setValue(cadastro.nome_fantasia);  
+    //     if(cadastro.simples.optante_simples === 'S')
+    //       this.clinicaForm.get('simplesNacional')?.setValue(true);
+    //     else
+    //       this.clinicaForm.get('simplesNacional')?.setValue(false);
 
-        this.clinicaForm.get('logradouro')?.setValue(cadastro.endereco.logradouro);
-        this.clinicaForm.get('bairro')?.setValue(cadastro.endereco.bairro);
-        this.clinicaForm.get('cidade')?.setValue(cadastro.endereco.municipio);    
-        this.clinicaForm.get('cep')?.setValue(cadastro.endereco.cep);    
-        this.clinicaForm.get('complemento')?.setValue(cadastro.endereco.complemento);
-        this.clinicaForm.get('numero')?.setValue(cadastro.endereco.numero);
-        const estadoRetornado = this.estados.find((estado) => estado.label === cadastro.endereco.uf);
-        if(estadoRetornado)
-          this.clinicaForm.get('uf')?.setValue(estadoRetornado.value);   
+    //     this.clinicaForm.get('logradouro')?.setValue(cadastro.endereco.logradouro);
+    //     this.clinicaForm.get('bairro')?.setValue(cadastro.endereco.bairro);
+    //     this.clinicaForm.get('cidade')?.setValue(cadastro.endereco.municipio);    
+    //     this.clinicaForm.get('cep')?.setValue(cadastro.endereco.cep);    
+    //     this.clinicaForm.get('complemento')?.setValue(cadastro.endereco.complemento);
+    //     this.clinicaForm.get('numero')?.setValue(cadastro.endereco.numero);
+    //     const estadoRetornado = this.estados.find((estado) => estado.label === cadastro.endereco.uf);
+    //     if(estadoRetornado)
+    //       this.clinicaForm.get('uf')?.setValue(estadoRetornado.value);   
 
-        this.clinicaForm.get('email')?.setValue(cadastro.email);
-        this.clinicaForm.get('numeroContato')?.setValue(cadastro.telefone1);
-        this.clinicaForm.get('nomeContato')?.setValue(cadastro.nome_fantasia); 
-        this.clinicaForm.get('tipoContato')?.setValue('1'); 
-        this.clinicaForm.get('horarioComercial')?.setValue(true);
-      },
-      (error) => {
-        this.clinicaForm.reset();
-      }
-    )
+    //     this.clinicaForm.get('email')?.setValue(cadastro.email);
+    //     this.clinicaForm.get('numeroContato')?.setValue(cadastro.telefone1);
+    //     this.clinicaForm.get('nomeContato')?.setValue(cadastro.nome_fantasia); 
+    //     this.clinicaForm.get('tipoContato')?.setValue('1'); 
+    //     this.clinicaForm.get('horarioComercial')?.setValue(true);
+    //   },
+    //   (error) => {
+    //     this.clinicaForm.reset();
+    //   }
+    // )
   }
 }

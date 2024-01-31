@@ -3,7 +3,7 @@
         <mat-divider></mat-divider>
     </mat-card-title>
     <div class="demo-button-container" *ngIf="tipoTela == 1">
-        <button mat-raised-button color="primary" class="btn-card" (click)="Cadastro()">
+        <button mat-raised-button color="primary" class="btn-card" (click)="TelaCadastro()">
           Adicionar Clinica
         </button>
     </div>
@@ -56,7 +56,7 @@
                                 <mat-icon>edit</mat-icon>
                             </a>
                             &nbsp;
-                            <a matTooltip="Deletar">
+                            <a matTooltip="Deletar" (click)="DeletarClinica(row.id)">
                                 <mat-icon>delete</mat-icon>
                             </a>
                         </td>
@@ -72,7 +72,7 @@
     </mat-card-content>   
     
     <mat-card-content *ngIf="tipoTela == 2">
-        <form [formGroup]="clinicaForm" (ngSubmit)="submit()" >
+        <form [formGroup]="clinicaForm" (ngSubmit)="Cadastro()" >
             <mat-card>
                 <mat-card-title>
                     Dados                    

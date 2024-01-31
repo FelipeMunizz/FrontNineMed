@@ -22,6 +22,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { PacienteComponent } from './paciente/paciente.component';
+import { FuncionarioComponent } from './funcionario/funcionario.component';
 
 
 @NgModule({
@@ -49,6 +51,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     RouterModule.forChild(CadastrosRoutes),
     MatTooltipModule
   ],
-  declarations: [ClinicaComponent],
+  declarations: [ClinicaComponent, PacienteComponent, FuncionarioComponent],
 })
 export class CadastrosModule {}
