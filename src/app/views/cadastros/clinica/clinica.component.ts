@@ -160,7 +160,7 @@ export class ClinicaComponent implements OnInit {
     var dados = this.dadosForm()
     var item = new AdicionarClinica();
     item.cnpj = dados['cnpj'].value
-    item.razaoSocial = dados['razaoSocial'].value
+    item.razaoSocial = dados['nome'].value
     item.fantasia = dados['fantasia'].value
     item.inscricaoEstadual = dados['inscricaoEstadual'].value
     item.inscricaoMunicipal = dados['inscricaoMunicipal'].value
@@ -205,4 +205,31 @@ export class ClinicaComponent implements OnInit {
     )
   };
 
+  BuscaCnpj(cnpj: string){
+    this.utilityService.BuscaCnpj(cnpj).subscribe(
+      (cadastro) => {
+        debugger
+        this.clinicaForm.get('nome')?.setValue(cadastro.razao_social);
+        this.clinicaForm.get('fantasia')?.setValue(cadastro.nome_fantasia);  
+        if(cadastro.simples.optante_simples === 'S')
+          this.clinicaForm.get('simplesNacional')?.setValue(true);
+
+        this.clinicaForm.get('logradouro')?.setValue(cadastro.endereco.logradouro);
+        this.clinicaForm.get('bairro')?.setValue(cadastro.endereco.bairro);
+        this.clinicaForm.get('cidade')?.setValue(cadastro.endereco.municipio);    
+        this.clinicaForm.get('cep')?.setValue(cadastro.endereco.cep);    
+        this.clinicaForm.get('complemento')?.setValue(cadastro.endereco.complemento);
+        this.clinicaForm.get('numero')?.setValue(cadastro.endereco.numero);
+        const estadoRetornado = this.estados.find((estado) => estado.label === cadastro.endereco.uf);
+        if(estadoRetornado)
+          this.clinicaForm.get('uf')?.setValue(estadoRetornado.value);   
+
+        this.clinicaForm.get('email')?.setValue(cadastro.email);
+        this.clinicaForm.get('numeroContato')?.setValue(cadastro.telefone1);
+        this.clinicaForm.get('nomeContato')?.setValue(cadastro.nome_fantasia); 
+        this.clinicaForm.get('tipoContato')?.setValue('1'); 
+        this.clinicaForm.get('horarioComercial')?.setValue(true);
+      }
+    )
+  }
 }
