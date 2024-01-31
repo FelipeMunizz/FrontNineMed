@@ -16,7 +16,6 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { QuillModule } from 'ngx-quill';
 import { FileUploadModule } from 'ng2-file-upload';
-
 import { ClinicaComponent } from './clinica/clinica.component';
 import { CadastrosRoutes } from './cadastros.routing';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';

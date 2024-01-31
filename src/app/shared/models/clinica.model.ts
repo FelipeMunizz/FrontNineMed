@@ -8,3 +8,28 @@ export class Clinica {
     public simplesNacional: boolean;
     public logo: string;
 }
+
+export class AdicionarClinica{
+  cnpj: string;
+  razaoSocial: string;
+  fantasia: string;
+  inscricaoEstadual: string;
+  inscricaoMunicipal: string;
+  simplesNacional: boolean;
+  logo: string;
+
+  logradouro: string;
+  numero: string;
+  complemento: string;
+  bairro: string;
+  cep: string;
+  estado: number;
+  cidade: string;
+
+  nomeContato: string;
+  numeroContato: string;
+  tipoContato: number;
+  email: string;
+  horarioComercial: boolean;
+  lembretes: boolean;
+}

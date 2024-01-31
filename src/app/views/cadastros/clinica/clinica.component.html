@@ -1,6 +1,5 @@
 <mat-card class="p-0">
     <mat-card-title class="">
-        <div class="card-title-text">Clinica</div>
         <mat-divider></mat-divider>
     </mat-card-title>
     <div class="demo-button-container" *ngIf="tipoTela == 1">
@@ -74,83 +73,287 @@
     
     <mat-card-content *ngIf="tipoTela == 2">
         <form [formGroup]="clinicaForm" (ngSubmit)="submit()" >
-            <div class="row">
-                <div class="col col-lg-6 col-md-6 col-sm-6">
-                    <mat-form-field class="full-width">
-                        <input
-                        matInput
-                        name="nome"
-                        formControlName="nome"
-                        placeholder="Razão Social"
-                        value="">
-                    </mat-form-field>
-                    <small 
-                    *ngIf="clinicaForm.controls['nome'].hasError('minlength') && clinicaForm.controls['nome'].touched" 
-                    class="form-error-msg"> A razão social deve conter no minimo:  {{basicForm.controls['nome'].errors.minlength.requiredLength}} caracteres </small>
-                    <small 
-                    *ngIf="clinicaForm.controls['nome'].hasError('maxlength') && clinicaForm.controls['nome'].touched" 
-                    class="form-error-msg"> A razão social deve conter no maximo: {{clinicaForm.controls['nome'].errors.maxlength.requiredLength}} caracteres </small>
-                </div>
-                <div class="col col-lg-6 col-md-6 col-sm-6">
-                    <mat-form-field class="full-width">
-                        <input
-                        matInput
-                        name="fantasia"
-                        formControlName="fantasia"
-                        placeholder="Nome Fantasia"
-                        value="">
-                    </mat-form-field>
-                </div>
-            </div>
+            <mat-card>
+                <mat-card-title>
+                    Dados                    
+                </mat-card-title>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col col-lg-6 col-md-6 col-sm-6">
+                            <mat-form-field class="full-width">
+                                <input
+                                matInput
+                                name="nome"
+                                formControlName="nome"
+                                placeholder="Razão Social"
+                                value="">
+                            </mat-form-field>
+                            <small 
+                            *ngIf="clinicaForm.controls['nome'].hasError('minlength') && clinicaForm.controls['nome'].touched" 
+                            class="form-error-msg"> A razão social deve conter no minimo:  {{basicForm.controls['nome'].errors.minlength.requiredLength}} caracteres </small>
+                            <small 
+                            *ngIf="clinicaForm.controls['nome'].hasError('maxlength') && clinicaForm.controls['nome'].touched" 
+                            class="form-error-msg"> A razão social deve conter no maximo: {{clinicaForm.controls['nome'].errors.maxlength.requiredLength}} caracteres </small>
+                        </div>
+                        <div class="col col-lg-6 col-md-6 col-sm-6">
+                            <mat-form-field class="full-width">
+                                <input
+                                matInput
+                                name="fantasia"
+                                formControlName="fantasia"
+                                placeholder="Nome Fantasia"
+                                value="">
+                            </mat-form-field>
+                        </div>
+                    </div>
+        
+                    <div class="row">
+                        <div class="col col-lg-4 col-md-4 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input                             
+                                matInput
+                                name="cnpj"
+                                formControlName="cnpj"                            
+                                placeholder="CNPJ"
+                                value=""
+                                (keypress)="onKeyPress($event)"
+                                >
+                            </mat-form-field>
+                            <small 
+                            *ngIf="clinicaForm.controls['cnpj'].hasError('maxlength') && clinicaForm.controls['cnpj'].touched" 
+                            class="form-error-msg"> A Inscrição Municipal deve conter no maximo: {{clinicaForm.controls['cnpj'].errors.maxlength.requiredLength}} caracteres </small>
+                        </div>
+                        <div class="col col-lg-4 col-md-4 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input                             
+                                matInput
+                                name="inscricaoMunicipal"
+                                formControlName="inscricaoMunicipal"                            
+                                placeholder="Inscrição Municipal"
+                                value=""
+                                (keypress)="onKeyPress($event)"
+                                >
+                            </mat-form-field>
+                            <small 
+                            *ngIf="clinicaForm.controls['inscricaoMunicipal'].hasError('maxlength') && clinicaForm.controls['inscricaoMunicipal'].touched" 
+                            class="form-error-msg"> A Inscrição Municipal deve conter no maximo: {{clinicaForm.controls['inscricaoMunicipal'].errors.maxlength.requiredLength}} caracteres </small>
+                        </div>
+                        <div class="col col-lg-4 col-md-4 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input 
+                                matInput
+                                name="inscricaoEstadual"
+                                formControlName="inscricaoEstadual"                            
+                                placeholder="Inscrição Estadual"
+                                value=""
+                                (keypress)="onKeyPress($event)"
+                                >
+                            </mat-form-field>
+                            <small 
+                            *ngIf="clinicaForm.controls['inscricaoEstadual'].hasError('maxlength') && clinicaForm.controls['inscricaoEstadual'].touched" 
+                            class="form-error-msg"> A Inscrição Estadual deve conter no maximo: {{clinicaForm.controls['inscricaoEstadual'].errors.maxlength.requiredLength}} caracteres </small>
+                        </div>
+                    </div>
+        
+                    <div class="row">
+                        <div class="col col-lg-6 col-md-6 col-sm-6">
+                            <mat-label>Optante do Simples Nascional?</mat-label>
+                                <mat-slide-toggle
+                                class="margin-toggle"
+                                [color]="color"
+                                [checked]="checked">
+                                </mat-slide-toggle>
+                        </div>
+                        <div class="col col-lg-6 col-md-6 col-sm-6">
+                            <mat-label>Envie seu Logo</mat-label>
+                                <input type="file" class="margin-toggle" (change)="onFileSelected($event)">
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
 
-            <div class="row">
-                <div class="col col-lg-6 col-md-6 col-sm-6">
-                    <mat-form-field class="full-widtf">
-                        <input                             
-                        matInput
-                        name="inscricaoMunicipal"
-                        formControlName="inscricaoMunicipal"                            
-                        placeholder="Inscrição Municipal"
-                        value=""
-                        (keypress)="onKeyPress($event)"
-                        >
-                    </mat-form-field>
-                    <small 
-                    *ngIf="clinicaForm.controls['inscricaoMunicipal'].hasError('maxlength') && clinicaForm.controls['inscricaoMunicipal'].touched" 
-                    class="form-error-msg"> A Inscrição Municipal deve conter no maximo: {{clinicaForm.controls['inscricaoMunicipal'].errors.maxlength.requiredLength}} caracteres </small>
-                </div>
-                <div class="col col-lg-6 col-md-6 col-sm-6">
-                    <mat-form-field class="full-widtf">
-                        <input 
-                        matInput
-                        name="inscricaoEstadual"
-                        formControlName="inscricaoEstadual"                            
-                        placeholder="Inscrição Estadual"
-                        value=""
-                        (keypress)="onKeyPress($event)"
-                        >
-                    </mat-form-field>
-                    <small 
-                    *ngIf="clinicaForm.controls['inscricaoEstadual'].hasError('maxlength') && clinicaForm.controls['inscricaoEstadual'].touched" 
-                    class="form-error-msg"> A Inscrição Estadual deve conter no maximo: {{clinicaForm.controls['inscricaoEstadual'].errors.maxlength.requiredLength}} caracteres </small>
-                </div>
-            </div>
+            <mat-card>
+                <mat-card-title>
+                    Endereço
+                </mat-card-title>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col col-lg-3 col-md-3 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input
+                                matInput
+                                name="cep"
+                                formControlName="cep"
+                                placeholder="CEP (apenas texto)"
+                                value=""
+                                #cepInput
+                                (blur)="BuscaEndereco(cepInput.value)"
+                                (keypress)="onKeyPress($event)">
+                            </mat-form-field>
+                            <small 
+                            *ngIf="clinicaForm.controls['cep'].hasError('maxlength') && clinicaForm.controls['cep'].touched" 
+                            class="form-error-msg"> O CEP deve conter no maximo: {{clinicaForm.controls['cep'].errors.maxlength.requiredLength}} caracteres </small>
+                        </div>
+                    </div>
 
-            <div class="row">
-                <div class="col col-lg-6 col-md-6 col-sm-6">
-                    <mat-label>Empresa optante do Simples Nascional?</mat-label>
-                        <mat-slide-toggle
-                        class="margin-toggle"
-                        [color]="color"
-                        [checked]="checked">
-                        </mat-slide-toggle>
-                </div>
-                <div class="col col-lg-6 col-md-6 col-sm-6">
-                    <mat-label>Envie seu Logo</mat-label>
-                        <input type="file" class="margin-toggle" (change)="onFileSelected($event)">
-                </div>
-            </div>
+                    <div class="row">
+                        <div class="col col-lg-8 col-md-8 col-sm-10">
+                            <mat-form-field class="full-width">
+                                <input
+                                matInput
+                                name="logradouro"
+                                formControlName="logradouro"
+                                placeholder="Endereço"
+                                value="">
+                            </mat-form-field>
+                            <small 
+                            *ngIf="clinicaForm.controls['logradouro'].touched" 
+                            class="form-error-msg"> </small>
+                        </div>
 
+                        <div class="col col-lg-2 col-md-2 col-sm-1">
+                            <mat-form-field class="full-width">
+                                <input
+                                matInput
+                                name="numero"
+                                formControlName="numero"
+                                placeholder="Número"
+                                value="">
+                            </mat-form-field>
+                            <small 
+                            *ngIf="clinicaForm.controls['numero'].touched" 
+                            class="form-error-msg"> </small>
+                        </div>
+                        <div class="col col-lg-2 col-md-2 col-sm-1">
+                            <mat-form-field class="full-width">
+                                <input
+                                matInput
+                                name="complemento"
+                                formControlName="complemento"
+                                placeholder="Complemento"
+                                value="">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col col-lg-4 col-md-4 col-sm-2">
+                            <mat-form-field class="full-width">
+                                <input
+                                matInput
+                                name="bairro"
+                                formControlName="bairro"
+                                placeholder="Bairro"
+                                value="">
+                            </mat-form-field>
+                            <small 
+                            *ngIf="clinicaForm.controls['bairro'].touched" 
+                            class="form-error-msg"> </small>
+                        </div>
+
+                        <div class="col col-lg-4 col-md-4 col-sm-2">
+                            <mat-form-field class="full-width">
+                                <input
+                                matInput
+                                name="cidade"
+                                formControlName="cidade"
+                                placeholder="Ciddade"
+                                value="">
+                            </mat-form-field>
+                            <small 
+                            *ngIf="clinicaForm.controls['cidade'].touched" 
+                            class="form-error-msg"> </small>
+                        </div>
+
+                        <div class="col col-lg-4 col-md-4 col-sm-2">
+                            <mat-form-field class="full-width">
+                                <mat-label>Estado</mat-label>
+                                <select matNativeControl formControlName="uf" class="form-select">
+                                  <option class="dropdown-item" *ngFor="let estado of estados" [value]="estado.value">{{ estado.label }}</option>
+                                </select>
+                              </mat-form-field>
+                              <small *ngIf="clinicaForm.controls['uf'].touched" class="form-error-msg"> </small>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card>
+                <mat-card-title>
+                    Contato
+                </mat-card-title>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col col-lg-4 col-md-4 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input
+                                matInput
+                                name="nomeContato"
+                                formControlName="nomeContato"
+                                placeholder="Nome Contato"
+                                value="">
+                            </mat-form-field>
+                            <small 
+                            *ngIf="clinicaForm.controls['nomeContato'].touched" 
+                            class="form-error-msg"> </small>
+                        </div>
+                        <div class="col col-lg-4 col-md-4 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input
+                                matInput
+                                name="numeroContato"
+                                formControlName="numeroContato"
+                                placeholder="Número Contato"
+                                value=""
+                                (keypress)="onKeyPress($event)">
+                            </mat-form-field>
+                            <small 
+                            *ngIf="clinicaForm.controls['numeroContato'].touched" 
+                            class="form-error-msg"> </small>
+                        </div>
+                        <div class="col col-lg-4 col-md-4 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <mat-label>Tipo de Contato</mat-label>
+                                <select matNativeControl formControlName="tipoContato" class="dorpdown-menu">
+                                  <option value="0">Residêncial</option>
+                                  <option value="1">Comercial</option>
+                                  <option value="2">Outro</option>
+                                </select>
+                              </mat-form-field>
+                              <small *ngIf="clinicaForm.controls['uf'].touched" class="form-error-msg"> </small>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input
+                                matInput
+                                name="email"
+                                formControlName="email"
+                                placeholder="Email"
+                                value="">
+                            </mat-form-field>
+                            <small 
+                            *ngIf="clinicaForm.controls['email'].touched" 
+                            class="form-error-msg"> </small>
+                        </div>
+                        <div class="col col-lg-3 col-md-3 col-sm-12">
+                                <mat-checkbox
+                                name="horarioComercial"
+                                formControlName="horarioComercial" 
+                                class="pb-16">Horário Comercial</mat-checkbox>
+                        </div>
+                        <div class="col col-lg-3 col-md-3 col-sm-12">
+                            <mat-checkbox
+                                name="lembretes"
+                                formControlName="lembretes" 
+                                class="pb-16">Lembretes</mat-checkbox>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            
             <div class="row">
                 <div class="col align-self-end">
                     <input type="submit" class="btn btn-primary btn-clinica-submit" value="Salvar">
