@@ -94,9 +94,9 @@ export class ClinicaComponent implements OnInit {
         Validators.email,
         Validators.required
       ]),
-      horarioComercial: new UntypedFormControl('',[]),
-      lembretes: new UntypedFormControl('',[]),
-      simplesNascional: new UntypedFormControl('',[]),
+      horarioComercial: new UntypedFormControl(false,[]),
+      lembretes: new UntypedFormControl(true,[]),
+      simplesNacional: new UntypedFormControl(false,[]),
     })
     this.estados = this.ufService.getEstados();
   };
