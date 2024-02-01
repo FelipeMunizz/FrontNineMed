@@ -34,13 +34,12 @@ export const rootRouterConfig: Routes = [
         path: 'cadastros',
         loadChildren: () => import('./views/cadastros/cadastros.module').then(m => m.CadastrosModule),
         data: { title: 'Cadastros', breadcrumb: 'Cadastros'}
-      },
+      },    
       {
-        path: 'forms',
-        loadChildren: () => import('./views/forms/forms.module').then(m => m.AppFormsModule),
-        data: { title: 'Forms', breadcrumb: 'FORMS'}
-      },      
-      
+        path: 'editar',
+        loadChildren: () => import('./views/editar/editar.module').then(m => m.EditarModule),
+        data: { title: 'Editar', breadcrumb: 'Editar'}
+      },     
     ]
   },
   {

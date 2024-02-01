@@ -49,34 +49,6 @@ export class NavigationService {
         { name: 'Paciente', state: 'cadastros/paciente', icon: 'person' },
         { name: 'Funcionario', state: 'cadastros/funcionario', icon: 'support_agent' },
       ]
-    },
-    {
-      name: 'FORMS',
-      type: 'separator'
-    },
-    {
-      name: 'BASIC',
-      state: 'forms/basic',
-      type: 'link',
-      icon: 'description',
-    },
-    {
-      name: 'EDITOR',
-      state: 'forms/editor',
-      type: 'link',
-      icon: 'subject',
-    },
-    {
-      name: 'UPLOAD',
-      state: 'forms/upload',
-      type: 'link',
-      icon: 'upload',
-    },
-    {
-      name: 'WIZARD',
-      state: 'forms/wizard',
-      type: 'link',
-      icon: 'grain',
     }
   ];
 

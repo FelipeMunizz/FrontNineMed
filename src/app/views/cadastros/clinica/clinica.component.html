@@ -52,7 +52,7 @@
                       <ng-container matColumnDef="acoes">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Ações</th>
                         <td mat-cell *matCellDef="let row">
-                            <a matTooltip="Editar">
+                            <a matTooltip="Editar" (click)="EditarClinica(row.id)">
                                 <mat-icon>edit</mat-icon>
                             </a>
                             &nbsp;
@@ -75,7 +75,7 @@
         <form [formGroup]="clinicaForm" (ngSubmit)="Cadastro()" >
             <mat-card>
                 <mat-card-title>
-                    Dados                    
+                    Dados Empresa         
                 </mat-card-title>
                 <mat-card-content>
                     <div class="row">

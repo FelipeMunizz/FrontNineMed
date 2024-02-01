@@ -1,4 +1,4 @@
-export interface User {
+export class User {
   idFuncionario?: string;
   displayName?: string;
   role?: string

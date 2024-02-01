@@ -12,6 +12,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ErrorHandlerService } from './shared/services/error-handler.service';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
+import { ToastrModule } from 'ngx-toastr';
 
 
 // AoT requires an exported function for factories
@@ -21,7 +22,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 
 @NgModule({
   imports: [
-    BrowserModule,
+  BrowserModule,
     BrowserAnimationsModule,
     SharedModule,
     HttpClientModule,
@@ -32,7 +33,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    RouterModule.forRoot(rootRouterConfig, { useHash: false, relativeLinkResolution: 'legacy' })
+    RouterModule.forRoot(rootRouterConfig, { useHash: false, relativeLinkResolution: 'legacy' }),
+    ToastrModule.forRoot()
   ],
   declarations: [AppComponent],
   providers: [

@@ -1,6 +1,5 @@
 import {  Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
-import { ThemePalette } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ClinicaService } from 'app/shared/services/app-models/clinica.service';
 import { UtilityService } from 'app/shared/services/utility.service';
@@ -11,8 +10,9 @@ import { Clinica, AdicionarClinica } from 'app/shared/models/clinica.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { EstadosService } from 'app/shared/services/uf.service';
-import { error } from 'console';
 import { FuncionarioService } from 'app/shared/services/app-models/funcionario.service';
+import { Funcionario } from 'app/shared/models/funcionario.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-clinica',
@@ -40,11 +40,18 @@ export class ClinicaComponent implements OnInit {
     private funcionarioService: FuncionarioService,
     private auth: JwtAuthService,
     private utilityService: UtilityService,
-    private ufService: EstadosService
+    private ufService: EstadosService,
+    private router: Router
     ) { }
 
   ngOnInit() {
     this.ListaClinicas();
+    this.IniciaForm();
+    this.estados = this.ufService.getEstados();
+  };
+
+  IniciaForm(){
+    
     this.clinicaForm = new UntypedFormGroup({
       nome: new UntypedFormControl('', [        
         Validators.required,
@@ -90,7 +97,7 @@ export class ClinicaComponent implements OnInit {
       numeroContato: new UntypedFormControl('',[
         Validators.required
       ]),
-      tipoContato: new UntypedFormControl(null,[
+      tipoContato: new UntypedFormControl(0,[
         Validators.required
       ]),
       email: new UntypedFormControl('',[
@@ -101,8 +108,11 @@ export class ClinicaComponent implements OnInit {
       lembretes: new UntypedFormControl(true,[]),
       simplesNacional: new UntypedFormControl(false,[]),
     })
-    this.estados = this.ufService.getEstados();
-  };
+  }
+
+  EditarClinica(id: number){
+    this.router.navigateByUrl(`editar/clinica?idClinica=${id}`);
+  }
 
   ListaClinicas(){
     this.tipoTela = 1;
@@ -114,7 +124,7 @@ export class ClinicaComponent implements OnInit {
         this.dataSource.sort = this.sort;
       },
       (error) => {
-        console.error(error);
+        this.utilityService.MostraToastr("Erro", error.message, 'erro')
       }
     )
   }
@@ -187,15 +197,35 @@ export class ClinicaComponent implements OnInit {
 
     this.clinicaService.AdicionarClinica(item)    
       .subscribe((response : any) => {
-        this.clinicaForm.reset();
+        this.clinicaForm.reset(); 
+        this.utilityService.MostraToastr('Adicionado com Sucesso', response.message, 'sucesso');
+        this.user = this.auth.getUser();
+        debugger
+        let funcionario = new Funcionario();
+        funcionario.email = this.user.displayName;
+        funcionario.idClinica = response.result.id;
+        funcionario.profissionalSaude = true;
+        funcionario.perfil = 0;
+
+        this.funcionarioService.AdicionarFuncionario(funcionario)
+          .subscribe((responseFuncionario : any) =>{
+            this.utilityService.MostraToastr('Adicionado com Sucesso', responseFuncionario.message, 'sucesso');
+          },
+          (errorFun) => {
+            this.utilityService.MostraToastr('Erro', errorFun.message, 'erro')
+          })
+
         this.ListaClinicas();
+      },
+      (error) => {
+        this.utilityService.MostraToastr('Erro ao Adicionar Clinica', error.message, 'erro')
       })
 }
 
   DeletarClinica(id: number){
     this.clinicaService.DeletarClinica(id)
       .subscribe((response: any) => {
-        
+        this.utilityService.MostraToastr('', response.message, 'aviso')
       })
   }
 
@@ -215,39 +245,40 @@ export class ClinicaComponent implements OnInit {
         this.clinicaForm.get('bairro')?.setValue('');
         this.clinicaForm.get('cidade')?.setValue('');
         this.clinicaForm.get('uf')?.setValue(null);
+        this.utilityService.MostraToastr('Erro ao buscar endereço', error.message, 'erro');
       }
     )
   };
 
   BuscaCnpj(cnpj: string){
-    // this.utilityService.BuscaCnpj(cnpj).subscribe(
-    //   (cadastro) => {
-    //     this.clinicaForm.get('nome')?.setValue(cadastro.razao_social);
-    //     this.clinicaForm.get('fantasia')?.setValue(cadastro.nome_fantasia);  
-    //     if(cadastro.simples.optante_simples === 'S')
-    //       this.clinicaForm.get('simplesNacional')?.setValue(true);
-    //     else
-    //       this.clinicaForm.get('simplesNacional')?.setValue(false);
+    this.utilityService.BuscaCnpj(cnpj).subscribe(
+      (cadastro) => {
+        this.clinicaForm.get('nome')?.setValue(cadastro.razao_social);
+        this.clinicaForm.get('fantasia')?.setValue(cadastro.nome_fantasia);  
+        if(cadastro.simples.optante_simples === 'S')
+          this.clinicaForm.get('simplesNacional')?.setValue(true);
+        else
+          this.clinicaForm.get('simplesNacional')?.setValue(false);
 
-    //     this.clinicaForm.get('logradouro')?.setValue(cadastro.endereco.logradouro);
-    //     this.clinicaForm.get('bairro')?.setValue(cadastro.endereco.bairro);
-    //     this.clinicaForm.get('cidade')?.setValue(cadastro.endereco.municipio);    
-    //     this.clinicaForm.get('cep')?.setValue(cadastro.endereco.cep);    
-    //     this.clinicaForm.get('complemento')?.setValue(cadastro.endereco.complemento);
-    //     this.clinicaForm.get('numero')?.setValue(cadastro.endereco.numero);
-    //     const estadoRetornado = this.estados.find((estado) => estado.label === cadastro.endereco.uf);
-    //     if(estadoRetornado)
-    //       this.clinicaForm.get('uf')?.setValue(estadoRetornado.value);   
+        this.clinicaForm.get('logradouro')?.setValue(cadastro.endereco.logradouro);
+        this.clinicaForm.get('bairro')?.setValue(cadastro.endereco.bairro);
+        this.clinicaForm.get('cidade')?.setValue(cadastro.endereco.municipio);    
+        this.clinicaForm.get('cep')?.setValue(cadastro.endereco.cep);    
+        this.clinicaForm.get('complemento')?.setValue(cadastro.endereco.complemento);
+        this.clinicaForm.get('numero')?.setValue(cadastro.endereco.numero);
+        const estadoRetornado = this.estados.find((estado) => estado.label === cadastro.endereco.uf);
+        if(estadoRetornado)
+          this.clinicaForm.get('uf')?.setValue(estadoRetornado.value);   
 
-    //     this.clinicaForm.get('email')?.setValue(cadastro.email);
-    //     this.clinicaForm.get('numeroContato')?.setValue(cadastro.telefone1);
-    //     this.clinicaForm.get('nomeContato')?.setValue(cadastro.nome_fantasia); 
-    //     this.clinicaForm.get('tipoContato')?.setValue('1'); 
-    //     this.clinicaForm.get('horarioComercial')?.setValue(true);
-    //   },
-    //   (error) => {
-    //     this.clinicaForm.reset();
-    //   }
-    // )
+        this.clinicaForm.get('email')?.setValue(cadastro.email);
+        this.clinicaForm.get('numeroContato')?.setValue(cadastro.telefone1);
+        this.clinicaForm.get('nomeContato')?.setValue(cadastro.nome_fantasia); 
+        this.clinicaForm.get('tipoContato')?.setValue(1); 
+        this.clinicaForm.get('horarioComercial')?.setValue(true);
+      },
+      (error) => {
+        this.utilityService.MostraToastr('Erro ao buscar CNPJ', error.message, 'erro')
+      }
+    )
   }
 }
