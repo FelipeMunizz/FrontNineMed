@@ -9,13 +9,6 @@
   <mat-icon>menu</mat-icon>
 </button>
   <span fxFlex></span>
-  <!-- Language Switcher -->
-  <mat-menu #menu="matMenu">
-  <button mat-menu-item *ngFor="let lang of availableLangs" (click)="setLang(lang)">
-        <span class="fi mr-8 fi-{{lang.flag}}"></span>
-        <span>{{lang.name}}</span>
-  </button>
-</mat-menu>
 
   <!-- Top left user menu -->
   <button
@@ -23,7 +16,7 @@
     [matMenuTriggerFor]="accountMenu"
     class="topbar-button-right"
   >
-  <mat-icon> build</mat-icon>
+  <mat-icon> settings</mat-icon>
   </button>
 
   <mat-menu #accountMenu="matMenu">
@@ -32,7 +25,7 @@
       <span>Profile</span>
     </button>
     <button mat-menu-item [routerLink]="['/profile/settings']">
-      <mat-icon>settings</mat-icon>
+      <mat-icon>settings_applications</mat-icon>
       <span>Config. Clinica</span>
     </button>
     <button mat-menu-item (click)="jwtAuth.signout()">
