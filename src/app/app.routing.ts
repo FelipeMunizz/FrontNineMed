@@ -34,12 +34,7 @@ export const rootRouterConfig: Routes = [
         path: 'cadastros',
         loadChildren: () => import('./views/cadastros/cadastros.module').then(m => m.CadastrosModule),
         data: { title: 'Cadastros', breadcrumb: 'Cadastros'}
-      },    
-      {
-        path: 'editar',
-        loadChildren: () => import('./views/editar/editar.module').then(m => m.EditarModule),
-        data: { title: 'Editar', breadcrumb: 'Editar'}
-      },     
+      }    
     ]
   },
   {

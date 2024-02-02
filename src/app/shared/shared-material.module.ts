@@ -75,7 +75,7 @@ import { MatMomentDateModule } from "@angular/material-moment-adapter";
     MatRippleModule,
     MatBadgeModule,
     MatBottomSheetModule,
-    MatDividerModule
+    MatDividerModule,
   ]
 })
 export class SharedMaterialModule {}
