@@ -6,7 +6,7 @@ import { UtilityService } from 'app/shared/services/utility.service';
 import { User } from './../../../shared/models/user.model';
 import { JwtAuthService } from 'app/shared/services/auth/jwt-auth.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { Clinica, AdicionarClinica } from 'app/shared/models/clinica.model';
+import { Clinica, AdicionarClinica, EnderecoClinica, ContatoClinica } from 'app/shared/models/clinica.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { EstadosService } from 'app/shared/services/uf.service';
@@ -30,6 +30,10 @@ export class ClinicaComponent implements OnInit {
   dataSource: MatTableDataSource<Clinica>;
   displayedColumns: string[] = ['id', 'razaoSocial', 'cnpj', 'simplesNacional', 'acoes'];
   estados: { value: number; label: string }[] = [];
+
+  clinicaEdicao: Clinica;
+  clinicaEndereco: EnderecoClinica;
+  clinicaContato: ContatoClinica;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -113,7 +117,7 @@ export class ClinicaComponent implements OnInit {
   }
 
   EditarClinica(id: number){
-    this.router.navigateByUrl(`editar/clinica?idClinica=${id}`);
+    this.tipoTela = 2
   }
 
   ListaClinicas(){
@@ -131,7 +135,7 @@ export class ClinicaComponent implements OnInit {
     )
   }
   
-  Cadastro(){
+  Salvar(){
     var dados = this.dadosForm()
     var item = new AdicionarClinica();
     item.cnpj = dados['cnpj'].value
