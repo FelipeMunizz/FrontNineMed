@@ -14,6 +14,7 @@ import { FuncionarioService } from 'app/shared/services/app-models/funcionario.s
 import { Funcionario } from 'app/shared/models/funcionario.model';
 import { Router } from '@angular/router';
 import { AppConfirmService } from 'app/shared/services/app-confirm/app-confirm.service';
+import { AppLoaderService } from 'app/shared/services/app-loader/app-loader.service';
 
 @Component({
   selector: 'app-clinica',
@@ -32,8 +33,8 @@ export class ClinicaComponent implements OnInit {
   estados: { value: number; label: string }[] = [];
 
   clinicaEdicao: Clinica;
-  clinicaEndereco: EnderecoClinica;
-  clinicaContato: ContatoClinica;
+  clinicaEnderecoEdicao: EnderecoClinica;
+  clinicaContatoEdicao: ContatoClinica;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -46,8 +47,8 @@ export class ClinicaComponent implements OnInit {
     private auth: JwtAuthService,
     private utilityService: UtilityService,
     private ufService: EstadosService,
-    private router: Router,
-    private confirmModal: AppConfirmService
+    private confirmModal: AppConfirmService,
+    private loader: AppLoaderService
     ) { }
 
   ngOnInit() {
@@ -117,7 +118,43 @@ export class ClinicaComponent implements OnInit {
   }
 
   EditarClinica(id: number){
-    this.tipoTela = 2
+    this.loader.open('Aguarde');
+    this.clinicaService.ObterClinica(id)
+    .subscribe((clinica) => {
+      this.tipoTela = 2;
+      let dados = this.dadosForm();
+      this.clinicaEdicao = clinica;
+      dados['nome'].setValue(clinica.nome);
+      dados['fantasia'].setValue(clinica.fantasia);
+      dados['cnpj'].setValue(clinica.cnpj);
+      dados['inscricaoEstadual'].setValue(clinica.inscricaoEstadual); 
+      dados['inscricaoMunicipal'].setValue(clinica.inscricaoMunicipal);
+      dados['simplesNacional'].setValue(clinica.simplesNacional ? true : false);
+
+      this.clinicaService.ListarEnderecoClinica(id)
+      .subscribe((endereco) => {
+        this.clinicaEnderecoEdicao = endereco[0];
+        dados['logradouro'].setValue(endereco[0].logradouro);
+        dados['numero'].setValue(endereco[0].numero);
+        dados['complemento'].setValue(endereco[0].complemento);
+        dados['bairro'].setValue(endereco[0].bairro);
+        dados['cep'].setValue(endereco[0].cep);
+        dados['uf'].setValue(endereco[0].estado);
+        dados['cidade'].setValue(endereco[0].cidade);
+      });
+
+      this.clinicaService.ListaContatoClinica(id)
+      .subscribe((contato) => {  
+        this.clinicaContatoEdicao = contato[0];          
+        dados['nomeContato'].setValue(contato[0].nome);
+        dados['numeroContato'].setValue(contato[0].numeroContato);
+        dados['tipoContato'].setValue(contato[0].tipoContato);
+        dados['email'].setValue(contato[0].email);
+        dados['horarioComercial'].setValue(contato[0].horarioComercial);
+        dados['lembretes'].setValue(contato[0].lembretes);
+      })
+    })
+    this.loader.close();
   }
 
   ListaClinicas(){
@@ -136,7 +173,22 @@ export class ClinicaComponent implements OnInit {
   }
   
   Salvar(){
-    var dados = this.dadosForm()
+    this.loader.open('Aguarde');
+    if(this.clinicaEdicao && this.clinicaEnderecoEdicao && this.clinicaContatoEdicao){
+      this.clinicaService.AtualizarClinica(this.clinicaEdicao)
+      .subscribe((response) => {
+        this.clinicaService.AtualizarEnderecoClinica(this.clinicaEnderecoEdicao)
+        .subscribe((response)=>{})
+        
+        this.clinicaService.AtualizarContatoClinica(this.clinicaContatoEdicao)
+        .subscribe((response) => {})
+        this.utilityService.MostraToastr('Sucesso','Clinica Atualizada com sucesso','sucesso')
+        this.ListaClinicas();
+      },(error) => {
+        this.utilityService.MostraToastr('Erro','Erro ao atualizar a clinica ' + error,'erro')
+      })      
+    }else{
+      var dados = this.dadosForm()
     var item = new AdicionarClinica();
     item.cnpj = dados['cnpj'].value
     item.razaoSocial = dados['nome'].value
@@ -186,6 +238,8 @@ export class ClinicaComponent implements OnInit {
       (error) => {
         this.utilityService.MostraToastr('Erro ao Adicionar Clinica', error.message, 'erro')
       })
+    }    
+    this.loader.close();
 }
 
   DeletarClinica(id: number){   

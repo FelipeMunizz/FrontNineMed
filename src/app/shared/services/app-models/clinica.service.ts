@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import { environment } from 'environments/environment.prod';
 import { Observable } from 'rxjs';
-import { AdicionarClinica, Clinica } from 'app/shared/models/clinica.model';
+import { AdicionarClinica, Clinica, ContatoClinica, EnderecoClinica } from 'app/shared/models/clinica.model';
 
 @Injectable({    
   providedIn: "root",
@@ -16,6 +16,12 @@ export class ClinicaService{
     //Lista Clinicas do usuario
     public ListaClinicasUsuario(email: string): Observable<any> {
       const url = `${this.baseUrl}/Clinica/ListaClinicasUsuario?email=${email}`;
+      return this.httpClient.get<any>(url);
+    }
+
+    //Obtem Clinica 
+    public ObterClinica(idClinica: number){
+      const url = `${this.baseUrl}/Clinica/ObterClinica/${idClinica}`;
       return this.httpClient.get<any>(url);
     }
 
@@ -35,5 +41,29 @@ export class ClinicaService{
     public DeletarClinica(id: number): Observable<any>{
       const url = `${this.baseUrl}/Clinica/DeletarClinica/${id}`;
       return this.httpClient.delete<any>(url)
+    }
+
+    //Listar Endereco Clinica
+    public ListarEnderecoClinica(idClinica: number){
+      const url = `${this.baseUrl}/Clinica/ListaEnderecosClinica/${idClinica}`;
+      return this.httpClient.get<any>(url);
+    }
+
+    //Atualizar Endereco Clinica
+    public AtualizarEnderecoClinica(item: EnderecoClinica){
+      const url = `${this.baseUrl}/Clinica/AtualizarEnderecoClinica`;
+      return this.httpClient.put<any>(url, item);
+    }
+
+    //Listar Contatos Clinica
+    public ListaContatoClinica(idClinica: number){
+      const url = `${this.baseUrl}/Clinica/ListaContatoClinica/${idClinica}`;
+      return this.httpClient.get<any>(url);
+    }
+
+    //Atualizar Contato Clinica
+    public AtualizarContatoClinica(item: ContatoClinica){
+      const url = `${this.baseUrl}/Clinica/AtualizarContatoClinica`;
+      return this.httpClient.put<any>(url, item);
     }
 }
