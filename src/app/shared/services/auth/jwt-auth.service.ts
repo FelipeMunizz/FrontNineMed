@@ -36,7 +36,6 @@ export class JwtAuthService {
     return this.http.post(`${environment.apiURL}/Account/CreateToken`, { email, password })
       .pipe(
         map((res: any) => {
-          debugger
           this.user = new User();
           this.user.displayName = res.email;
           this.setUserAndToken(res.token, this.user, !!res);

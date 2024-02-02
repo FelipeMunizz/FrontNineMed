@@ -13,6 +13,7 @@ import { EstadosService } from 'app/shared/services/uf.service';
 import { FuncionarioService } from 'app/shared/services/app-models/funcionario.service';
 import { Funcionario } from 'app/shared/models/funcionario.model';
 import { Router } from '@angular/router';
+import { AppConfirmService } from 'app/shared/services/app-confirm/app-confirm.service';
 
 @Component({
   selector: 'app-clinica',
@@ -41,7 +42,8 @@ export class ClinicaComponent implements OnInit {
     private auth: JwtAuthService,
     private utilityService: UtilityService,
     private ufService: EstadosService,
-    private router: Router
+    private router: Router,
+    private confirmModal: AppConfirmService
     ) { }
 
   ngOnInit() {
@@ -128,47 +130,7 @@ export class ClinicaComponent implements OnInit {
       }
     )
   }
-
-  TelaCadastro(){
-    this.tipoTela = 2;
-    this.clinicaForm.reset();
-  }
-
-  onKeyPress(event: any): void {
-    const keyCode = event.keyCode;
-    if ((keyCode < 48 || keyCode > 57) && keyCode !== 8) {
-      event.preventDefault();
-    }
-  }
-  onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
-
-    if (file) {
-      if (this.isImageFile(file)) {
-        const reader = new FileReader();
-
-        reader.onloadend = () => {
-          this.logoBase64 = reader.result as string;
-        };
-
-        reader.readAsDataURL(file);
-      } else {
-        this.snac.open('Por favor, selecione um arquivo de imagem válido.','',{duration: 3000});
-      }
-    }
-  }
-
-  private isImageFile(file: File): boolean {
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    const fileType = file.type;
-
-    return allowedTypes.includes(fileType);
-  }  
-
-  dadosForm(){
-    return this.clinicaForm.controls
-  }
-
+  
   Cadastro(){
     var dados = this.dadosForm()
     var item = new AdicionarClinica();
@@ -222,11 +184,58 @@ export class ClinicaComponent implements OnInit {
       })
 }
 
-  DeletarClinica(id: number){
-    this.clinicaService.DeletarClinica(id)
-      .subscribe((response: any) => {
-        this.utilityService.MostraToastr('', response.message, 'aviso')
+  DeletarClinica(id: number){   
+    this.confirmModal.confirm({title: 'Confirme', message: 'Tem certeza que deseja deletar a clinica?'})
+    .subscribe((retorno) => {
+      if(retorno){
+        this.clinicaService.DeletarClinica(id)
+        .subscribe((response: any) => {
+          this.utilityService.MostraToastr('', response.message, 'aviso')
       })
+      }
+    })    
+  }
+
+  TelaCadastro(){
+    this.tipoTela = 2;
+    this.clinicaForm.reset();
+  }
+
+  //Metodos Auxiliares
+
+  onKeyPress(event: any): void {
+    const keyCode = event.keyCode;
+    if ((keyCode < 48 || keyCode > 57) && keyCode !== 8) {
+      event.preventDefault();
+    }
+  }
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+
+    if (file) {
+      if (this.isImageFile(file)) {
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+          this.logoBase64 = reader.result as string;
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        this.snac.open('Por favor, selecione um arquivo de imagem válido.','',{duration: 3000});
+      }
+    }
+  }
+
+  private isImageFile(file: File): boolean {
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    const fileType = file.type;
+
+    return allowedTypes.includes(fileType);
+  }  
+
+  dadosForm(){
+    return this.clinicaForm.controls
   }
 
   BuscaEndereco(cep: string){
@@ -275,9 +284,6 @@ export class ClinicaComponent implements OnInit {
         this.clinicaForm.get('nomeContato')?.setValue(cadastro.nome_fantasia); 
         this.clinicaForm.get('tipoContato')?.setValue(1); 
         this.clinicaForm.get('horarioComercial')?.setValue(true);
-      },
-      (error) => {
-        this.utilityService.MostraToastr('Erro ao buscar CNPJ', error.message, 'erro')
       }
     )
   }
