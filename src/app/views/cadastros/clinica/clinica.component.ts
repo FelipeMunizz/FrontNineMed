@@ -12,7 +12,6 @@ import { MatSort } from '@angular/material/sort';
 import { EstadosService } from 'app/shared/services/uf.service';
 import { FuncionarioService } from 'app/shared/services/app-models/funcionario.service';
 import { Funcionario } from 'app/shared/models/funcionario.model';
-import { Router } from '@angular/router';
 import { AppConfirmService } from 'app/shared/services/app-confirm/app-confirm.service';
 import { AppLoaderService } from 'app/shared/services/app-loader/app-loader.service';
 
