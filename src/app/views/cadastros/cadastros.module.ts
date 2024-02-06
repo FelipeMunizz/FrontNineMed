@@ -24,6 +24,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PacienteComponent } from './paciente/paciente.component';
 import { FuncionarioComponent } from './funcionario/funcionario.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { EnderecoClinicaModalComponent } from './clinica/modals/endereco-clinica.modal.component';
+import { ClinicaModalComponent } from './clinica/modals/clinica.modal.component';
+import { ContatoClinicaModalComponent } from './clinica/modals/contato-clinica.modal.component';
 
 
 @NgModule({
@@ -49,8 +53,16 @@ import { FuncionarioComponent } from './funcionario/funcionario.component';
     QuillModule.forRoot(),
     FileUploadModule,
     RouterModule.forChild(CadastrosRoutes),
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule
   ],
-  declarations: [ClinicaComponent, PacienteComponent, FuncionarioComponent],
+  declarations: [
+    ClinicaComponent,
+    ClinicaModalComponent,
+    EnderecoClinicaModalComponent,
+    ContatoClinicaModalComponent,
+    PacienteComponent, 
+    FuncionarioComponent
+  ],
 })
 export class CadastrosModule {}

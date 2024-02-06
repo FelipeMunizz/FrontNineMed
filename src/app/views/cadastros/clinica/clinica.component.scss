@@ -1,12 +1,43 @@
-.margin-toggle{
+.margin-toggle {
     margin: 10px;
 }
 
-.btn-card{
+.btn-card {
     padding: 0px 10px 0px 10px;
     margin: 25px;
 }
 
 table {
     width: 100%;
+}
+
+.image-card-clinica {
+    max-width: 300px;
+    padding: 10px;
+}
+
+.card {
+    border: none;
+}
+
+.row-card {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.card-title {
+    padding: 10px;
+}
+
+.btn-collapse {
+    border: none;
+    padding: 10px 10px 10px 0px;
+}
+
+.collapse-arrow {
+    transition: transform 0.3s ease;
+}
+
+.open {
+    transform: rotate(90deg);
 }
