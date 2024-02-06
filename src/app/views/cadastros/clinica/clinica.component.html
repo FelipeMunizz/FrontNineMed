@@ -2,172 +2,335 @@
     <mat-card-title class="">
         <mat-divider></mat-divider>
     </mat-card-title>
-    <div class="demo-button-container" *ngIf="tipoTela == 1">
-        <button mat-raised-button color="primary" class="btn-card" (click)="TelaCadastro()">
-          Adicionar Clinica
-        </button>
+    <div class="row row-card" *ngIf="listaClinicas.length < 4">
+        <div class="demo-button-container" *ngIf="tipoTela == 1">
+            <button mat-raised-button color="primary" class="btn-card" (click)="TelaCadastro()">
+                Adicionar Clinica
+            </button>
+        </div>
+        <div class="demo-button-container" *ngIf="tipoTela == 2">
+            <button mat-raised-button color="primary" class="btn-card" (click)="ListaClinicas()">
+                Listar Clinicas
+            </button>
+        </div>
     </div>
-    <div class="demo-button-container" *ngIf="tipoTela == 2">
-        <button mat-raised-button color="primary" class="btn-card" (click)="ListaClinicas()">
-          Listar Clinicas
-        </button>
-    </div>
-
+    <!--Accordion Lista Clinica-->
     <mat-card-content *ngIf="tipoTela == 1">
         <div fxLayout="row wrap">
             <div fxFlex="100" fxFlex.gt-xs="100">
                 <div class="mat-elevation-z8">
-                    <table mat-table [dataSource]="dataSource" matSort>
-                      <!-- ID Column -->
-                      <ng-container  matColumnDef="id">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Cod. Clinica</th>
-                        <td mat-cell *matCellDef="let row">{{ row.id }}</td>
-                      </ng-container>
-                  
-                      <!-- Razão Social Column -->
-                      <ng-container matColumnDef="razaoSocial">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Razão Social</th>
-                        <td mat-cell *matCellDef="let row">{{ row.razaoSocial }}</td>
-                      </ng-container>
-                  
-                      <!-- CNPJ Column -->
-                      <ng-container matColumnDef="cnpj">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>CNPJ</th>
-                        <td mat-cell *matCellDef="let row">{{ row.cnpj }}</td>
-                      </ng-container>
-                  
-                      <!-- Simples Nacional Column -->
-                      <ng-container matColumnDef="simplesNacional">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Simples Nacional</th>
-                        <td mat-cell *matCellDef="let row">
-                            <mat-slide-toggle
-                                class="margin-toggle"
-                                [color]="color"
-                                [checked]="row.simplesNacional"
-                                disabled>                                
-                            </mat-slide-toggle>
-                        </td>
-                      </ng-container>
+                    <div class="accordion" id="accordion-clinica">
+                        <div *ngFor="let clinica of listaClinicas; let i = index" class="accordion-item">
+                            <input type="hidden" #idClinica value="{{clinica.id}}">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" [class.collapsed]="!isAccordionOpen[i]"
+                                    (click)="toggleAccordion(i)">
+                                    {{clinica.id}} - {{clinica.razaoSocial}}
+                                </button>
+                            </h2>
+                            <div id="accordion-item-{{i}}" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                                            <div class="card" style="width: 50rem;">
+                                                <img [src]="SanitizeImage(clinica.logo)" alt=""
+                                                    class="car-img-top image-card-clinica" />
+                                                <h3 class="card-title">{{clinica.fantasia}}</h3>
+                                                <mat-divider></mat-divider>
+                                                <div class="card-content">
+                                                    <div class="container cnt-dados-empresa">
+                                                        <div class="row row-card">
+                                                            <div class="col col-lg-6 col-md-6 col sm-12">
+                                                                Documento:
+                                                                <strong><span>{{clinica.cnpj}}</span></strong>
+                                                            </div>
+                                                            <div class="col col-lg-4 col-md-4 col sm-12">
+                                                                <mat-slide-toggle [checked]="clinica.simplesNacional"
+                                                                    style="opacity: 1;" disabled>Silpes
+                                                                    Nascional</mat-slide-toggle>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row row-card">
+                                                            <div class="col col-lg-6 col-md-6 col sm-12">
+                                                                Inscrição Municipal:
+                                                                <strong><span>{{clinica.inscricaoMunicipal}}</span></strong>
+                                                            </div>
+                                                            <div class="col col-lg-4 col-md-4 col sm-12">
+                                                                Inscrição Estadual:
+                                                                <strong><span>{{clinica.inscricaoEstadual}}</span></strong>
+                                                            </div>
+                                                            <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                                <a matTooltip="Atualizar Clinica"
+                                                                    matTooltipPosition="below"
+                                                                    (click)="openClinicaModal(clinica)">
+                                                                    <mat-icon style="color: blue;">edit</mat-icon>
+                                                                </a>
+                                                            </div>
+                                                            <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                                <a matTooltip="Deletar Clinica"
+                                                                    matTooltipPosition="below"
+                                                                    (click)="DeletarClinica(clinica.id)">
+                                                                    <mat-icon style="color: red;">delete</mat-icon>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <mat-divider></mat-divider>
+                                                    <div class="container cnt-dados-endereco">
+                                                        <div class="row row-card">
+                                                            <div class="col col-lg-12 col-md-12 col-sm-12">
+                                                                <a class="btn-collapse" data-bs-toggle="collapse"
+                                                                    role="button" aria-expanded="false"
+                                                                    href="#collapse-endereco-{{i}}"
+                                                                    aria-controls="collapse-endereco-{{i}}"
+                                                                    (click)="toggleCollapse(i, 'endereco')">
+                                                                    <mat-icon class="collapse-arrow" id="arrow-{{i}}">{{
+                                                                        isCollapsed[i] ? 'expand_more' : 'chevron_right'
+                                                                        }}</mat-icon>
+                                                                    <strong class="card-title">Endereço</strong>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row row-card" id="collapse-endereco-{{i}}"
+                                                            [ngClass]="{'collapse': !isCollapsed[i], 'show': isCollapsed[i]}">
+                                                            <div *ngFor="let endereco of listaEnderecoClinica">
+                                                                <div *ngIf="endereco.idClinica === clinica.id">
 
-                      <ng-container matColumnDef="acoes">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ações</th>
-                        <td mat-cell *matCellDef="let row">
-                            <a matTooltip="Editar" (click)="EditarClinica(row.id)">
-                                <mat-icon>edit</mat-icon>
-                            </a>
-                            &nbsp;
-                            <a matTooltip="Deletar" (click)="DeletarClinica(row.id)">
-                                <mat-icon>delete</mat-icon>
-                            </a>
-                        </td>
-                      </ng-container>
-                  
-                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-                    </table>      
-                    <mat-paginator [pageSizeOptions]="[5, 10, 20, 100]" showFirstLastButtons></mat-paginator>
-                </div>          
+                                                                    <input type="hidden" id="idClinica{{clinica.id}}"
+                                                                        value="{{clinica.id}}" />
+                                                                    <div class="row row-card">
+                                                                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                                            Logradouro: <span><strong>{{
+                                                                                    endereco.logradouro
+                                                                                    }}</strong></span>
+                                                                        </div>
+                                                                        <div class="col col-lg-2 col-md-2 col-sm-12">
+                                                                            N°: <span><strong>{{ endereco.numero
+                                                                                    }}</strong></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row row-card">
+                                                                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                                            Complemento: <span><strong>{{
+                                                                                    endereco.complemento
+                                                                                    }}</strong></span>
+                                                                        </div>
+                                                                        <div class="col col-lg-2 col-md-2 col-sm-12">
+                                                                            CEP: <span><strong>{{ endereco.cep
+                                                                                    }}</strong></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row row-card">
+                                                                        <div class="col col-lg-4 col-md-4 col-sm-12">
+                                                                            Cidade: <span><strong>{{ endereco.cidade
+                                                                                    }}</strong></span>
+                                                                        </div>
+                                                                        <div class="col col-lg-2 col-md-2 col-sm-12">
+                                                                            UF: <span><strong>{{
+                                                                                    SetValorEnum(endereco.estado, 'uf')
+                                                                                    }}</strong></span>
+                                                                        </div>
+                                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                                            <a matTooltip="Atualizar endereço"
+                                                                                matTooltipPosition="below"
+                                                                                (click)="openEnderecoModal(null, endereco)">
+                                                                                <mat-icon
+                                                                                    style="color: blue;">edit</mat-icon>
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                                            <a matTooltip="Deletar endereço"
+                                                                                matTooltipPosition="below"
+                                                                                (click)="DeletarEnderecoClinica(endereco.id)">
+                                                                                <mat-icon
+                                                                                    style="color: red;">delete</mat-icon>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <mat-divider></mat-divider>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row row-card">
+                                                                <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                                    <a matTooltip="Adicionar novo endereço"
+                                                                        matTooltipPosition="below"
+                                                                        (click)="openEnderecoModal(clinica.id)">
+                                                                        <mat-icon style="color: blue;">add</mat-icon>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <mat-divider></mat-divider>
+                                                    <div class="container cnt-dados-contato">
+                                                        <div class="row row-card">
+                                                            <div class="col col-lg-12 col-md-12 col-sm-12">
+                                                                <a class="btn-collapse" data-bs-toggle="collapse"
+                                                                    role="button" aria-expanded="false"
+                                                                    href="#collapse-contato-{{i}}"
+                                                                    aria-controls="collapse-contato-{{i}}"
+                                                                    (click)="toggleCollapse(i, 'contato')">
+                                                                    <mat-icon class="collapse-arrow" id="arrow-{{i}}">{{
+                                                                        isCollapsedContato[i] ? 'expand_more' :
+                                                                        'chevron_right' }}</mat-icon>
+                                                                    <strong class="card-title">Contato</strong>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row row-card" id="collapse-contato-{{i}}"
+                                                            [ngClass]="{'collapse': !isCollapsedContato[i], 'show': isCollapsedContato[i]}">
+                                                            <div *ngFor="let contato of listaContatoClinica">
+                                                                <div *ngIf="contato.idClinica === clinica.id">
+                                                                    <div class="row row-card">
+                                                                        <div class="col col-lg-12 col-md-12 col-sm-12">
+                                                                            <h3>{{contato.nome}}</h3>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row row-card">
+                                                                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                                            Número:
+                                                                            <span><strong>{{contato.numeroContato}}</strong></span>
+                                                                        </div>
+                                                                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                                            Email:
+                                                                            <span><strong>{{contato.email}}</strong></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row row-card">
+                                                                        <div class="col col-lg-4 col-md-4 col-sm-12">
+                                                                            Tipo Contato:
+                                                                            <span><strong>{{SetValorEnum(contato.tipoContato,
+                                                                                    'contato')}}</strong></span>
+                                                                        </div>
+                                                                        <div class="col col-lg-3 col-md-3 col-sm-12">
+                                                                            <mat-slide-toggle style="opacity: 1;"
+                                                                                [checked]="contato.horarioComercial"
+                                                                                disabled>Horario
+                                                                                Comercial</mat-slide-toggle>
+                                                                        </div>
+                                                                        <div class="col col-lg-3 col-md-3 col-sm-12">
+                                                                            <mat-slide-toggle style="opacity: 1;"
+                                                                                [checked]="contato.lembretes"
+                                                                                disabled>Lembretes</mat-slide-toggle>
+                                                                        </div>
+                                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                                            <a matTooltip="Atualizar contato"
+                                                                                matTooltipPosition="below"
+                                                                                (click)="openContatoModal(null, contato)">
+                                                                                <mat-icon
+                                                                                    style="color: blue;">edit</mat-icon>
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                                            <a matTooltip="Deletar contato"
+                                                                                matTooltipPosition="below"
+                                                                                (click)="DeletarContatoClinica(contato.id)">
+                                                                                <mat-icon
+                                                                                    style="color: red;">delete</mat-icon>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <mat-divider></mat-divider>
+                                                            <div class="row row-card">
+                                                                <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                                    <a matTooltip="Adicionar novo contato"
+                                                                        matTooltipPosition="below"
+                                                                        (click)="openContatoModal(clinica.id)">
+                                                                        <mat-icon style="color: blue;">add</mat-icon>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </mat-card-content>   
-    
+    </mat-card-content>
+
+    <!--Formulario Cadastro-->
     <mat-card-content *ngIf="tipoTela == 2">
-        <form [formGroup]="clinicaForm" (ngSubmit)="Salvar()" >
+        <form [formGroup]="clinicaForm" (ngSubmit)="Salvar()">
             <mat-card>
                 <mat-card-title>
-                    Dados Empresa         
+                    Dados Empresa
                 </mat-card-title>
                 <mat-card-content>
                     <div class="row">
                         <div class="col col-lg-6 col-md-6 col-sm-6">
                             <mat-form-field class="full-width">
-                                <input
-                                matInput
-                                name="nome"
-                                formControlName="nome"
-                                placeholder="Razão Social"
-                                value="">
+                                <input matInput name="nome" formControlName="nome" placeholder="Razão Social" value="">
                             </mat-form-field>
-                            <small 
-                            *ngIf="clinicaForm.controls['nome'].hasError('minlength') && clinicaForm.controls['nome'].touched" 
-                            class="form-error-msg"> A razão social deve conter no minimo:  {{basicForm.controls['nome'].errors.minlength.requiredLength}} caracteres </small>
-                            <small 
-                            *ngIf="clinicaForm.controls['nome'].hasError('maxlength') && clinicaForm.controls['nome'].touched" 
-                            class="form-error-msg"> A razão social deve conter no maximo: {{clinicaForm.controls['nome'].errors.maxlength.requiredLength}} caracteres </small>
+                            <small
+                                *ngIf="clinicaForm.controls['nome'].hasError('minlength') && clinicaForm.controls['nome'].touched"
+                                class="form-error-msg"> A razão social deve conter no minimo:
+                                {{basicForm.controls['nome'].errors.minlength.requiredLength}} caracteres </small>
+                            <small
+                                *ngIf="clinicaForm.controls['nome'].hasError('maxlength') && clinicaForm.controls['nome'].touched"
+                                class="form-error-msg"> A razão social deve conter no maximo:
+                                {{clinicaForm.controls['nome'].errors.maxlength.requiredLength}} caracteres </small>
                         </div>
                         <div class="col col-lg-6 col-md-6 col-sm-6">
                             <mat-form-field class="full-width">
-                                <input
-                                matInput
-                                name="fantasia"
-                                formControlName="fantasia"
-                                placeholder="Nome Fantasia"
-                                value="">
+                                <input matInput name="fantasia" formControlName="fantasia" placeholder="Nome Fantasia"
+                                    value="">
                             </mat-form-field>
                         </div>
                     </div>
-        
+
                     <div class="row">
                         <div class="col col-lg-4 col-md-4 col-sm-12">
                             <mat-form-field class="full-width">
-                                <input                             
-                                matInput
-                                name="cnpj"
-                                formControlName="cnpj"                            
-                                placeholder="CNPJ"
-                                value=""
-                                #cnpj
-                                (keypress)="onKeyPress($event)"
-                                (blur)="BuscaCnpj(cnpj.value)"
-                                >
+                                <input matInput name="cnpj" formControlName="cnpj" placeholder="CNPJ" value="" #cnpj
+                                    (keypress)="onKeyPress($event)" (blur)="BuscaCnpj(cnpj.value)">
                             </mat-form-field>
-                            <small 
-                            *ngIf="clinicaForm.controls['cnpj'].hasError('maxlength') && clinicaForm.controls['cnpj'].touched" 
-                            class="form-error-msg"> A Inscrição Municipal deve conter no maximo: {{clinicaForm.controls['cnpj'].errors.maxlength.requiredLength}} caracteres </small>
+                            <small
+                                *ngIf="clinicaForm.controls['cnpj'].hasError('maxlength') && clinicaForm.controls['cnpj'].touched"
+                                class="form-error-msg"> A Inscrição Municipal deve conter no maximo:
+                                {{clinicaForm.controls['cnpj'].errors.maxlength.requiredLength}} caracteres </small>
                         </div>
                         <div class="col col-lg-4 col-md-4 col-sm-12">
                             <mat-form-field class="full-width">
-                                <input                             
-                                matInput
-                                name="inscricaoMunicipal"
-                                formControlName="inscricaoMunicipal"                            
-                                placeholder="Inscrição Municipal"
-                                value=""
-                                (keypress)="onKeyPress($event)"
-                                >
+                                <input matInput name="inscricaoMunicipal" formControlName="inscricaoMunicipal"
+                                    placeholder="Inscrição Municipal" value="" (keypress)="onKeyPress($event)">
                             </mat-form-field>
-                            <small 
-                            *ngIf="clinicaForm.controls['inscricaoMunicipal'].hasError('maxlength') && clinicaForm.controls['inscricaoMunicipal'].touched" 
-                            class="form-error-msg"> A Inscrição Municipal deve conter no maximo: {{clinicaForm.controls['inscricaoMunicipal'].errors.maxlength.requiredLength}} caracteres </small>
+                            <small
+                                *ngIf="clinicaForm.controls['inscricaoMunicipal'].hasError('maxlength') && clinicaForm.controls['inscricaoMunicipal'].touched"
+                                class="form-error-msg"> A Inscrição Municipal deve conter no maximo:
+                                {{clinicaForm.controls['inscricaoMunicipal'].errors.maxlength.requiredLength}}
+                                caracteres </small>
                         </div>
                         <div class="col col-lg-4 col-md-4 col-sm-12">
                             <mat-form-field class="full-width">
-                                <input 
-                                matInput
-                                name="inscricaoEstadual"
-                                formControlName="inscricaoEstadual"                            
-                                placeholder="Inscrição Estadual"
-                                value=""
-                                (keypress)="onKeyPress($event)"
-                                >
+                                <input matInput name="inscricaoEstadual" formControlName="inscricaoEstadual"
+                                    placeholder="Inscrição Estadual" value="" (keypress)="onKeyPress($event)">
                             </mat-form-field>
-                            <small 
-                            *ngIf="clinicaForm.controls['inscricaoEstadual'].hasError('maxlength') && clinicaForm.controls['inscricaoEstadual'].touched" 
-                            class="form-error-msg"> A Inscrição Estadual deve conter no maximo: {{clinicaForm.controls['inscricaoEstadual'].errors.maxlength.requiredLength}} caracteres </small>
+                            <small
+                                *ngIf="clinicaForm.controls['inscricaoEstadual'].hasError('maxlength') && clinicaForm.controls['inscricaoEstadual'].touched"
+                                class="form-error-msg"> A Inscrição Estadual deve conter no maximo:
+                                {{clinicaForm.controls['inscricaoEstadual'].errors.maxlength.requiredLength}} caracteres
+                            </small>
                         </div>
                     </div>
-        
+
                     <div class="row">
                         <div class="col col-lg-2 col-md-2 col-sm-12">
-                                <mat-checkbox
-                                    name="simplesNacional"
-                                    formControlName="simplesNacional" 
-                                    class="pb-16">Simples Nacional
-                                </mat-checkbox>
+                            <mat-checkbox name="simplesNacional" formControlName="simplesNacional" class="pb-16">Simples
+                                Nacional
+                            </mat-checkbox>
                         </div>
                         <div class="col col-lg-10 col-md-10 col-sm-12">
                             <mat-label>Envie seu Logo</mat-label>
-                                <input type="file" class="margin-toggle" (change)="onFileSelected($event)">
+                            <input type="file" class="margin-toggle" (change)="onFileSelected($event)">
                         </div>
                     </div>
                 </mat-card-content>
@@ -181,58 +344,36 @@
                     <div class="row">
                         <div class="col col-lg-3 col-md-3 col-sm-12">
                             <mat-form-field class="full-width">
-                                <input
-                                matInput
-                                name="cep"
-                                formControlName="cep"
-                                placeholder="CEP (apenas texto)"
-                                value=""
-                                #cepInput
-                                (blur)="BuscaEndereco(cepInput.value)"
-                                (keypress)="onKeyPress($event)">
+                                <input matInput name="cep" formControlName="cep" placeholder="CEP (apenas texto)"
+                                    value="" #cepInput (blur)="BuscaEndereco(cepInput.value)"
+                                    (keypress)="onKeyPress($event)">
                             </mat-form-field>
-                            <small 
-                            *ngIf="clinicaForm.controls['cep'].hasError('maxlength') && clinicaForm.controls['cep'].touched" 
-                            class="form-error-msg"> O CEP deve conter no maximo: {{clinicaForm.controls['cep'].errors.maxlength.requiredLength}} caracteres </small>
+                            <small
+                                *ngIf="clinicaForm.controls['cep'].hasError('maxlength') && clinicaForm.controls['cep'].touched"
+                                class="form-error-msg"> O CEP deve conter no maximo:
+                                {{clinicaForm.controls['cep'].errors.maxlength.requiredLength}} caracteres </small>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col col-lg-6 col-md-6 col-sm-12">
                             <mat-form-field class="full-width">
-                                <input
-                                matInput
-                                name="logradouro"
-                                formControlName="logradouro"
-                                placeholder="Endereço"
-                                value="">
+                                <input matInput name="logradouro" formControlName="logradouro" placeholder="Endereço"
+                                    value="">
                             </mat-form-field>
-                            <small 
-                            *ngIf="clinicaForm.controls['logradouro'].touched" 
-                            class="form-error-msg"> </small>
+                            <small *ngIf="clinicaForm.controls['logradouro'].touched" class="form-error-msg"> </small>
                         </div>
 
                         <div class="col col-lg-2 col-md-2 col-sm-12">
                             <mat-form-field class="full-width">
-                                <input
-                                matInput
-                                name="numero"
-                                formControlName="numero"
-                                placeholder="Número"
-                                value="">
+                                <input matInput name="numero" formControlName="numero" placeholder="Número" value="">
                             </mat-form-field>
-                            <small 
-                            *ngIf="clinicaForm.controls['numero'].touched" 
-                            class="form-error-msg"> </small>
+                            <small *ngIf="clinicaForm.controls['numero'].touched" class="form-error-msg"> </small>
                         </div>
                         <div class="col col-lg-4 col-md-4 col-sm-12">
                             <mat-form-field class="full-width">
-                                <input
-                                matInput
-                                name="complemento"
-                                formControlName="complemento"
-                                placeholder="Complemento"
-                                value="">
+                                <input matInput name="complemento" formControlName="complemento"
+                                    placeholder="Complemento" value="">
                             </mat-form-field>
                         </div>
                     </div>
@@ -240,40 +381,27 @@
                     <div class="row">
                         <div class="col col-lg-4 col-md-4 col-sm-2">
                             <mat-form-field class="full-width">
-                                <input
-                                matInput
-                                name="bairro"
-                                formControlName="bairro"
-                                placeholder="Bairro"
-                                value="">
+                                <input matInput name="bairro" formControlName="bairro" placeholder="Bairro" value="">
                             </mat-form-field>
-                            <small 
-                            *ngIf="clinicaForm.controls['bairro'].touched" 
-                            class="form-error-msg"> </small>
+                            <small *ngIf="clinicaForm.controls['bairro'].touched" class="form-error-msg"> </small>
                         </div>
 
                         <div class="col col-lg-4 col-md-4 col-sm-2">
                             <mat-form-field class="full-width">
-                                <input
-                                matInput
-                                name="cidade"
-                                formControlName="cidade"
-                                placeholder="Ciddade"
-                                value="">
+                                <input matInput name="cidade" formControlName="cidade" placeholder="Ciddade" value="">
                             </mat-form-field>
-                            <small 
-                            *ngIf="clinicaForm.controls['cidade'].touched" 
-                            class="form-error-msg"> </small>
+                            <small *ngIf="clinicaForm.controls['cidade'].touched" class="form-error-msg"> </small>
                         </div>
 
                         <div class="col col-lg-4 col-md-4 col-sm-2">
                             <mat-form-field class="full-width">
                                 <mat-label>Estado</mat-label>
                                 <select matNativeControl formControlName="uf" class="form-select">
-                                  <option class="dropdown-item" *ngFor="let estado of estados" [value]="estado.value">{{ estado.label }}</option>
+                                    <option class="dropdown-item" *ngFor="let estado of estados" [value]="estado.value">
+                                        {{ estado.label }}</option>
                                 </select>
-                              </mat-form-field>
-                              <small *ngIf="clinicaForm.controls['uf'].touched" class="form-error-msg"> </small>
+                            </mat-form-field>
+                            <small *ngIf="clinicaForm.controls['uf'].touched" class="form-error-msg"> </small>
                         </div>
                     </div>
                 </mat-card-content>
@@ -287,75 +415,52 @@
                     <div class="row">
                         <div class="col col-lg-4 col-md-4 col-sm-12">
                             <mat-form-field class="full-width">
-                                <input
-                                matInput
-                                name="nomeContato"
-                                formControlName="nomeContato"
-                                placeholder="Nome Contato"
-                                value="">
+                                <input matInput name="nomeContato" formControlName="nomeContato"
+                                    placeholder="Nome Contato" value="">
                             </mat-form-field>
-                            <small 
-                            *ngIf="clinicaForm.controls['nomeContato'].touched" 
-                            class="form-error-msg"> </small>
+                            <small *ngIf="clinicaForm.controls['nomeContato'].touched" class="form-error-msg"> </small>
                         </div>
                         <div class="col col-lg-4 col-md-4 col-sm-12">
                             <mat-form-field class="full-width">
-                                <input
-                                matInput
-                                name="numeroContato"
-                                formControlName="numeroContato"
-                                placeholder="Número Contato"
-                                value=""
-                                (keypress)="onKeyPress($event)">
+                                <input matInput name="numeroContato" formControlName="numeroContato"
+                                    placeholder="Número Contato" value="" (keypress)="onKeyPress($event)">
                             </mat-form-field>
-                            <small 
-                            *ngIf="clinicaForm.controls['numeroContato'].touched" 
-                            class="form-error-msg"> </small>
+                            <small *ngIf="clinicaForm.controls['numeroContato'].touched" class="form-error-msg">
+                            </small>
                         </div>
                         <div class="col col-lg-4 col-md-4 col-sm-12">
                             <mat-form-field class="full-width">
                                 <mat-label>Tipo de Contato</mat-label>
                                 <select matNativeControl formControlName="tipoContato" class="dorpdown-menu">
-                                  <option value="0">Residêncial</option>
-                                  <option value="1">Comercial</option>
-                                  <option value="2">Outro</option>
+                                    <option value="0">Residêncial</option>
+                                    <option value="1">Comercial</option>
+                                    <option value="2">Outro</option>
                                 </select>
-                              </mat-form-field>
-                              <small *ngIf="clinicaForm.controls['uf'].touched" class="form-error-msg"> </small>
-                        </div>                        
+                            </mat-form-field>
+                            <small *ngIf="clinicaForm.controls['tipoContato'].touched" class="form-error-msg"> </small>
+                        </div>
                     </div>
 
                     <div class="row">
                         <div class="col col-lg-6 col-md-6 col-sm-12">
                             <mat-form-field class="full-width">
-                                <input
-                                matInput
-                                name="email"
-                                formControlName="email"
-                                placeholder="Email"
-                                value="">
+                                <input matInput name="email" formControlName="email" placeholder="Email" value="">
                             </mat-form-field>
-                            <small 
-                            *ngIf="clinicaForm.controls['email'].touched" 
-                            class="form-error-msg"> </small>
+                            <small *ngIf="clinicaForm.controls['email'].touched" class="form-error-msg"> </small>
                         </div>
                         <div class="col col-lg-3 col-md-3 col-sm-12">
-                                <mat-checkbox
-                                    name="horarioComercial"
-                                    formControlName="horarioComercial" 
-                                    class="pb-16">Horário Comercial
-                                </mat-checkbox>
+                            <mat-checkbox name="horarioComercial" formControlName="horarioComercial"
+                                class="pb-16">Horário Comercial
+                            </mat-checkbox>
                         </div>
                         <div class="col col-lg-3 col-md-3 col-sm-12">
-                            <mat-checkbox
-                                name="lembretes"
-                                formControlName="lembretes" 
+                            <mat-checkbox name="lembretes" formControlName="lembretes"
                                 class="pb-16">Lembretes</mat-checkbox>
                         </div>
                     </div>
                 </mat-card-content>
             </mat-card>
-            
+
             <div class="row">
                 <div class="col align-self-end">
                     <input type="submit" class="btn btn-primary btn-clinica-submit" value="Salvar">

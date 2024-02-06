@@ -27,6 +27,7 @@ export class AdicionarClinica{
 export class Clinica {
   id: number;
   nome: string;
+  razaoSocial: string;
   cnpj: string;
   fantasia: string;
   inscricaoEstadual: string;

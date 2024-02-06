@@ -16,10 +16,10 @@ import { SharedDirectivesModule } from './directives/shared-directives.module';
 
 @NgModule({
   imports: [
-  CommonModule,
+    CommonModule,
     SharedComponentsModule,
     SharedPipesModule,
-    SharedDirectivesModule    
+    SharedDirectivesModule
   ],
   providers: [
     ThemeService,

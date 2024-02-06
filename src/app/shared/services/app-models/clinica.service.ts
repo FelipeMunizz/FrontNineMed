@@ -8,7 +8,7 @@ import { AdicionarClinica, Clinica, ContatoClinica, EnderecoClinica } from 'app/
   providedIn: "root",
 })
 
-export class ClinicaService{
+export class ClinicaService{    
     constructor(private httpClient: HttpClient){}
 
     private readonly baseUrl = environment.apiURL;
@@ -55,6 +55,11 @@ export class ClinicaService{
       return this.httpClient.put<any>(url, item);
     }
 
+    public DeletarEnderecoClinica(idEndereco: number): Observable<any>{
+      const url = `${this.baseUrl}/Clinica/DeletarEnderecoClinica/${idEndereco}`;
+      return this.httpClient.delete<any>(url)
+    }
+
     //Listar Contatos Clinica
     public ListaContatoClinica(idClinica: number){
       const url = `${this.baseUrl}/Clinica/ListaContatoClinica/${idClinica}`;
@@ -65,5 +70,10 @@ export class ClinicaService{
     public AtualizarContatoClinica(item: ContatoClinica){
       const url = `${this.baseUrl}/Clinica/AtualizarContatoClinica`;
       return this.httpClient.put<any>(url, item);
+    }
+
+    public DeletarContatoClinica(idEndereco: number): Observable<any>{
+      const url = `${this.baseUrl}/Clinica/DeletarContatoClinica/${idEndereco}`;
+      return this.httpClient.delete<any>(url)
     }
 }
