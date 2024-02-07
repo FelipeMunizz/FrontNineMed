@@ -6,6 +6,8 @@ import { map, catchError, delay } from "rxjs/operators";
 import { User } from "../../models/user.model";
 import { of, BehaviorSubject, throwError } from "rxjs";
 import { environment } from "environments/environment";
+import { UtilityService } from "../utility.service";
+import { config } from "config";
 
 @Injectable({
   providedIn: "root",
@@ -24,7 +26,8 @@ export class JwtAuthService {
     private ls: LocalStoreService,
     private http: HttpClient,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private utilityService: UtilityService
   ) {
     // this.route.queryParams
     //   .subscribe(params => this.return = params['return'] || '/');
@@ -48,6 +51,19 @@ export class JwtAuthService {
       );
   }
 
+  public ValidaRolesFuncionario(nivelPermissao: string){
+    debugger
+    let funcionarioLogado = new User();
+    funcionarioLogado = this.getUser();
+    switch(nivelPermissao){
+      case 'sa':
+        return config.authRoles.sa.includes(funcionarioLogado.role);
+      case 'medico':
+        return config.authRoles.medico.includes(funcionarioLogado.role);
+      case 'recepcao':
+        return config.authRoles.recepcao.includes(funcionarioLogado.role);
+    }
+  }
   /*
     checkTokenIsValid is called inside constructor of
     shared/components/layouts/admin-layout/admin-layout.component.ts
@@ -59,7 +75,35 @@ export class JwtAuthService {
   }
 
   isLoggedIn(): Boolean {
-    return !!this.getJwtToken();
+    const token = this.getJwtToken();
+    if (token && !this.isTokenExpired(token)) {
+      return true;
+    } else {
+      this.utilityService.MostraToastr('Aviso', 'Sessão encerrada', 'aviso');
+      this.signout();
+      return false;
+    }
+  }
+
+  private isTokenExpired(token: string): boolean {
+    const expirationDate = this.getTokenExpirationDate(token);
+    return expirationDate === null || expirationDate.valueOf() <= new Date().valueOf();
+  }
+
+  private getTokenExpirationDate(token: string): Date | null {
+    const decoded = this.decodeJwt(token);
+    if (decoded === null || !decoded.hasOwnProperty("exp")) return null;
+    const expirationDate = new Date(0);
+    expirationDate.setUTCSeconds(decoded.exp);
+    return expirationDate;
+  }
+
+  private decodeJwt(token: string): any {
+    try {
+      return JSON.parse(atob(token.split(".")[1]));
+    } catch (e) {
+      return null;
+    }
   }
 
   getJwtToken() {

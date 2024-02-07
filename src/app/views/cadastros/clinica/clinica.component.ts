@@ -1,11 +1,9 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ClinicaService } from 'app/shared/services/app-models/clinica.service';
 import { UtilityService } from 'app/shared/services/utility.service';
 import { User } from './../../../shared/models/user.model';
 import { JwtAuthService } from 'app/shared/services/auth/jwt-auth.service';
-import { MatTableDataSource } from '@angular/material/table';
 import { Clinica, AdicionarClinica, EnderecoClinica, ContatoClinica } from 'app/shared/models/clinica.model';
 import { FuncionarioService } from 'app/shared/services/app-models/funcionario.service';
 import { Funcionario } from 'app/shared/models/funcionario.model';
@@ -17,17 +15,20 @@ import { MatDialog } from '@angular/material/dialog';
 import { EnderecoClinicaModalComponent } from './modals/endereco-clinica.modal.component';
 import { ClinicaModalComponent } from './modals/clinica.modal.component';
 import { ContatoClinicaModalComponent } from './modals/contato-clinica.modal.component';
+import { matxAnimations } from 'app/shared/animations/matx-animations';
 
 @Component({
   selector: 'app-clinica',
   templateUrl: './clinica.component.html',
-  styleUrls: ['./clinica.component.scss']
+  styleUrls: ['./clinica.component.scss'],
+  animations: matxAnimations
 })
 
 export class ClinicaComponent implements OnInit {
   tipoTela: number = 1
   formData = {};
   user: User = {};
+  funcionarioAuth: Funcionario;
   logoBase64: string | undefined;
   clinicaForm: UntypedFormGroup;
   estados: { value: number; label: string }[] = [];
@@ -37,9 +38,9 @@ export class ClinicaComponent implements OnInit {
   isAccordionOpen: boolean[] = [];
   isCollapsed: boolean[] = [];
   isCollapsedContato: boolean[] = [];
+  isAutorizado: boolean;
 
   constructor(
-    private snac: MatSnackBar,
     private clinicaService: ClinicaService,
     private funcionarioService: FuncionarioService,
     private auth: JwtAuthService,
@@ -54,10 +55,11 @@ export class ClinicaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isAutorizado = this.auth.ValidaRolesFuncionario('sa');
     this.ListaClinicas();
     this.IniciaForm();
     this.estados = this.enumService.getEstados();
-  };
+  };  
 
   IniciaForm() {
 
@@ -121,7 +123,7 @@ export class ClinicaComponent implements OnInit {
 
   ListaClinicas() {
     this.loader.open('Aguarde');
-    this.tipoTela = 1;
+    this.tipoTela = 1;    
     this.user = this.auth.getUser();
     this.clinicaService.ListaClinicasUsuario(this.user.displayName).subscribe(
       (clinicas) => {
@@ -242,7 +244,6 @@ export class ClinicaComponent implements OnInit {
     this.clinicaForm.reset();
   }
 
-  //Metodos Auxiliares  
   openEnderecoModal(idClinica?: number, endereco?: EnderecoClinica) {
     const dialogRef = this.dialog.open(EnderecoClinicaModalComponent, {
       width: '80vh',
@@ -284,6 +285,8 @@ export class ClinicaComponent implements OnInit {
       });
     }
   }
+
+  //Metodos Auxiliares   
 
   toggleAccordion(index: number) {
     this.isAccordionOpen[index] = !this.isAccordionOpen[index];
@@ -340,7 +343,7 @@ export class ClinicaComponent implements OnInit {
 
         reader.readAsDataURL(file);
       } else {
-        this.snac.open('Por favor, selecione um arquivo de imagem válido.', '', { duration: 3000 });
+        this.utilityService.MostraToastr('Atenção','Por favor, selecione um arquivo de imagem válido.', 'aviso');
       }
     }
   }
