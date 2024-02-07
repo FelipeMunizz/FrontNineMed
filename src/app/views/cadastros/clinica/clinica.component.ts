@@ -16,8 +16,6 @@ import { EnderecoClinicaModalComponent } from './modals/endereco-clinica.modal.c
 import { ClinicaModalComponent } from './modals/clinica.modal.component';
 import { ContatoClinicaModalComponent } from './modals/contato-clinica.modal.component';
 import { matxAnimations } from 'app/shared/animations/matx-animations';
-import { config } from 'config';
-import { de } from 'date-fns/locale';
 
 @Component({
   selector: 'app-clinica',
