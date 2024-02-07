@@ -1,24 +1,29 @@
 <mat-card class="p-0">
-    <mat-card-title class="">
+    <mat-card-title class="">        
         <mat-divider></mat-divider>
     </mat-card-title>
-    <div class="row row-card">
-        <div *ngIf="isAutorizado">
-            <div class="demo-button-container" *ngIf="tipoTela == 1">
-                <button mat-raised-button color="primary" class="btn-card" (click)="TelaCadastro()">
-                    Adicionar Clinica
-                </button>
+    <div class="container cnt">
+        <div class="row row-card">        
+            <div class="col col-lg-10 col-md-10 col-sm-10">
+                <h1 class="text-muted">Clinicas e Consultórios</h1>
             </div>
-            <div class="demo-button-container" *ngIf="tipoTela == 2">
-                <button mat-raised-button color="primary" class="btn-card" (click)="ListaClinicas()">
-                    Listar Clinicas
-                </button>
+            <div class="col col-lg-2 col-md-2 col-sm-2" *ngIf="isAutorizado">
+                <div class="demo-button-container" *ngIf="tipoTela == 1">
+                    <button mat-raised-button color="primary" class="btn-card" matTooltip="Adicionar nova Clinica" matTooltipPosition="below" (click)="TelaCadastro()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+                <div class="demo-button-container" *ngIf="tipoTela == 2">
+                    <button mat-raised-button color="primary" class="btn-card" matTooltip="Lista Clinicas" matTooltipPosition="below" (click)="ListaClinicas()">
+                        <mat-icon>list</mat-icon>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
     <!--Accordion Lista Clinica-->
     <mat-card-content *ngIf="tipoTela == 1">
-        <div fxLayout="row wrap">
+        <div fxLayout="row wrap">            
             <div fxFlex="100" fxFlex.gt-xs="100">
                 <div class="mat-elevation-z8">
                     <div class="accordion" id="accordion-clinica">

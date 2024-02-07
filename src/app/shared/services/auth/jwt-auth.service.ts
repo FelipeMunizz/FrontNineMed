@@ -52,6 +52,7 @@ export class JwtAuthService {
   }
 
   public ValidaRolesFuncionario(nivelPermissao: string){
+    debugger
     let funcionarioLogado = new User();
     funcionarioLogado = this.getUser();
     switch(nivelPermissao){
