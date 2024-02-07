@@ -62,6 +62,13 @@ export class EnumService {
       {value: 2, label: 'Outros'},       
     ]
   }
+  getPerfilUsuario(){
+    return[
+      {value: 0, label: 'Administrador'},
+      {value: 1, label: 'ProfissionalSaude'},
+      {value: 2, label: 'Recpcao'}
+    ]
+  }
   getRepeticaoAgendamento(){
     return [
       {value: 0, label: 'NaoRepete'}, 

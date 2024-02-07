@@ -19,6 +19,16 @@ export class FuncionarioService{
       return this.httpClient.get<any>(url);
     }
 
+    public ObterFuncionario(idFuncionario: number): Observable<any> {
+      const url = `${this.baseUrl}/Funcionario/ObterFuncionario/${idFuncionario}`;
+      return this.httpClient.get<any>(url);
+    }
+
+    public ObterFuncionarioEmail(email: string): Observable<any> {
+      const url = `${this.baseUrl}/Funcionario/ObterFuncionarioEmail?email=${email}`;
+      return this.httpClient.get<any>(url);
+    }
+
     //Adicionar Funcionario
     public AdicionarFuncionario(funcionario: Funcionario): Observable<any>{
       const url = `${this.baseUrl}/Funcionario/AdicionarFuncionario`;

@@ -2,16 +2,18 @@
     <mat-card-title class="">
         <mat-divider></mat-divider>
     </mat-card-title>
-    <div class="row row-card" *ngIf="listaClinicas.length < 4">
-        <div class="demo-button-container" *ngIf="tipoTela == 1">
-            <button mat-raised-button color="primary" class="btn-card" (click)="TelaCadastro()">
-                Adicionar Clinica
-            </button>
-        </div>
-        <div class="demo-button-container" *ngIf="tipoTela == 2">
-            <button mat-raised-button color="primary" class="btn-card" (click)="ListaClinicas()">
-                Listar Clinicas
-            </button>
+    <div class="row row-card">
+        <div *ngIf="isAutorizado">
+            <div class="demo-button-container" *ngIf="tipoTela == 1">
+                <button mat-raised-button color="primary" class="btn-card" (click)="TelaCadastro()">
+                    Adicionar Clinica
+                </button>
+            </div>
+            <div class="demo-button-container" *ngIf="tipoTela == 2">
+                <button mat-raised-button color="primary" class="btn-card" (click)="ListaClinicas()">
+                    Listar Clinicas
+                </button>
+            </div>
         </div>
     </div>
     <!--Accordion Lista Clinica-->
@@ -59,14 +61,16 @@
                                                                 Inscrição Estadual:
                                                                 <strong><span>{{clinica.inscricaoEstadual}}</span></strong>
                                                             </div>
-                                                            <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                            <div class="col col-lg-1 col-md-1 col-sm-1"
+                                                                *ngIf="isAutorizado">
                                                                 <a matTooltip="Atualizar Clinica"
                                                                     matTooltipPosition="below"
                                                                     (click)="openClinicaModal(clinica)">
                                                                     <mat-icon style="color: blue;">edit</mat-icon>
                                                                 </a>
                                                             </div>
-                                                            <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                            <div class="col col-lg-1 col-md-1 col-sm-1"
+                                                                *ngIf="isAutorizado">
                                                                 <a matTooltip="Deletar Clinica"
                                                                     matTooltipPosition="below"
                                                                     (click)="DeletarClinica(clinica.id)">
@@ -130,7 +134,8 @@
                                                                                     SetValorEnum(endereco.estado, 'uf')
                                                                                     }}</strong></span>
                                                                         </div>
-                                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                                        <div class="col col-lg-1 col-md-1 col-sm-1"
+                                                                            *ngIf="isAutorizado">
                                                                             <a matTooltip="Atualizar endereço"
                                                                                 matTooltipPosition="below"
                                                                                 (click)="openEnderecoModal(null, endereco)">
@@ -138,7 +143,8 @@
                                                                                     style="color: blue;">edit</mat-icon>
                                                                             </a>
                                                                         </div>
-                                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                                        <div class="col col-lg-1 col-md-1 col-sm-1"
+                                                                            *ngIf="isAutorizado">
                                                                             <a matTooltip="Deletar endereço"
                                                                                 matTooltipPosition="below"
                                                                                 (click)="DeletarEnderecoClinica(endereco.id)">
@@ -151,7 +157,8 @@
                                                                 </div>
                                                             </div>
                                                             <div class="row row-card">
-                                                                <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                                <div class="col col-lg-1 col-md-1 col-sm-1"
+                                                                    *ngIf="isAutorizado">
                                                                     <a matTooltip="Adicionar novo endereço"
                                                                         matTooltipPosition="below"
                                                                         (click)="openEnderecoModal(clinica.id)">
@@ -213,7 +220,8 @@
                                                                                 [checked]="contato.lembretes"
                                                                                 disabled>Lembretes</mat-slide-toggle>
                                                                         </div>
-                                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                                        <div class="col col-lg-1 col-md-1 col-sm-1"
+                                                                            *ngIf="isAutorizado">
                                                                             <a matTooltip="Atualizar contato"
                                                                                 matTooltipPosition="below"
                                                                                 (click)="openContatoModal(null, contato)">
@@ -221,7 +229,8 @@
                                                                                     style="color: blue;">edit</mat-icon>
                                                                             </a>
                                                                         </div>
-                                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                                        <div class="col col-lg-1 col-md-1 col-sm-1"
+                                                                            *ngIf="isAutorizado">
                                                                             <a matTooltip="Deletar contato"
                                                                                 matTooltipPosition="below"
                                                                                 (click)="DeletarContatoClinica(contato.id)">
@@ -234,7 +243,8 @@
                                                             </div>
                                                             <mat-divider></mat-divider>
                                                             <div class="row row-card">
-                                                                <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                                <div class="col col-lg-1 col-md-1 col-sm-1"
+                                                                    *ngIf="isAutorizado">
                                                                     <a matTooltip="Adicionar novo contato"
                                                                         matTooltipPosition="below"
                                                                         (click)="openContatoModal(clinica.id)">
