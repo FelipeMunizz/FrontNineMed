@@ -47,6 +47,7 @@
     "ng2-file-upload": "^1.4.0",
     "ngx-color-picker": "^12.0.1",
     "ngx-echarts": "^14.0.0",
+    "ngx-mask": "^13.2.2",
     "ngx-pagination": "^6.0.2",
     "ngx-quill": "^19.0.1",
     "ngx-toastr": "^15.2.0",

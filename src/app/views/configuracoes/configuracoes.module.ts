@@ -21,9 +21,10 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { RouterModule } from "@angular/router";
 import { FileUploadModule } from "ng2-file-upload";
 import { QuillModule } from "ngx-quill";
-import { CadastrosRoutes } from "../cadastros/cadastros.routing";
+import { NgxMaskModule } from 'ngx-mask';
 import { PerfilComponent } from "./perfil/perfil.component";
 import { ConfiguracoesRoutes } from "./configuracoes.routing";
+import { ConfiguracaoClinicaComponent } from './configuracao-clinica/configuracao-clinica.component';
 
 @NgModule({
     imports: [
@@ -49,10 +50,12 @@ import { ConfiguracoesRoutes } from "./configuracoes.routing";
       FileUploadModule,
       RouterModule.forChild(ConfiguracoesRoutes),
       MatTooltipModule,
-      MatDialogModule
+      MatDialogModule,
+      NgxMaskModule.forRoot()
     ],
     declarations: [
         PerfilComponent,
+        ConfiguracaoClinicaComponent,
     ],
   })
   export class ConfiguracoesModule {}

@@ -104,7 +104,6 @@ export class ContatoClinicaModalComponent implements OnInit {
     }
 
     LoadDadosForm(contato?: ContatoClinica) {
-        debugger
         var dados = this.dadosForm();
         dados['nomeContato'].setValue(contato.nome);
         dados['numeroContato'].setValue(contato.numeroContato);
