@@ -28,6 +28,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { EnderecoClinicaModalComponent } from './clinica/modals/endereco-clinica.modal.component';
 import { ClinicaModalComponent } from './clinica/modals/clinica.modal.component';
 import { ContatoClinicaModalComponent } from './clinica/modals/contato-clinica.modal.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { ContatoClinicaModalComponent } from './clinica/modals/contato-clinica.m
     FileUploadModule,
     RouterModule.forChild(CadastrosRoutes),
     MatTooltipModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxMaskModule.forRoot()
   ],
   declarations: [
     ClinicaComponent,

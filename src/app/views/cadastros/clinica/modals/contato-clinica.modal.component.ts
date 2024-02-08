@@ -20,7 +20,7 @@ import { UtilityService } from "app/shared/services/utility.service";
             </div>
             <div class="col col-lg-4 col-md-4 col-sm-12">
                 <mat-form-field class="full-width">
-                    <input matInput name="numeroContato" formControlName="numeroContato" placeholder="Número Contato" value="" (keypress)   ="onKeyPress($event)">
+                    <input matInput name="numeroContato" formControlName="numeroContato" placeholder="Número Contato" value="" (keypress)="onKeyPress($event)" mask="(00) 00000-0000">
                 </mat-form-field>
                 <small *ngIf="contatoForm.controls['numeroContato'].touched" class="form-error-msg">
                 </small>
