@@ -35,5 +35,16 @@ export class FuncionarioService{
       return this.httpClient.post<any>(url, funcionario);
     }
 
+    //Atualizar Funcionario
+    public AtualizarFuncionario(funcionario: Funcionario): Observable<any>{
+      const url = `${this.baseUrl}/Funcionario/AtualizarFuncionario`;
+      return this.httpClient.put<any>(url, funcionario);
+    }
+
+    //Atualizar Funcionario
+    public AtualizarSenhaFuncionario(email: string, password: string): Observable<any>{
+      const url = `${this.baseUrl}/Funcionario/AtualizarSenhaFuncionario`;
+      return this.httpClient.put<any>(url, {email, password});
+    }
 }
   

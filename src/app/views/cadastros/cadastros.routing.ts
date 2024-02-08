@@ -16,12 +16,12 @@ export const CadastrosRoutes: Routes = [
       {
         path: 'paciente',
         component: PacienteComponent,
-        data: {title: 'Paciente', breadcrump: 'Paciente'}
+        data: {title: 'Pacientes', breadcrump: 'Paciente'}
       },
       {
         path: 'funcionario',
         component: FuncionarioComponent,
-        data: {title: 'Funcionario', breadcrump: 'Funcionario'}
+        data: {title: 'Funcionarios', breadcrump: 'Funcionario'}
       }]
   }
 ];
