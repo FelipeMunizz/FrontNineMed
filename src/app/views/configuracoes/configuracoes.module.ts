@@ -24,6 +24,7 @@ import { QuillModule } from "ngx-quill";
 import { CadastrosRoutes } from "../cadastros/cadastros.routing";
 import { PerfilComponent } from "./perfil/perfil.component";
 import { ConfiguracoesRoutes } from "./configuracoes.routing";
+import { ConfiguracaoClinicaComponent } from './configuracao-clinica/configuracao-clinica.component';
 
 @NgModule({
     imports: [
@@ -53,6 +54,7 @@ import { ConfiguracoesRoutes } from "./configuracoes.routing";
     ],
     declarations: [
         PerfilComponent,
+        ConfiguracaoClinicaComponent,
     ],
   })
   export class ConfiguracoesModule {}
