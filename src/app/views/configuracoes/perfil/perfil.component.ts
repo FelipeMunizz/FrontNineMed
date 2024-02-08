@@ -62,7 +62,6 @@ export class PerfilComponent implements OnInit {
     this.user = new User;
     this.user = this.auth.getUser();
     var dados = this.dadosForm(this.loginForm)
-    debugger
     if (dados['password'].value) {
       this.funcionarioService.AtualizarSenhaFuncionario(this.user.displayName, dados['password'].value)
         .subscribe((response) => {

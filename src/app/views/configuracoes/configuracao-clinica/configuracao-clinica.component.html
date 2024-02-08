@@ -1,0 +1,83 @@
+<mat-card class="p-0">
+    <mat-card-title>
+        <mat-divider></mat-divider>
+    </mat-card-title>
+
+    <mat-card>
+        <mat-card-title class="text-muted">
+            Configurações - Clinica
+        </mat-card-title>
+        <mat-card-content>
+            <form [formGroup]="configClinicaForm" (submit)="SalvarClick()">
+                <mat-card>
+                    <mat-card-title>Configurações Gerais</mat-card-title>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col col-lg-4 col-md-4 col-sm12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="horarioAbertura" formControlName="horarioAbertura"
+                                        placeholder="Horario Abertura" mask="00:00:00" value="">
+                                </mat-form-field>
+                                <small *ngIf="configClinicaForm.controls['horarioAbertura'].touched"
+                                    class="form-error-msg">
+                                </small>
+                            </div>
+                            <div class="col col-lg-4 col-md-4 col-sm12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="horarioFechamento" formControlName="horarioFechamento"
+                                        placeholder="Horario Fechamento" mask="00:00:00" value="">
+                                </mat-form-field>
+                                <small *ngIf="configClinicaForm.controls['horarioFechamento'].touched"
+                                    class="form-error-msg">
+                                </small>
+                            </div>
+                            <div class="col col-lg-2 col-md-2 col-sm12">
+                                <mat-checkbox name="funcionaFeriados" formControlName="funcionaFeriados"
+                                    class="p-16">Funciona Feriados</mat-checkbox>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-lg-4 col-md-4 col-sm12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="intervaloAgendaPadrao" formControlName="intervaloAgendaPadrao"
+                                        placeholder="Intervalo padrão Agendamento" mask="00" value="">
+                                    <button type="button" mat-icon-button matSuffix
+                                        matTooltip="Minutos entre um agendamento e outro">
+                                        <mat-icon>info</mat-icon>
+                                    </button>
+                                </mat-form-field>
+                            </div>
+                            <div class="col col-lg-2 col-md-2 col-sm12">
+                                <mat-checkbox name="controlaEstoque" formControlName="controlaEstoque"
+                                    class="p-16">Controla Estoque</mat-checkbox>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card>
+                    <mat-card-title>Configuraçõe Fiscais</mat-card-title>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col col-lg-4 col-md-4 col-sm12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="cnae" formControlName="cnae" placeholder="CNAE" value="">
+                                </mat-form-field>
+                            </div>
+                            <div class="col col-lg-4 col-md-4 col-sm12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="numeroNota" formControlName="numeroNota"
+                                        placeholder="Número Nota" value="">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+                <div class="row">
+                    <div class="col align-self-end">
+                        <input type="submit" class="btn btn-primary btn-clinica-submit" value="Salvar">
+                    </div>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</mat-card>

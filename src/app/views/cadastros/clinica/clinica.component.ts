@@ -16,6 +16,8 @@ import { EnderecoClinicaModalComponent } from './modals/endereco-clinica.modal.c
 import { ClinicaModalComponent } from './modals/clinica.modal.component';
 import { ContatoClinicaModalComponent } from './modals/contato-clinica.modal.component';
 import { matxAnimations } from 'app/shared/animations/matx-animations';
+import { ConfiguracaoClinicaService } from 'app/shared/services/app-models/configuracao-clinica.service';
+import { ConfiguracaoClinica } from 'app/shared/models/configuracao-clinica.model';
 
 @Component({
   selector: 'app-clinica',
@@ -51,7 +53,8 @@ export class ClinicaComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private el: ElementRef,
     private renderer: Renderer2,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private configClinicaService: ConfiguracaoClinicaService
   ) { }
 
   ngOnInit() {
@@ -59,7 +62,7 @@ export class ClinicaComponent implements OnInit {
     this.ListaClinicas();
     this.IniciaForm();
     this.estados = this.enumService.getEstados();
-  };  
+  };
 
   IniciaForm() {
 
@@ -123,7 +126,7 @@ export class ClinicaComponent implements OnInit {
 
   ListaClinicas() {
     this.loader.open('Aguarde');
-    this.tipoTela = 1;    
+    this.tipoTela = 1;
     this.user = this.auth.getUser();
     this.clinicaService.ListaClinicasUsuario(this.user.displayName).subscribe(
       (clinicas) => {
@@ -178,7 +181,7 @@ export class ClinicaComponent implements OnInit {
         this.clinicaForm.reset();
         this.utilityService.MostraToastr('Adicionado com Sucesso', response.message, 'sucesso');
         this.user = this.auth.getUser();
-        debugger
+
         let funcionario = new Funcionario();
         funcionario.email = this.user.displayName;
         funcionario.idClinica = response.result.id;
@@ -191,8 +194,20 @@ export class ClinicaComponent implements OnInit {
           },
             (errorFun) => {
               this.utilityService.MostraToastr('Erro', errorFun.message, 'erro')
-            })
-
+            }
+          )
+          
+          let configClinica = new ConfiguracaoClinica();
+          configClinica.idClinica = response.result.id;
+          configClinica.horarioAbertura = '08:00:00';
+          configClinica.horarioFechamento = '18:00:00';
+          configClinica.funcionaFeriados = false;
+          configClinica.controlaEstoque = true;
+          this.configClinicaService.AdicionarConfiguracaoClinica(configClinica)
+          .subscribe((resp) => {
+            this.utilityService.MostraToastr('Adicionado com Sucesso', 'Configuração da Clinica adicionada com dados padrão, favor alter.', 'sucesso');
+          });
+          
         this.ListaClinicas();
       },
         (error) => {
@@ -258,7 +273,6 @@ export class ClinicaComponent implements OnInit {
   }
 
   openContatoModal(idClinica?: number, contato?: ContatoClinica) {
-    debugger
     const dialogRef = this.dialog.open(ContatoClinicaModalComponent, {
       width: '80vh',
       height: 'auto',
@@ -343,7 +357,7 @@ export class ClinicaComponent implements OnInit {
 
         reader.readAsDataURL(file);
       } else {
-        this.utilityService.MostraToastr('Atenção','Por favor, selecione um arquivo de imagem válido.', 'aviso');
+        this.utilityService.MostraToastr('Atenção', 'Por favor, selecione um arquivo de imagem válido.', 'aviso');
       }
     }
   }

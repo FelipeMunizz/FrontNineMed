@@ -35,9 +35,9 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
     this.user = this.auth.getUser();
     this.funcionarioService.ObterFuncionarioEmail(this.user.displayName)
     .subscribe((func) => {
-      debugger
       this.user = new User();
-      this.user.displayName = func.nome || func.email;
+      this.user.displayName = func.email;
+      this.user.name = func.nome;
       this.user.idClinica = func.idClinica;
       this.user.idFuncionario = func.id;
       let perfil = this.enumService.getPerfilUsuario().find((role) => role.value === func.perfil);
