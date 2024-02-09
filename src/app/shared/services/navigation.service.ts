@@ -37,17 +37,13 @@ export class NavigationService {
     },
     {
       name: 'Cadastros',
-      type: 'separator'
-    },
-    {
-      name: 'Cadastros',
       type: 'dropDown',
       tooltip: 'Pages',
       icon: 'library_add',
       sub: [
         { name: 'Clinica', state: 'cadastros/clinica', icon: 'store' },
-        { name: 'Pacientes', state: 'cadastros/paciente', icon: 'person' },
         { name: 'Funcionarios', state: 'cadastros/funcionario', icon: 'support_agent' },
+        { name: 'Pacientes', state: 'cadastros/paciente', icon: 'person' },
       ]
     }
   ];
