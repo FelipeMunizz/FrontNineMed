@@ -51,6 +51,7 @@ export class FuncionarioComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.isAutorizado = this.auth.ValidaRolesFuncionario('sa');
     this.ListaFuncionarios();
     this.InicializaForm();
     this.perfils = this.enumService.getPerfilUsuario();

@@ -65,12 +65,14 @@
                     <ng-container matColumnDef="acoes">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Ações </th>
                         <td mat-cell *matCellDef="let row">
-                            <a (click)="LoadDadosForm(row.id, row.email)">
-                                <mat-icon style="color: blue;" matTooltip="Editar Funcionario" matTooltipPosition="below">edit</mat-icon>
-                            </a> &nbsp;&nbsp;
-                            <a (click)="DeletarFuncionario(row.id, row.email)">
-                                <mat-icon style="color: red;" matTooltip="Deletar Funcionario" matTooltipPosition="below">delete</mat-icon>
-                            </a>
+                            <div *ngIf="isAutorizado">
+                                <a (click)="LoadDadosForm(row.id, row.email)">
+                                    <mat-icon style="color: blue;" matTooltip="Editar Funcionario" matTooltipPosition="below">edit</mat-icon>
+                                </a> &nbsp;&nbsp;
+                                <a (click)="DeletarFuncionario(row.id, row.email)">
+                                    <mat-icon style="color: red;" matTooltip="Deletar Funcionario" matTooltipPosition="below">delete</mat-icon>
+                                </a>
+                            </div>
                         </td>
                     </ng-container>
 
