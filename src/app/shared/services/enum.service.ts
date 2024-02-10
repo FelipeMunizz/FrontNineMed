@@ -65,7 +65,7 @@ export class EnumService {
   getPerfilUsuario(){
     return[
       {value: 0, label: 'Administrador'},
-      {value: 1, label: 'ProfissionalSaude'},
+      {value: 1, label: 'Profissional da Saude'},
       {value: 2, label: 'Recpcao'}
     ]
   }

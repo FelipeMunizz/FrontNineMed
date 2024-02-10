@@ -150,6 +150,11 @@ export class ClinicaComponent implements OnInit {
   }
 
   Salvar() {
+    if (this.clinicaForm.invalid) {
+      this.utilityService.MostraToastr('Erro', 'Por favor, preencha todos os campos corretamente', 'erro');
+      return;
+    }
+    
     this.loader.open('Aguarde');
     var dados = this.dadosForm()
     var item = new AdicionarClinica();

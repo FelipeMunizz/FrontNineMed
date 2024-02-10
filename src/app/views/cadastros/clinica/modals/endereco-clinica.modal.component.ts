@@ -142,6 +142,10 @@ export class EnderecoClinicaModalComponent implements OnInit {
     }
 
     SalvarClick() {
+      if (this.enderecoForm.invalid) {
+        this.utilityService.MostraToastr('Erro', 'Por favor, preencha todos os campos corretamente', 'erro');
+        return;
+      }
         var dados = this.dadosForm();
         var item = new EnderecoClinica;
         item.logradouro = dados['logradouro'].value;

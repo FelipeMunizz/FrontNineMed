@@ -114,6 +114,10 @@ export class ContatoClinicaModalComponent implements OnInit {
     }
 
     SalvarClick() {
+        if (this.contatoForm.invalid) {
+            this.utilityService.MostraToastr('Erro', 'Por favor, preencha todos os campos corretamente', 'erro');
+            return;
+          }
         var dados = this.dadosForm();
         var item = new ContatoClinica;
         item.nome = dados['nomeContato'].value;

@@ -140,6 +140,10 @@ export class ClinicaModalComponent implements OnInit {
     }
 
     SalvarClick() {
+        if (this.clinicaForm.invalid) {
+            this.utilityService.MostraToastr('Erro', 'Por favor, preencha todos os campos corretamente', 'erro');
+            return;
+          }
         var dados = this.dadosForm();
         var item = new Clinica;
         item.id = this.clinicaEdicao.id;
