@@ -59,6 +59,10 @@ export class PerfilComponent implements OnInit {
   }
 
   AtualizarSenhaFuncionario() {
+    if (this.loginForm.invalid) {
+      this.utilityService.MostraToastr('Erro', 'Por favor, preencha todos os campos corretamente', 'erro');
+      return;
+    }
     this.user = new User;
     this.user = this.auth.getUser();
     var dados = this.dadosForm(this.loginForm)
@@ -74,10 +78,14 @@ export class PerfilComponent implements OnInit {
   }
 
   AtualizarFuncionario() {
+    if (this.funcionarioForm.invalid) {
+      this.utilityService.MostraToastr('Erro', 'Por favor, preencha todos os campos corretamente', 'erro');
+      return;
+    }
     this.user = new User;
     this.user = this.auth.getUser();
 
-    if(!this.user.idClinica && !this.user.idFuncionario){
+    if (!this.user.idClinica && !this.user.idFuncionario) {
       this.utilityService.MostraToastr('Aviso', 'Funcionario não cadastrado a nenhuma clinica, entre em contato com o suporte', 'aviso');
       return
     }
@@ -93,13 +101,13 @@ export class PerfilComponent implements OnInit {
     funcionario.idClinica = +this.user.idClinica;
 
     this.funcionarioService.AtualizarFuncionario(funcionario)
-    .subscribe((response) => {
-      this.utilityService.MostraToastr('Sucesso', 'Funcionario atualizado com sucesso', 'sucesso');
-      this.LoadDadosForm();
-    },
-    (error) => {
-      this.utilityService.MostraToastr('Erro', 'Erro ao atualizar o funcionario', 'erro');
-    })
+      .subscribe((response) => {
+        this.utilityService.MostraToastr('Sucesso', 'Funcionario atualizado com sucesso', 'sucesso');
+        this.LoadDadosForm();
+      },
+        (error) => {
+          this.utilityService.MostraToastr('Erro', 'Erro ao atualizar o funcionario', 'erro');
+        })
   }
 
   //Metodos Auxiliares

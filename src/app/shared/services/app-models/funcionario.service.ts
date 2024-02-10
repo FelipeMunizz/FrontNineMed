@@ -46,5 +46,10 @@ export class FuncionarioService{
       const url = `${this.baseUrl}/Funcionario/AtualizarSenhaFuncionario`;
       return this.httpClient.put<any>(url, {email, password});
     }
+
+    //Deletar Funcionario
+    public DeletarFuncionario(idFuncionario: number): Observable<any>{
+      return this.httpClient.delete<any>(`${this.baseUrl}/Funcionario/DeletarFuncionario/${idFuncionario}`)
+    }
 }
   

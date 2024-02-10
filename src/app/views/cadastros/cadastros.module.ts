@@ -19,7 +19,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { ClinicaComponent } from './clinica/clinica.component';
 import { CadastrosRoutes } from './cadastros.routing';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PacienteComponent } from './paciente/paciente.component';
@@ -29,6 +29,7 @@ import { EnderecoClinicaModalComponent } from './clinica/modals/endereco-clinica
 import { ClinicaModalComponent } from './clinica/modals/clinica.modal.component';
 import { ContatoClinicaModalComponent } from './clinica/modals/contato-clinica.modal.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { CustomPaginator } from 'app/shared/helpers/custom-paginator';
 
 
 @NgModule({
@@ -56,7 +57,11 @@ import { NgxMaskModule } from 'ngx-mask';
     RouterModule.forChild(CadastrosRoutes),
     MatTooltipModule,
     MatDialogModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    MatPaginatorModule
+  ],
+  providers: [
+    { provide: MatPaginatorIntl, useClass: CustomPaginator }
   ],
   declarations: [
     ClinicaComponent,

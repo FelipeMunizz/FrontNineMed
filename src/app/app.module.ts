@@ -14,6 +14,7 @@ import { ErrorHandlerService } from './shared/services/error-handler.service';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { PerfilComponent } from './views/configuracoes/perfil/perfil.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 
 // AoT requires an exported function for factories
@@ -46,7 +47,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true,
-    }
+    },
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
   ],
   bootstrap: [AppComponent],
 })

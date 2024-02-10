@@ -62,6 +62,10 @@ export class ConfiguracaoClinicaComponent implements OnInit {
   }
 
   SalvarClick() {
+    if (this.configClinicaForm.invalid) {
+      this.utility.MostraToastr('Erro', 'Por favor, preencha todos os campos corretamente', 'erro');
+      return;
+    }
     var dados = this.dadosForm();
     this.configuracaoClinica.horarioAbertura = dados['horarioAbertura'].value;
     this.configuracaoClinica.horarioFechamento = dados['horarioFechamento'].value;
