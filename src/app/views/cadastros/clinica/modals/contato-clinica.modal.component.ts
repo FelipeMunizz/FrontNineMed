@@ -140,7 +140,7 @@ export class ContatoClinicaModalComponent implements OnInit {
              })
         }else{
             item.idClinica = this.idClinica;
-            this.clinicaService.AtualizarContatoClinica(item)
+            this.clinicaService.AdicionarContatoClinica(item)
             .subscribe((response) => {
                 this.utilityService.MostraToastr('Sucesso',response.message, 'sucesso');
              },

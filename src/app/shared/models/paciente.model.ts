@@ -69,7 +69,7 @@ export class EnderecoPaciente {
     idClinica: number;
 }
 
-export class ConvenioPaciente{
+export class ConvenioPaciente {
     id: number;
     numeroCarterinha: string;
     validade: string;
@@ -78,9 +78,20 @@ export class ConvenioPaciente{
     idConvenio: number;
 }
 
-export class FamiliarPaciente{
+export class FamiliarPaciente {
     id: number;
     nomeFamiliar: string;
     grauParentesco: string;
     telefoneFamiliar: string;
+}
+
+export class ProntuarioPaciente {
+    id: number;
+    antecedenteClinico: string;
+    antecedenteCirurgico: string;
+    antecedenteFamiliares: string;
+    habitos: string;
+    alergias: string;
+    medicamentoUso: string;
+    idPaciente: number;
 }

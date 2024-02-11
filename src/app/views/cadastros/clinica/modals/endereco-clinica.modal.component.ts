@@ -169,7 +169,7 @@ export class EnderecoClinicaModalComponent implements OnInit {
              })
         }else{
             item.idClinica = this.idClinica;
-            this.clinicaService.AtualizarEnderecoClinica(item)
+            this.clinicaService.AdicionarEnderecoClinica(item)
             .subscribe((response) => {
                 this.utilityService.MostraToastr('Sucesso',response.message, 'sucesso');
              },
