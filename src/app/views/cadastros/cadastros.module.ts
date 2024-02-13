@@ -30,6 +30,7 @@ import { ClinicaModalComponent } from './clinica/modals/clinica.modal.component'
 import { ContatoClinicaModalComponent } from './clinica/modals/contato-clinica.modal.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { CustomPaginator } from 'app/shared/helpers/custom-paginator';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { CustomPaginator } from 'app/shared/helpers/custom-paginator';
     MatTooltipModule,
     MatDialogModule,
     NgxMaskModule.forRoot(),
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSelectModule
   ],
   providers: [
     { provide: MatPaginatorIntl, useClass: CustomPaginator }

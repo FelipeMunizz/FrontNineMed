@@ -63,11 +63,11 @@ import { UtilityService } from "app/shared/services/utility.service";
       <div class="col col-lg-4 col-md-4 col-sm-2">
         <mat-form-field class="full-width">
           <mat-label>Estado</mat-label>
-          <select matNativeControl formControlName="uf" class="form-select">
-            <option class="dropdown-item" *ngFor="let estado of estados" [value]="estado.value">
+          <mat-select matNativeControl formControlName="uf" class="dorpdown-menu">
+            <mat-option class="dropdown-item" *ngFor="let estado of estados" [value]="estado.value">
               {{ estado.label }}
-            </option>
-          </select>
+            </mat-option>
+          </mat-select>
         </mat-form-field>
         <small *ngIf="enderecoForm.controls['uf'].touched" class="form-error-msg"> </small>
       </div>

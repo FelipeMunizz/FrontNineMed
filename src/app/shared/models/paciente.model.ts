@@ -1,7 +1,9 @@
+import { parse } from "date-fns";
+
 export class AdicionarPaciente {
     idClinica: number;
     nome: string;
-    dataNascimento: string;
+    dataNascimento: Date;
     estadoCivil: number;
     rg: string;
     cpf: string;
@@ -24,7 +26,7 @@ export class AdicionarPaciente {
     lembretes: boolean = false;
 
     numeroCarterinha: string;
-    validade: string;
+    validade: Date;
     contratoPlano: string;
     observacoes: string;
     idConvenio: number;

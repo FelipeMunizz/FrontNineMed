@@ -28,11 +28,11 @@ import { UtilityService } from "app/shared/services/utility.service";
             <div class="col col-lg-4 col-md-4 col-sm-12">
                 <mat-form-field class="full-width">
                     <mat-label>Tipo de Contato</mat-label>
-                    <select matNativeControl formControlName="tipoContato" class="form-select">
-                        <option class="dropdown-item" *ngFor="let tpContato of tipoContato" [value]="tpContato.value">
+                    <mat-select matNativeControl formControlName="tipoContato" class="dropdown-menu">
+                        <mat-option class="dropdown-item" *ngFor="let tpContato of tipoContato" [value]="tpContato.value">
                             {{ tpContato.label }}
-                        </option>
-                    </select>
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
                 <small *ngIf="contatoForm.controls['tipoContato'].touched" class="form-error-msg"> </small>
             </div>
