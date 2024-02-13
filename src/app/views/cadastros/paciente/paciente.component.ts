@@ -7,6 +7,7 @@ import { Convenio } from 'app/shared/models/convenio.model';
 import { AdicionarPaciente, Paciente } from 'app/shared/models/paciente.model';
 import { SelectedModel } from 'app/shared/models/selected-model';
 import { User } from 'app/shared/models/user.model';
+import { AppConfirmService } from 'app/shared/services/app-confirm/app-confirm.service';
 import { ConvenioService } from 'app/shared/services/app-models/convenio.service';
 import { PacienteService } from 'app/shared/services/app-models/paciente.service';
 import { JwtAuthService } from 'app/shared/services/auth/jwt-auth.service';
@@ -38,7 +39,8 @@ export class PacienteComponent implements OnInit {
     private pacienteService: PacienteService,
     private utitlity: UtilityService,
     private enumService: EnumService,
-    private convenioService: ConvenioService
+    private convenioService: ConvenioService,
+    private modal: AppConfirmService
   ) { }
 
   ngOnInit(): void {
@@ -180,6 +182,18 @@ export class PacienteComponent implements OnInit {
     (error) => {
       this.utitlity.MostraToastr('Error', 'Erro ao adicionar o paciente', 'erro')
     })
+  }
+
+  DeletarPaciente(idPaciente: number){
+    this.modal.confirm({ title: 'Confirme', message: 'Tem certeza que deseja deletar o paciente?' })
+      .subscribe((retorno) => {
+        if (retorno) {
+          this.pacienteService.DeletarPaciente(idPaciente)
+            .subscribe((response: any) => {
+              this.utitlity.MostraToastr('', response.message, 'aviso')
+            })
+        }
+      })
   }
 
   ListaConvenios() {
