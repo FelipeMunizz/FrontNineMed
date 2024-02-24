@@ -394,17 +394,20 @@
                                             </div>
                                         </div>
                                         <div class="row row-card">
-                                            <div class="col col-lg-6 col-md-6 col sm-12" *ngIf="pacienteEdicao.profissao">
+                                            <div class="col col-lg-6 col-md-6 col sm-12"
+                                                *ngIf="pacienteEdicao.profissao">
                                                 Profissão:
                                                 <strong><span>{{pacienteEdicao.profissao}}</span></strong>
                                             </div>
                                             <div class="col col-lg-1 col-md-1 col-sm-1">
-                                                <a matTooltip="Atualizar Paciente" matTooltipPosition="below">
+                                                <a matTooltip="Atualizar Paciente" matTooltipPosition="below"
+                                                    (click)="openModalPaciente(pacienteEdicao)">
                                                     <mat-icon style="color: blue;">edit</mat-icon>
                                                 </a>
                                             </div>
                                             <div class="col col-lg-1 col-md-1 col-sm-1">
-                                                <a matTooltip="Deletar Paciente" matTooltipPosition="below">
+                                                <a matTooltip="Deletar Paciente" matTooltipPosition="below"
+                                                    (click)="DeletarPaciente(pacienteEdicao.id)">
                                                     <mat-icon style="color: red;">delete</mat-icon>
                                                 </a>
                                             </div>

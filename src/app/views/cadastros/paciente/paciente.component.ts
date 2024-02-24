@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -13,6 +14,7 @@ import { PacienteService } from 'app/shared/services/app-models/paciente.service
 import { JwtAuthService } from 'app/shared/services/auth/jwt-auth.service';
 import { EnumService } from 'app/shared/services/enum.service';
 import { UtilityService } from 'app/shared/services/utility.service';
+import { PacienteModalComponent } from './modals/paciente.modal.component';
 
 @Component({
   selector: 'app-paciente',
@@ -51,6 +53,7 @@ export class PacienteComponent implements OnInit {
     private modal: AppConfirmService,
     private el: ElementRef,
     private renderer: Renderer2,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -234,7 +237,21 @@ export class PacienteComponent implements OnInit {
       })
   }
 
+  openModalPaciente(paciente: Paciente) {
+    const dialogRef = this.dialog.open(PacienteModalComponent, {
+      width: '100vh',
+      height: 'auto',
+      data: { paciente }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result)
+        this.ListaPaciente();
+    });
+  }
+
   //Metodos Auxiliares
+
   calculaIdade(dataNascimento: Date): number {
     const hoje = new Date();
     const dataNascimentoConvertida = new Date(dataNascimento);
