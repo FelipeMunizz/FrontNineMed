@@ -11,6 +11,15 @@ table {
     width: 20%;
   }
 
+  .card{
+    border: none;
+  }
+
+  .row-card {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
   mat-datepicker-toggle{
     display: flex;
     align-items: end;

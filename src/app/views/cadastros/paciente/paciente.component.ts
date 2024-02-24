@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Convenio } from 'app/shared/models/convenio.model';
-import { AdicionarPaciente, Paciente } from 'app/shared/models/paciente.model';
+import { AdicionarPaciente, ContatoPaciente, ConvenioPaciente, EnderecoPaciente, FamiliarPaciente, Paciente } from 'app/shared/models/paciente.model';
 import { SelectedModel } from 'app/shared/models/selected-model';
 import { User } from 'app/shared/models/user.model';
 import { AppConfirmService } from 'app/shared/services/app-confirm/app-confirm.service';
@@ -27,9 +27,17 @@ export class PacienteComponent implements OnInit {
   tipoTela: number = 1;
   estadosCivil: { value: number, label: string }[] = [];
   estados: { value: number, label: string }[] = [];
+  isAccordionOpen: boolean[] = [];
 
   listaConvenios: Array<SelectedModel>;
   convenioSelected: SelectedModel;
+
+  pacienteEdicao: Paciente;
+  convenioPacienteEdicao: ConvenioPaciente;
+  familiarPacienteEdicao: FamiliarPaciente;
+  enderecosPacienteEdicao: Array<EnderecoPaciente>;
+  contatosPacienteEdicao: Array<ContatoPaciente>;
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -40,7 +48,9 @@ export class PacienteComponent implements OnInit {
     private utitlity: UtilityService,
     private enumService: EnumService,
     private convenioService: ConvenioService,
-    private modal: AppConfirmService
+    private modal: AppConfirmService,
+    private el: ElementRef,
+    private renderer: Renderer2,
   ) { }
 
   ngOnInit(): void {
@@ -175,16 +185,25 @@ export class PacienteComponent implements OnInit {
     paciente.telefoneFamiliar = dados['telefoneFamiliar'].value;
 
     this.pacienteService.AdicionarPaciente(paciente)
-    .subscribe((response) => {
-      this.utitlity.MostraToastr('Sucesso', 'Paciente adicionado com sucesso', 'sucesso');
-      this.ListaPaciente();
-    },
-    (error) => {
-      this.utitlity.MostraToastr('Error', 'Erro ao adicionar o paciente', 'erro')
-    })
+      .subscribe((response) => {
+        this.utitlity.MostraToastr('Sucesso', 'Paciente adicionado com sucesso', 'sucesso');
+        this.ListaPaciente();
+      },
+        (error) => {
+          this.utitlity.MostraToastr('Error', 'Erro ao adicionar o paciente', 'erro')
+        })
   }
 
-  DeletarPaciente(idPaciente: number){
+  EditarPaciente(idPaciente: number) {
+    this.pacienteService.ObterPaciente(idPaciente)
+      .subscribe((paciente) => {
+        this.pacienteEdicao = paciente;
+
+      })
+    this.tipoTela = 3;
+  }
+
+  DeletarPaciente(idPaciente: number) {
     this.modal.confirm({ title: 'Confirme', message: 'Tem certeza que deseja deletar o paciente?' })
       .subscribe((retorno) => {
         if (retorno) {
@@ -193,6 +212,7 @@ export class PacienteComponent implements OnInit {
               this.utitlity.MostraToastr('', response.message, 'aviso')
             })
         }
+        this.ListaPaciente();
       })
   }
 
@@ -215,6 +235,59 @@ export class PacienteComponent implements OnInit {
   }
 
   //Metodos Auxiliares
+  calculaIdade(dataNascimento: Date): number {
+    const hoje = new Date();
+    const dataNascimentoConvertida = new Date(dataNascimento);
+
+    let idade = hoje.getFullYear() - dataNascimentoConvertida.getFullYear();
+    const mesAtual = hoje.getMonth() + 1;
+    const diaAtual = hoje.getDate();
+    const mesNascimento = dataNascimentoConvertida.getMonth() + 1;
+    const diaNascimento = dataNascimentoConvertida.getDate();
+
+    if (mesAtual < mesNascimento || (mesAtual === mesNascimento && diaAtual < diaNascimento)) {
+      idade--;
+    }
+
+    return idade;
+  }
+
+  SetValorEnum(id: number, enumPesquisa: string) {
+    switch (enumPesquisa) {
+      case 'uf':
+        let ufs = this.enumService.getEstados();
+        let uf = ufs.find(item => item.value === id)
+        if (uf)
+          return uf.label;
+        break;
+      case 'contato':
+        let tipoContato = this.enumService.getTipoContato();
+        let contato = tipoContato.find(item => item.value === id);
+        if (contato)
+          return contato.label;
+      case 'civil':
+        let estadosCivis = this.enumService.getEstadoCivil();
+        let estadoCivil = estadosCivis.find(item => item.value === id)
+        if (estadoCivil)
+          return estadoCivil.label;
+    }
+  }
+
+  formatarData(data: string): string {
+    const dataFormatada = new Date(data);
+    const dia = dataFormatada.getDate().toString().padStart(2, '0');
+    const mes = (dataFormatada.getMonth() + 1).toString().padStart(2, '0');
+    const ano = dataFormatada.getFullYear();
+    return `${dia}/${mes}/${ano}`;
+  }
+
+
+  toggleAccordion(index: number) {
+    this.isAccordionOpen[index] = !this.isAccordionOpen[index];
+    const collapse = this.el.nativeElement.querySelector(`#accordion-item-paciente`);
+    this.isAccordionOpen[index] ? this.renderer.addClass(collapse, 'show') : this.renderer.removeClass(collapse, 'show');
+  }
+
   AplicaFiltro(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

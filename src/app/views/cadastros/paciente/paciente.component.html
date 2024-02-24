@@ -22,7 +22,9 @@
             </div>
         </div>
     </mat-card-title>
+
     <mat-card-content>
+        <!--tela listagem-->
         <mat-card-content *ngIf="tipoTela == 1">
             <div class="row">
                 <div class="col col-lg-10 col-md-10 col-sm-10">
@@ -65,11 +67,11 @@
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Ações </th>
                         <td mat-cell *matCellDef="let row">
                             <div>
-                                <a (click)="LoadDadosForm(row.id, row.email)">
+                                <a (click)="EditarPaciente(row.id)">
                                     <mat-icon style="color: blue;" matTooltip="Editar Paciente"
                                         matTooltipPosition="below">edit</mat-icon>
                                 </a> &nbsp;&nbsp;
-                                <a (click)="DeletarPaciente(row.id, row.email)">
+                                <a (click)="DeletarPaciente(row.id)">
                                     <mat-icon style="color: red;" matTooltip="Deletar Paciente"
                                         matTooltipPosition="below">delete</mat-icon>
                                 </a>
@@ -91,7 +93,8 @@
             </div>
         </mat-card-content>
 
-        <mat-card-content *ngIf="tipoTela != 1">
+        <!--tela cadastro-->
+        <mat-card-content *ngIf="tipoTela == 2">
             <form [formGroup]="pacienteForm" (submit)="SalvarClick()">
                 <mat-card>
                     <mat-card-title>Dados Paciente</mat-card-title>
@@ -323,17 +326,20 @@
                         <div class="row">
                             <div class="col col-lg-4 col-md-4 col-sm-12">
                                 <mat-form-field class="full-width">
-                                    <input matInput name="nomeFamiliar" formControlName="nomeFamiliar" placeholder="Nome" value="">
+                                    <input matInput name="nomeFamiliar" formControlName="nomeFamiliar"
+                                        placeholder="Nome" value="">
                                 </mat-form-field>
                             </div>
                             <div class="col col-lg-4 col-md-4 col-sm-12">
                                 <mat-form-field class="full-width">
-                                    <input matInput name="grauParentesco" formControlName="grauParentesco" placeholder="Grau de Parentesco" value="">
+                                    <input matInput name="grauParentesco" formControlName="grauParentesco"
+                                        placeholder="Grau de Parentesco" value="">
                                 </mat-form-field>
                             </div>
                             <div class="col col-lg-4 col-md-4 col-sm-12">
                                 <mat-form-field class="full-width">
-                                    <input matInput name="telefoneFamiliar" formControlName="telefoneFamiliar" placeholder="Telefone" value="" mask="(00) 00000-0000">
+                                    <input matInput name="telefoneFamiliar" formControlName="telefoneFamiliar"
+                                        placeholder="Telefone" value="" mask="(00) 00000-0000">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -346,6 +352,71 @@
                     </div>
                 </div>
             </form>
+        </mat-card-content>
+
+        <!--tela edicao-->
+        <mat-card-content *ngIf="tipoTela == 3">
+            <div class="accordion" id="accordion-clinica">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" [class.collapsed]="!isAccordionOpen[i]"
+                        (click)="toggleAccordion(i)">
+                        {{pacienteEdicao.id}} - {{pacienteEdicao.nome}}
+                    </button>
+                </h2>
+                <div id="accordion-item-paciente" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-12">
+                                <div class="card" style="width: 50rem;">
+                                    <h3 class="card-title" style="text-align: center;">{{pacienteEdicao.nome}} -
+                                        {{calculaIdade(pacienteEdicao.dataNascimento)}} Anos</h3>
+                                    <mat-divider></mat-divider>
+                                    <div class="card-content">
+                                        <div class="row row-card">
+                                            <div class="col col-lg-6 col-md-6 col sm-12">
+                                                RG:
+                                                <strong><span>{{pacienteEdicao.rg}}</span></strong>
+                                            </div>
+                                            <div class="col col-lg-6 col-md-6 col sm-12">
+                                                CPF:
+                                                <strong><span>{{pacienteEdicao.cpf}}</span></strong>
+                                            </div>
+                                        </div>
+                                        <div class="row row-card">
+                                            <div class="col col-lg-6 col-md-6 col sm-12">
+                                                Data Nascimento:
+                                                <strong><span>{{formatarData(pacienteEdicao.dataNascimento)}}</span></strong>
+                                            </div>
+                                            <div class="col col-lg-6 col-md-6 col sm-12">
+                                                Estado Civil:
+                                                <strong><span>{{SetValorEnum(pacienteEdicao.estadoCivil,
+                                                        'civil')}}</span></strong>
+                                            </div>
+                                        </div>
+                                        <div class="row row-card" *ngIf="pacienteEdicao.profissao">
+                                            <div class="col col-lg-6 col-md-6 col sm-12">
+                                                Profissão:
+                                                <strong><span>{{pacienteEdicao.profissao}}</span></strong>
+                                            </div>
+                                            <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                <a matTooltip="Atualizar Paciente" matTooltipPosition="below">
+                                                    <mat-icon style="color: blue;">edit</mat-icon>
+                                                </a>
+                                            </div>
+                                            <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                <a matTooltip="Deletar Paciente" matTooltipPosition="below">
+                                                    <mat-icon style="color: red;">delete</mat-icon>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <mat-divider></mat-divider>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </mat-card-content>
     </mat-card-content>
 </mat-card>
