@@ -128,8 +128,22 @@ export class PacienteModalComponent implements OnInit {
     }
 
     SalvarClick() {
-        console.log(this.pacienteEdicao)
+        var dados = this.dadosForm();
 
+        this.pacienteEdicao.nome = dados['nome'].value;
+        this.pacienteEdicao.dataNascimento = dados['dataNascimento'].value;
+        this.pacienteEdicao.estadoCivil = dados['estadoCivil'].value;
+        this.pacienteEdicao.rg = dados['rg'].value;
+        this.pacienteEdicao.cpf = dados['cpf'].value;
+        this.pacienteEdicao.profissao = dados['profissao'].value;
+
+        this.pacienteService.AtualizarPaciente(this.pacienteEdicao)
+        .subscribe((response) => {
+            this.utilityService.MostraToastr('Sucesso', 'Paciente atualizado com sucesso', 'sucesso');
+        },
+        (error) => {
+            this.utilityService.MostraToastr('Erro', 'Erro ao autializar o paciente', 'erro');
+        })
     }
 
     //Metodos Auxiliares
