@@ -428,7 +428,65 @@
                                                 </div>
                                                 <div class="row row-card" id="collapse-endereco-{{i}}"
                                                     [ngClass]="{'collapse': !isCollapsed[i], 'show': isCollapsed[i]}">
-                                                
+                                                    <div *ngFor="let endereco of listaEnderecoPaciente">
+                                                        <div class="row row-card">
+                                                            <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                                Logradouro: <span><strong>{{
+                                                                        endereco.logradouro
+                                                                        }}</strong></span>
+                                                            </div>
+                                                            <div class="col col-lg-2 col-md-2 col-sm-12">
+                                                                N°: <span><strong>{{ endereco.numero
+                                                                        }}</strong></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row row-card">
+                                                            <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                                Complemento: <span><strong>{{
+                                                                        endereco.complemento
+                                                                        }}</strong></span>
+                                                            </div>
+                                                            <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                                CEP: <span><strong>{{ endereco.cep
+                                                                        }}</strong></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row row-card">
+                                                            <div class="col col-lg-4 col-md-4 col-sm-12">
+                                                                Cidade: <span><strong>{{ endereco.cidade
+                                                                        }}</strong></span>
+                                                            </div>
+                                                            <div class="col col-lg-2 col-md-2 col-sm-12">
+                                                                UF: <span><strong>{{
+                                                                        SetValorEnum(endereco.estado, 'uf')
+                                                                        }}</strong></span>
+                                                            </div>
+                                                            <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                                <a matTooltip="Atualizar endereço"
+                                                                    matTooltipPosition="below"
+                                                                    (click)="openEnderecoModal(null, endereco)">
+                                                                    <mat-icon style="color: blue;">edit</mat-icon>
+                                                                </a>
+                                                            </div>
+                                                            <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                                <a matTooltip="Deletar endereço"
+                                                                    matTooltipPosition="below"
+                                                                    (click)="DeletarEnderecoClinica(endereco.id)">
+                                                                    <mat-icon style="color: red;">delete</mat-icon>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <mat-divider></mat-divider>
+                                                    </div>
+                                                    <div class="row row-card">
+                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                            <a matTooltip="Adicionar novo endereço"
+                                                                matTooltipPosition="below"
+                                                                (click)="openEnderecoModal(pacienteEdicao.id)">
+                                                                <mat-icon style="color: blue;">add</mat-icon>
+                                                            </a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

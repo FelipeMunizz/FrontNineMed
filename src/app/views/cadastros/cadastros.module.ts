@@ -32,6 +32,8 @@ import { NgxMaskModule } from 'ngx-mask';
 import { CustomPaginator } from 'app/shared/helpers/custom-paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { PacienteModalComponent } from './paciente/modals/paciente.modal.component';
+import { ContatoPacienteModalComponent } from './paciente/modals/contato-paciente.modal.component';
+import { EnderecoPacienteModalComponent } from './paciente/modals/endereco-paciente.modal.component';
 
 
 @NgModule({
@@ -73,7 +75,9 @@ import { PacienteModalComponent } from './paciente/modals/paciente.modal.compone
     EnderecoClinicaModalComponent,
     ContatoClinicaModalComponent,
     PacienteComponent, 
-    PacienteModalComponent
+    PacienteModalComponent,
+    ContatoPacienteModalComponent,
+    EnderecoPacienteModalComponent
   ],
 })
 export class CadastrosModule {}

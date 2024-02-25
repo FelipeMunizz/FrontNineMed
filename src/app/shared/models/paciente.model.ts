@@ -68,7 +68,7 @@ export class EnderecoPaciente {
     estado: number;
     cidade: string;
     codMunicipio: string;
-    idClinica: number;
+    idPaciente: number;
 }
 
 export class ConvenioPaciente {

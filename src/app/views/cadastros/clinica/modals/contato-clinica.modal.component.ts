@@ -20,7 +20,7 @@ import { UtilityService } from "app/shared/services/utility.service";
             </div>
             <div class="col col-lg-4 col-md-4 col-sm-12">
                 <mat-form-field class="full-width">
-                    <input matInput name="numeroContato" formControlName="numeroContato" placeholder="Número Contato" value="" (keypress)="onKeyPress($event)" mask="(00) 00000-0000">
+                    <input matInput name="numeroContato" formControlName="numeroContato" placeholder="Número Contato" value="" mask="(00) 00000-0000">
                 </mat-form-field>
                 <small *ngIf="contatoForm.controls['numeroContato'].touched" class="form-error-msg">
                 </small>
@@ -150,16 +150,9 @@ export class ContatoClinicaModalComponent implements OnInit {
         }
 
     }
+    
     //Metodos Auxiliares   
     dadosForm() {
         return this.contatoForm.controls;
     }
-
-    onKeyPress(event: any): void {
-        const keyCode = event.keyCode;
-        if ((keyCode < 48 || keyCode > 57) && keyCode !== 8) {
-            event.preventDefault();
-        }
-    }
-
 }

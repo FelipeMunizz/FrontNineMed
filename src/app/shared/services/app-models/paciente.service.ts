@@ -46,7 +46,7 @@ export class PacienteService {
 
     //Listar Endereco Paciente
     public ListarEnderecoPaciente(idPaciente: number): Observable<any> {
-        const url = `${this.baseUrl}/ListaEnderecosPaciente /${idPaciente}`;
+        const url = `${this.baseUrl}/ListaEnderecoPaciente/${idPaciente}`;
         return this.httpClient.get<any>(url);
     }
 
@@ -71,7 +71,7 @@ export class PacienteService {
 
     //Listar Contatos Paciente
     public ListaContatoPaciente(idPaciente: number): Observable<any> {
-        const url = `${this.baseUrl}/ListaContatoPaciente /${idPaciente}`;
+        const url = `${this.baseUrl}/ListaContatoPaciente/${idPaciente}`;
         return this.httpClient.get<any>(url);
     }
 
@@ -89,7 +89,7 @@ export class PacienteService {
 
     //Deletar Contato Paciente
     public DeletarContatoPaciente(idEndereco: number): Observable<any> {
-        const url = `${this.baseUrl}/DeletarContatoPaciente /${idEndereco}`;
+        const url = `${this.baseUrl}/DeletarContatoPaciente/${idEndereco}`;
         return this.httpClient.delete<any>(url)
     }
 
@@ -97,7 +97,7 @@ export class PacienteService {
 
     //Listar Convenio Paciente
     public ListaConvenioPaciente(idPaciente: number): Observable<any> {
-        const url = `${this.baseUrl}/ListaConvenioPaciente /${idPaciente}`;
+        const url = `${this.baseUrl}/ListaConvenioPaciente/${idPaciente}`;
         return this.httpClient.get<any>(url);
     }
 
@@ -115,7 +115,7 @@ export class PacienteService {
 
     //Deletar Convenio Paciente
     public DeletarConvenioPaciente(idEndereco: number): Observable<any> {
-        const url = `${this.baseUrl}/DeletarConvenioPaciente /${idEndereco}`;
+        const url = `${this.baseUrl}/DeletarConvenioPaciente/${idEndereco}`;
         return this.httpClient.delete<any>(url)
     }
 
@@ -123,7 +123,7 @@ export class PacienteService {
 
     //Listar Familiar Paciente
     public ListaFamiliarPaciente(idPaciente: number): Observable<any> {
-        const url = `${this.baseUrl}/ListaFamiliarPaciente /${idPaciente}`;
+        const url = `${this.baseUrl}/ListaFamiliarPaciente/${idPaciente}`;
         return this.httpClient.get<any>(url);
     }
 
@@ -141,7 +141,7 @@ export class PacienteService {
 
     //Deletar Familiar Paciente
     public DeletarFamiliarPaciente(idEndereco: number): Observable<any> {
-        const url = `${this.baseUrl}/DeletarFamiliarPaciente /${idEndereco}`;
+        const url = `${this.baseUrl}/DeletarFamiliarPaciente/${idEndereco}`;
         return this.httpClient.delete<any>(url)
     }
 }

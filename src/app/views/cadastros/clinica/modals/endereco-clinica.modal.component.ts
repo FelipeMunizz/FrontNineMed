@@ -14,8 +14,8 @@ import { UtilityService } from "app/shared/services/utility.service";
     <div class="row">
       <div class="col col-lg-3 col-md-3 col-sm-12">
         <mat-form-field class="full-width">
-          <input matInput name="cep" formControlName="cep" placeholder="CEP (apenas texto)"
-            value="" #cepInput (blur)="BuscaEndereco(cepInput.value)" (keypress)="onKeyPress($event)">
+          <input matInput name="cep" formControlName="cep" placeholder="CEP"
+            value="" #cepInput (blur)="BuscaEndereco(cepInput.value)" mask="00000-00">
         </mat-form-field>
         <small *ngIf="enderecoForm.controls['cep'].hasError('maxlength') && enderecoForm.controls['cep'].touched"
           class="form-error-msg">
@@ -183,13 +183,6 @@ export class EnderecoClinicaModalComponent implements OnInit {
     dadosForm(){
         return this.enderecoForm.controls;
     } 
-
-    onKeyPress(event: any): void {
-        const keyCode = event.keyCode;
-        if ((keyCode < 48 || keyCode > 57) && keyCode !== 8) {
-            event.preventDefault();
-        }
-    }
 
     BuscaEndereco(cep: string) {
         this.utilityService.BuscaEndereco(cep).subscribe(

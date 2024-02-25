@@ -16,6 +16,7 @@ import { EnumService } from 'app/shared/services/enum.service';
 import { UtilityService } from 'app/shared/services/utility.service';
 import { PacienteModalComponent } from './modals/paciente.modal.component';
 import { AppLoaderService } from 'app/shared/services/app-loader/app-loader.service';
+import { EnderecoPacienteModalComponent } from './modals/endereco-paciente.modal.component';
 
 @Component({
   selector: 'app-paciente',
@@ -213,7 +214,8 @@ export class PacienteComponent implements OnInit {
         this.pacienteEdicao = paciente;
         this.pacienteService.ListarEnderecoPaciente(idPaciente)
           .subscribe((enderecos) => {
-            this.listaEnderecoPaciente = enderecos
+            this.listaEnderecoPaciente = enderecos;
+            console.log(this.listaEnderecoPaciente);
           });
         this.pacienteService.ListaContatoPaciente(idPaciente)
           .subscribe((contatos) => {
@@ -274,6 +276,33 @@ export class PacienteComponent implements OnInit {
       if (result)
         this.ListaPaciente();
     });
+  }
+
+  openEnderecoModal(idPaciente?: number, endereco?: EnderecoPaciente) {
+    const dialogRef = this.dialog.open(EnderecoPacienteModalComponent, {
+      width: '80vh',
+      height: 'auto',
+      data: { idPaciente, endereco }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result)
+        this.ListaPaciente();
+    });
+  }
+
+  
+  DeletarEnderecoClinica(id: number) {
+    this.modal.confirm({ title: 'Confirme', message: 'Tem certeza que deseja deletar o endereço?' })
+      .subscribe((retorno) => {
+        if (retorno) {
+          this.pacienteService.DeletarEnderecoPaciente(id)
+            .subscribe((response: any) => {
+              this.ListaPaciente();
+              this.utitlity.MostraToastr('', response.message, 'aviso')
+            })
+        }
+      })
   }
 
   //Metodos Auxiliares
