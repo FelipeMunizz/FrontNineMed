@@ -413,6 +413,25 @@
                                             </div>
                                         </div>
                                         <mat-divider></mat-divider>
+                                        <div class="container cnt-dados-contato">
+                                            <div class="row row-card">
+                                                <div class="col col-lg-12 col-md-12 col-sm-12">
+                                                    <a class="btn-collapse" data-bs-toggle="collapse" role="button"
+                                                        aria-expanded="false" href="#collapse-endereco-{{i}}"
+                                                        aria-controls="collapse-endereco-{{i}}"
+                                                        (click)="toggleCollapse(i, 'endereco')">
+                                                        <mat-icon class="collapse-arrow" id="arrow-{{i}}">{{
+                                                            isCollapsed[i] ? 'expand_more' : 'chevron_right'
+                                                            }}</mat-icon>
+                                                        <strong class="card-title">Endereço</strong>
+                                                    </a>
+                                                </div>
+                                                <div class="row row-card" id="collapse-endereco-{{i}}"
+                                                    [ngClass]="{'collapse': !isCollapsed[i], 'show': isCollapsed[i]}">
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

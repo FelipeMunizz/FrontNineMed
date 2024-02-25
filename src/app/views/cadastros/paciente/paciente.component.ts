@@ -15,6 +15,7 @@ import { JwtAuthService } from 'app/shared/services/auth/jwt-auth.service';
 import { EnumService } from 'app/shared/services/enum.service';
 import { UtilityService } from 'app/shared/services/utility.service';
 import { PacienteModalComponent } from './modals/paciente.modal.component';
+import { AppLoaderService } from 'app/shared/services/app-loader/app-loader.service';
 
 @Component({
   selector: 'app-paciente',
@@ -30,9 +31,16 @@ export class PacienteComponent implements OnInit {
   estadosCivil: { value: number, label: string }[] = [];
   estados: { value: number, label: string }[] = [];
   isAccordionOpen: boolean[] = [];
+  isCollapsed: boolean[] = [];
+  isCollapsedContato: boolean[] = [];
 
   listaConvenios: Array<SelectedModel>;
   convenioSelected: SelectedModel;
+
+  listaEnderecoPaciente: Array<EnderecoPaciente>;
+  listaContatoPaciente: Array<ContatoPaciente>;
+  listaConvenioPaciente: Array<ConvenioPaciente>;
+  listaFamiliarPaciente: Array<FamiliarPaciente>;
 
   pacienteEdicao: Paciente;
   convenioPacienteEdicao: ConvenioPaciente;
@@ -53,7 +61,8 @@ export class PacienteComponent implements OnInit {
     private modal: AppConfirmService,
     private el: ElementRef,
     private renderer: Renderer2,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private loader: AppLoaderService,
   ) { }
 
   ngOnInit(): void {
@@ -198,11 +207,28 @@ export class PacienteComponent implements OnInit {
   }
 
   EditarPaciente(idPaciente: number) {
+    this.loader.open('Aguarde');
     this.pacienteService.ObterPaciente(idPaciente)
       .subscribe((paciente) => {
         this.pacienteEdicao = paciente;
-
+        this.pacienteService.ListarEnderecoPaciente(idPaciente)
+          .subscribe((enderecos) => {
+            this.listaEnderecoPaciente = enderecos
+          });
+        this.pacienteService.ListaContatoPaciente(idPaciente)
+          .subscribe((contatos) => {
+            this.listaContatoPaciente = contatos;
+          });
+        this.pacienteService.ListaConvenioPaciente(idPaciente)
+          .subscribe((convenios) => {
+            this.listaConvenioPaciente = convenios;
+          });
+        this.pacienteService.ListaFamiliarPaciente(idPaciente)
+          .subscribe((familiares) => {
+            this.listaFamiliarPaciente = familiares;
+          })
       })
+    this.loader.close();
     this.tipoTela = 3;
   }
 
@@ -303,6 +329,14 @@ export class PacienteComponent implements OnInit {
     this.isAccordionOpen[index] = !this.isAccordionOpen[index];
     const collapse = this.el.nativeElement.querySelector(`#accordion-item-paciente`);
     this.isAccordionOpen[index] ? this.renderer.addClass(collapse, 'show') : this.renderer.removeClass(collapse, 'show');
+  }
+
+  toggleCollapse(index: number, tipo: string) {
+    if (tipo === 'endedreco')
+      this.isCollapsed[index] = !this.isCollapsed[index];
+    else if (tipo === 'contato') {
+      this.isCollapsedContato[index] = !this.isCollapsedContato[index];
+    }
   }
 
   AplicaFiltro(event: Event) {
