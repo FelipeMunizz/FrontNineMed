@@ -55,7 +55,7 @@ export class ContatoPaciente {
     tipoContato: number;
     horarioComercial: boolean;
     lembretes: boolean;
-    idClinica: number;
+    idPaciente: number;
 }
 
 export class EnderecoPaciente {
@@ -78,6 +78,7 @@ export class ConvenioPaciente {
     contratoPlano: string;
     observacoes: string;
     idConvenio: number;
+    idPaciente: number;
 }
 
 export class FamiliarPaciente {
@@ -85,6 +86,7 @@ export class FamiliarPaciente {
     nomeFamiliar: string;
     grauParentesco: string;
     telefoneFamiliar: string;
+    idPaciente: number;
 }
 
 export class ProntuarioPaciente {

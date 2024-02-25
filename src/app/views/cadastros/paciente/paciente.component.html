@@ -413,7 +413,7 @@
                                             </div>
                                         </div>
                                         <mat-divider></mat-divider>
-                                        <div class="container cnt-dados-contato">
+                                        <div class="container cnt-dados-endereco">
                                             <div class="row row-card">
                                                 <div class="col col-lg-12 col-md-12 col-sm-12">
                                                     <a class="btn-collapse" data-bs-toggle="collapse" role="button"
@@ -421,8 +421,8 @@
                                                         aria-controls="collapse-endereco-{{i}}"
                                                         (click)="toggleCollapse(i, 'endereco')">
                                                         <mat-icon class="collapse-arrow" id="arrow-{{i}}">{{
-                                                            isCollapsed[i] ? 'expand_more' : 'chevron_right'
-                                                            }}</mat-icon>
+                                                            isCollapsed[i] ? 'expand_more' :
+                                                            'chevron_right'}}</mat-icon>
                                                         <strong class="card-title">Endereço</strong>
                                                     </a>
                                                 </div>
@@ -486,6 +486,81 @@
                                                                 <mat-icon style="color: blue;">add</mat-icon>
                                                             </a>
                                                         </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <mat-divider></mat-divider>
+                                        <div class="container cnt-dados-contato">
+                                            <div class="row row-card">
+                                                <div class="col col-lg-12 col-md-12 col-sm-12">
+                                                    <a class="btn-collapse" data-bs-toggle="collapse" role="button"
+                                                        aria-expanded="false" href="#collapse-contato-{{i}}"
+                                                        aria-controls="collapse-contato-{{i}}"
+                                                        (click)="toggleCollapse(i, 'contato')">
+                                                        <mat-icon class="collapse-arrow" id="arrow-{{i}}">{{
+                                                            isCollapsedContato[i] ? 'expand_more' :
+                                                            'chevron_right' }}</mat-icon>
+                                                        <strong class="card-title">Contato</strong>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="row row-card" id="collapse-contato-{{i}}"
+                                                [ngClass]="{'collapse': !isCollapsedContato[i], 'show': isCollapsedContato[i]}">
+                                                <div *ngFor="let contato of listaContatoPaciente">
+                                                    <div class="row row-card">
+                                                        <div class="col col-lg-12 col-md-12 col-sm-12">
+                                                            <h3>{{contato.nome}}</h3>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row row-card">
+                                                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                            Número:
+                                                            <span><strong>{{contato.numeroContato}}</strong></span>
+                                                        </div>
+                                                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                            Email:
+                                                            <span><strong>{{contato.email}}</strong></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row row-card">
+                                                        <div class="col col-lg-4 col-md-4 col-sm-12">
+                                                            Tipo Contato:
+                                                            <span><strong>{{SetValorEnum(contato.tipoContato,
+                                                                    'contato')}}</strong></span>
+                                                        </div>
+                                                        <div class="col col-lg-3 col-md-3 col-sm-12">
+                                                            <mat-slide-toggle style="opacity: 1;"
+                                                                [checked]="contato.horarioComercial" disabled>Horario
+                                                                Comercial</mat-slide-toggle>
+                                                        </div>
+                                                        <div class="col col-lg-3 col-md-3 col-sm-12">
+                                                            <mat-slide-toggle style="opacity: 1;"
+                                                                [checked]="contato.lembretes"
+                                                                disabled>Lembretes</mat-slide-toggle>
+                                                        </div>
+                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                            <a matTooltip="Atualizar contato" matTooltipPosition="below"
+                                                                (click)="openContatoModal(null, contato)">
+                                                                <mat-icon style="color: blue;">edit</mat-icon>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                            <a matTooltip="Deletar contato" matTooltipPosition="below"
+                                                                (click)="DeletarContatoClinica(contato.id)">
+                                                                <mat-icon style="color: red;">delete</mat-icon>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <mat-divider></mat-divider>
+                                                <div class="row row-card">
+                                                    <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                        <a matTooltip="Adicionar novo contato"
+                                                            matTooltipPosition="below"
+                                                            (click)="openContatoModal(pacienteEdicao.id)">
+                                                            <mat-icon style="color: blue;">add</mat-icon>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
