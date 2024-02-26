@@ -64,8 +64,7 @@ import { FamiliarPacienteModalComponent } from './paciente/modals/familiar-pacie
     MatTooltipModule,
     MatDialogModule,
     NgxMaskModule.forRoot(),
-    MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   providers: [
     { provide: MatPaginatorIntl, useClass: CustomPaginator }
