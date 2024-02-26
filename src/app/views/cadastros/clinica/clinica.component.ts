@@ -70,7 +70,7 @@ export class ClinicaComponent implements OnInit {
       nome: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(4),
-        Validators.maxLength(50)
+        Validators.maxLength(150)
       ]),
       cnpj: new UntypedFormControl('', [
         Validators.required,

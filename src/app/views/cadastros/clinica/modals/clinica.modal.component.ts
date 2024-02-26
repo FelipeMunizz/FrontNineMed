@@ -143,7 +143,7 @@ export class ClinicaModalComponent implements OnInit {
         if (this.clinicaForm.invalid) {
             this.utilityService.MostraToastr('Erro', 'Por favor, preencha todos os campos corretamente', 'erro');
             return;
-          }
+        }
         var dados = this.dadosForm();
         var item = new Clinica;
         item.id = this.clinicaEdicao.id;
@@ -157,12 +157,12 @@ export class ClinicaModalComponent implements OnInit {
         item.logo = this.logoBase64;
 
         this.clinicaService.AtualizarClinica(item)
-        .subscribe((response) => {
-            this.utilityService.MostraToastr('Sucesso', 'Clinica atualizada com sucesso', 'sucesso');
-        },
-        (error) => {
-            this.utilityService.MostraToastr('Erro', 'Erro ao atualizar clinica', 'erro');
-        })
+            .subscribe((response) => {
+                this.utilityService.MostraToastr('Sucesso', 'Clinica atualizada com sucesso', 'sucesso');
+            },
+                (error) => {
+                    this.utilityService.MostraToastr('Erro', 'Erro ao atualizar clinica', 'erro');
+                })
     }
 
     //Metodos Auxiliares

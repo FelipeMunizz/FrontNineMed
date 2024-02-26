@@ -30,6 +30,12 @@ import { ClinicaModalComponent } from './clinica/modals/clinica.modal.component'
 import { ContatoClinicaModalComponent } from './clinica/modals/contato-clinica.modal.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { CustomPaginator } from 'app/shared/helpers/custom-paginator';
+import { MatSelectModule } from '@angular/material/select';
+import { PacienteModalComponent } from './paciente/modals/paciente.modal.component';
+import { ContatoPacienteModalComponent } from './paciente/modals/contato-paciente.modal.component';
+import { EnderecoPacienteModalComponent } from './paciente/modals/endereco-paciente.modal.component';
+import { ConvenioPacienteModalComponent } from './paciente/modals/convenio-paciente.modal.component';
+import { FamiliarPacienteModalComponent } from './paciente/modals/familiar-paciente.modal.component';
 
 
 @NgModule({
@@ -58,18 +64,23 @@ import { CustomPaginator } from 'app/shared/helpers/custom-paginator';
     MatTooltipModule,
     MatDialogModule,
     NgxMaskModule.forRoot(),
-    MatPaginatorModule
+    MatSelectModule,
   ],
   providers: [
     { provide: MatPaginatorIntl, useClass: CustomPaginator }
   ],
   declarations: [
+    FuncionarioComponent,
     ClinicaComponent,
     ClinicaModalComponent,
     EnderecoClinicaModalComponent,
     ContatoClinicaModalComponent,
     PacienteComponent, 
-    FuncionarioComponent
+    PacienteModalComponent,
+    ContatoPacienteModalComponent,
+    EnderecoPacienteModalComponent,
+    ConvenioPacienteModalComponent,
+    FamiliarPacienteModalComponent
   ],
 })
 export class CadastrosModule {}

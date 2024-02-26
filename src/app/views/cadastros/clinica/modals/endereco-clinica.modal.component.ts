@@ -14,8 +14,8 @@ import { UtilityService } from "app/shared/services/utility.service";
     <div class="row">
       <div class="col col-lg-3 col-md-3 col-sm-12">
         <mat-form-field class="full-width">
-          <input matInput name="cep" formControlName="cep" placeholder="CEP (apenas texto)"
-            value="" #cepInput (blur)="BuscaEndereco(cepInput.value)" (keypress)="onKeyPress($event)">
+          <input matInput name="cep" formControlName="cep" placeholder="CEP"
+            value="" #cepInput (blur)="BuscaEndereco(cepInput.value)" mask="00000-00">
         </mat-form-field>
         <small *ngIf="enderecoForm.controls['cep'].hasError('maxlength') && enderecoForm.controls['cep'].touched"
           class="form-error-msg">
@@ -63,11 +63,11 @@ import { UtilityService } from "app/shared/services/utility.service";
       <div class="col col-lg-4 col-md-4 col-sm-2">
         <mat-form-field class="full-width">
           <mat-label>Estado</mat-label>
-          <select matNativeControl formControlName="uf" class="form-select">
-            <option class="dropdown-item" *ngFor="let estado of estados" [value]="estado.value">
+          <mat-select matNativeControl formControlName="uf" class="dorpdown-menu">
+            <mat-option class="dropdown-item" *ngFor="let estado of estados" [value]="estado.value">
               {{ estado.label }}
-            </option>
-          </select>
+            </mat-option>
+          </mat-select>
         </mat-form-field>
         <small *ngIf="enderecoForm.controls['uf'].touched" class="form-error-msg"> </small>
       </div>
@@ -169,7 +169,7 @@ export class EnderecoClinicaModalComponent implements OnInit {
              })
         }else{
             item.idClinica = this.idClinica;
-            this.clinicaService.AtualizarEnderecoClinica(item)
+            this.clinicaService.AdicionarEnderecoClinica(item)
             .subscribe((response) => {
                 this.utilityService.MostraToastr('Sucesso',response.message, 'sucesso');
              },
@@ -183,13 +183,6 @@ export class EnderecoClinicaModalComponent implements OnInit {
     dadosForm(){
         return this.enderecoForm.controls;
     } 
-
-    onKeyPress(event: any): void {
-        const keyCode = event.keyCode;
-        if ((keyCode < 48 || keyCode > 57) && keyCode !== 8) {
-            event.preventDefault();
-        }
-    }
 
     BuscaEndereco(cep: string) {
         this.utilityService.BuscaEndereco(cep).subscribe(

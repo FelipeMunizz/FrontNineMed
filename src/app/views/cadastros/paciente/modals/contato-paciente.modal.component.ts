@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { ContatoClinica } from "app/shared/models/clinica.model";
-import { ClinicaService } from "app/shared/services/app-models/clinica.service";
+import { ContatoPaciente } from "app/shared/models/paciente.model";
+import { PacienteService } from "app/shared/services/app-models/paciente.service";
 import { EnumService } from "app/shared/services/enum.service";
 import { UtilityService } from "app/shared/services/utility.service";
 
@@ -62,18 +62,18 @@ import { UtilityService } from "app/shared/services/utility.service";
     `
 })
 
-export class ContatoClinicaModalComponent implements OnInit {
-    idClinica = this.data.idClinica;
+export class ContatoPacienteModalComponent implements OnInit {
+    idPaciente = this.data.idPaciente;
     contatoEdicao = this.data.contato;
     contatoForm: UntypedFormGroup;
     tipoContato: { value: number; label: string }[] = [];
     constructor(
-        private clinicaService: ClinicaService,
+        private pacienteService: PacienteService,
         private enumService: EnumService,
         private utilityService: UtilityService,
-        @Inject(MAT_DIALOG_DATA) public data: { idClinica?: number, contato?: ContatoClinica }) {
+        @Inject(MAT_DIALOG_DATA) public data: { idPaciente?: number, contato?: ContatoPaciente }) {
         this.contatoEdicao = data.contato;
-        this.idClinica = data.idClinica;
+        this.idPaciente = data.idPaciente;
     }
     ngOnInit(): void {
         this.IniciaForm();
@@ -103,7 +103,7 @@ export class ContatoClinicaModalComponent implements OnInit {
         })
     }
 
-    LoadDadosForm(contato?: ContatoClinica) {
+    LoadDadosForm(contato?: ContatoPaciente) {
         var dados = this.dadosForm();
         dados['nomeContato'].setValue(contato.nome);
         dados['numeroContato'].setValue(contato.numeroContato);
@@ -117,9 +117,9 @@ export class ContatoClinicaModalComponent implements OnInit {
         if (this.contatoForm.invalid) {
             this.utilityService.MostraToastr('Erro', 'Por favor, preencha todos os campos corretamente', 'erro');
             return;
-          }
+        }
         var dados = this.dadosForm();
-        var item = new ContatoClinica;
+        var item = new ContatoPaciente;
         item.nome = dados['nomeContato'].value;
         item.numeroContato = dados['numeroContato'].value;
         item.email = dados['email'].value;
@@ -127,30 +127,30 @@ export class ContatoClinicaModalComponent implements OnInit {
         item.horarioComercial = dados['horarioComercial'].value;
         item.lembretes = dados['lembretes'].value;
 
-        if(this.contatoEdicao){
+        if (this.contatoEdicao) {
             item.id = this.contatoEdicao.id;
-            item.idClinica = this.contatoEdicao.idClinica;
+            item.idPaciente = this.contatoEdicao.idPaciente;
 
-            this.clinicaService.AtualizarContatoClinica(item)
-            .subscribe((response) => {
-                this.utilityService.MostraToastr('Sucesso','Contato atualizado com sucesso', 'sucesso');
-             },
-             (error) => {
-                this.utilityService.MostraToastr('Erro','Erro ao atualizar contato', 'erro');
-             })
-        }else{
-            item.idClinica = this.idClinica;
-            this.clinicaService.AdicionarContatoClinica(item)
-            .subscribe((response) => {
-                this.utilityService.MostraToastr('Sucesso',response.message, 'sucesso');
-             },
-             (error) => {
-                this.utilityService.MostraToastr('Erro','Erro ao adicionar contato', 'erro');
-             })
+            this.pacienteService.AtualizarContatoPaciente(item)
+                .subscribe((response) => {
+                    this.utilityService.MostraToastr('Sucesso', 'Contato atualizado com sucesso', 'sucesso');
+                },
+                    (error) => {
+                        this.utilityService.MostraToastr('Erro', 'Erro ao atualizar contato', 'erro');
+                    })
+        } else {
+            item.idPaciente = this.idPaciente;
+            this.pacienteService.AdicionarContatoPaciente(item)
+                .subscribe((response) => {
+                    this.utilityService.MostraToastr('Sucesso', response.message, 'sucesso');
+                },
+                    (error) => {
+                        this.utilityService.MostraToastr('Erro', 'Erro ao adicionar contato', 'erro');
+                    })
         }
 
     }
-    
+
     //Metodos Auxiliares   
     dadosForm() {
         return this.contatoForm.controls;

@@ -1,0 +1,706 @@
+<mat-card class="p0">
+    <mat-card-title>
+        <div class="row">
+            <div class="col col-lg-10 col-md-10 col-sm-10">
+                <mat-card-title class="text-muted">
+                    Paciente
+                </mat-card-title>
+            </div>
+            <div class="col col-lg-2 col-md-2 col-sm-2">
+                <div class="demo-button-container" *ngIf="tipoTela == 1">
+                    <button mat-raised-button color="primary" class="btn-card" matTooltip="Adicionar novo Paciente"
+                        TooltipPosition="below" (click)="TelaCadastro()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+                <div class="demo-button-container" *ngIf="tipoTela != 1">
+                    <button mat-raised-button color="primary" class="btn-card" matTooltip="Lista Paciente"
+                        matTooltipPosition="below" (click)="ListaPaciente()">
+                        <mat-icon>list</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-card-title>
+
+    <mat-card-content>
+        <!--tela listagem-->
+        <mat-card-content *ngIf="tipoTela == 1">
+            <div class="row">
+                <div class="col col-lg-10 col-md-10 col-sm-10">
+                    <mat-form-field>
+                        <mat-label>Pesquisar</mat-label>
+                        <input matInput (keyup)="AplicaFiltro($event)" placeholder="Ex. João" #input>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource" matSort>
+
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cod. Paciente </th>
+                        <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+                    </ng-container>
+
+                    <!-- Nome Column -->
+                    <ng-container matColumnDef="nome">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
+                        <td mat-cell *matCellDef="let row"> {{row.nome}} </td>
+                    </ng-container>
+
+                    <!-- RG Column -->
+                    <ng-container matColumnDef="rg">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> RG </th>
+                        <td mat-cell *matCellDef="let row"> {{row.rg}} </td>
+                    </ng-container>
+
+                    <!-- CPF Column -->
+                    <ng-container matColumnDef="cpf">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> CPF </th>
+                        <td mat-cell *matCellDef="let row"> {{row.cpf}} </td>
+                    </ng-container>
+
+                    <!-- Acoes Column -->
+                    <ng-container matColumnDef="acoes">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ações </th>
+                        <td mat-cell *matCellDef="let row">
+                            <div>
+                                <a (click)="EditarPaciente(row.id)">
+                                    <mat-icon style="color: blue;" matTooltip="Editar Paciente"
+                                        matTooltipPosition="below">edit</mat-icon>
+                                </a> &nbsp;&nbsp;
+                                <a (click)="DeletarPaciente(row.id)">
+                                    <mat-icon style="color: red;" matTooltip="Deletar Paciente"
+                                        matTooltipPosition="below">delete</mat-icon>
+                                </a>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="dispplayColuns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: dispplayColuns;"></tr>
+
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4" style="text-align: center;">Nenhum dado Encontrado </td>
+                    </tr>
+                </table>
+
+                <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[5, 10, 25, 100]"
+                    showFirstLastButtons aria-label="Select page">
+                </mat-paginator>
+            </div>
+        </mat-card-content>
+
+        <!--tela cadastro-->
+        <mat-card-content *ngIf="tipoTela == 2">
+            <form [formGroup]="pacienteForm" (submit)="SalvarClick()">
+                <mat-card>
+                    <mat-card-title>Dados Paciente</mat-card-title>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="nome" formControlName="nome" placeholder="Nome" value=""
+                                        class="p-16">
+                                </mat-form-field>
+                                <small *ngIf="pacienteForm.controls['nome'].touched" class="form-error-msg"> </small>
+                            </div>
+                            <div class="col col-lg-6 col-md-6 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                    <input matInput [matDatepicker]="picker" formControlName="dataNascimento"
+                                        placeholder="Data de Nascimento">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Estado Civil</mat-label>
+                                    <mat-select matNativeControl formControlName="estadoCivil" class="dorpdown-menu">
+                                        <mat-option class="dropdown-item" *ngFor="let estadoCivil of estadosCivil"
+                                            [value]="estadoCivil.value">
+                                            {{ estadoCivil.label }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col col-lg-6 col-md-6 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="profissao" formControlName="profissao" placeholder="Profissao"
+                                        value="">
+                                </mat-form-field>
+                                <small *ngIf="pacienteForm.controls['profissao'].touched" class="form-error-msg">
+                                </small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="rg" formControlName="rg" placeholder="RG" value=""
+                                        mask="00.000.000-0">
+                                </mat-form-field>
+                                <small *ngIf="pacienteForm.controls['rg'].touched" class="form-error-msg"> </small>
+                            </div>
+                            <div class="col col-lg-6 col-md-6 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="cpf" formControlName="cpf" placeholder="CPF" value=""
+                                        mask="000.000.000-00">
+                                </mat-form-field>
+                                <small *ngIf="pacienteForm.controls['cpf'].touched" class="form-error-msg"> </small>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card>
+                    <mat-card-title>
+                        Dados Endereço
+                    </mat-card-title>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col col-lg-3 col-md-3 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="cep" formControlName="cep" placeholder="CEP" value=""
+                                        #cepInput (blur)="BuscaEndereco(cepInput.value)" mask="00000-000">
+                                </mat-form-field>
+                                <small *ngIf="pacienteForm.controls['cep'].touched" class="form-error-msg"></small>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="logradouro" formControlName="logradouro"
+                                        placeholder="Endereço" value="">
+                                </mat-form-field>
+                                <small *ngIf="pacienteForm.controls['logradouro'].touched" class="form-error-msg">
+                                </small>
+                            </div>
+
+                            <div class="col col-lg-2 col-md-2 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="numero" formControlName="numero" placeholder="Número"
+                                        value="">
+                                </mat-form-field>
+                                <small *ngIf="pacienteForm.controls['numero'].touched" class="form-error-msg"> </small>
+                            </div>
+                            <div class="col col-lg-4 col-md-4 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="complemento" formControlName="complemento"
+                                        placeholder="Complemento" value="">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col col-lg-4 col-md-4 col-sm-2">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="bairro" formControlName="bairro" placeholder="Bairro"
+                                        value="">
+                                </mat-form-field>
+                                <small *ngIf="pacienteForm.controls['bairro'].touched" class="form-error-msg"> </small>
+                            </div>
+
+                            <div class="col col-lg-4 col-md-4 col-sm-2">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="cidade" formControlName="cidade" placeholder="Ciddade"
+                                        value="">
+                                </mat-form-field>
+                                <small *ngIf="pacienteForm.controls['cidade'].touched" class="form-error-msg"> </small>
+                            </div>
+
+                            <div class="col col-lg-4 col-md-4 col-sm-2">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Estado</mat-label>
+                                    <mat-select matNativeControl formControlName="uf" class="dorpdown-menu">
+                                        <mat-option class="dropdown-item" *ngFor="let estado of estados"
+                                            [value]="estado.value">
+                                            {{ estado.label }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <small *ngIf="pacienteForm.controls['uf'].touched" class="form-error-msg"> </small>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card>
+                    <mat-card-title>
+                        Dados Contato
+                    </mat-card-title>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col col-lg-4 col-md-4 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="nomeContato" formControlName="nomeContato"
+                                        placeholder="Nome Contato" value="">
+                                </mat-form-field>
+                                <small *ngIf="pacienteForm.controls['nomeContato'].touched" class="form-error-msg">
+                                </small>
+                            </div>
+                            <div class="col col-lg-4 col-md-4 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="numeroContato" formControlName="numeroContato"
+                                        placeholder="Número Contato" value="" mask="(00) 00000-0000">
+                                </mat-form-field>
+                                <small *ngIf="pacienteForm.controls['numeroContato'].touched" class="form-error-msg">
+                                </small>
+                            </div>
+                            <div class="col col-lg-4 col-md-4 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Tipo de Contato</mat-label>
+                                    <mat-select matNativeControl formControlName="tipoContato" class="dorpdown-menu">
+                                        <mat-option value="0">Residêncial</mat-option>
+                                        <mat-option value="1">Comercial</mat-option>
+                                        <mat-option value="2">Outro</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <small *ngIf="pacienteForm.controls['tipoContato'].touched" class="form-error-msg">
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="email" formControlName="email" placeholder="Email" value="">
+                                </mat-form-field>
+                            </div>
+                            <div class="col col-lg-3 col-md-3 col-sm-12">
+                                <mat-checkbox name="horarioComercial" formControlName="horarioComercial"
+                                    class="pb-16">Horário Comercial
+                                </mat-checkbox>
+                            </div>
+                            <div class="col col-lg-3 col-md-3 col-sm-12">
+                                <mat-checkbox name="lembretes" formControlName="lembretes"
+                                    class="pb-16">Lembretes</mat-checkbox>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card>
+                    <mat-card-title>Dados Convenio</mat-card-title>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col col-lg-2 col-md-2 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Convenio</mat-label>
+                                    <mat-select matNativeControl formControlName="idConvenio"
+                                        class="dorpdown-menu p-16">
+                                        <mat-option *ngFor="let convenio of listaConvenios"
+                                            [value]="convenio.id">{{convenio.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col col-lg-5 col-md-5 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="numeroCarteirinha" formControlName="numeroCarteirinha"
+                                        placeholder="Número Carteirinha" value="" class="p-16">
+                                </mat-form-field>
+                            </div>
+                            <div class="col col-lg-5 col-md-5 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <mat-datepicker-toggle matIconSuffix [for]="pickerId"></mat-datepicker-toggle>
+                                    <mat-datepicker #pickerId></mat-datepicker>
+                                    <input matInput [matDatepicker]="pickerId" formControlName="validade"
+                                        placeholder="Validade">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-lg-12 col-md-12 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="observacoes" formControlName="observacoes"
+                                        placeholder="Observações" value="">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card>
+                    <mat-card-title>
+                        Dados Acompanhante
+                    </mat-card-title>
+                    <mat-card-contetn>
+                        <div class="row">
+                            <div class="col col-lg-4 col-md-4 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="nomeFamiliar" formControlName="nomeFamiliar"
+                                        placeholder="Nome" value="">
+                                </mat-form-field>
+                            </div>
+                            <div class="col col-lg-4 col-md-4 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="grauParentesco" formControlName="grauParentesco"
+                                        placeholder="Grau de Parentesco" value="">
+                                </mat-form-field>
+                            </div>
+                            <div class="col col-lg-4 col-md-4 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="telefoneFamiliar" formControlName="telefoneFamiliar"
+                                        placeholder="Telefone" value="" mask="(00) 00000-0000">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </mat-card-contetn>
+                </mat-card>
+
+                <div class="row">
+                    <div class="col align-self-end">
+                        <input type="submit" class="btn btn-primary btn-clinica-submit" value="Salvar">
+                    </div>
+                </div>
+            </form>
+        </mat-card-content>
+
+        <!--tela edicao-->
+        <mat-card-content *ngIf="tipoTela == 3">
+            <div class="accordion" id="accordion-clinica">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" [class.collapsed]="!isAccordionOpen[i]"
+                        (click)="toggleAccordion(i)">
+                        {{pacienteEdicao.id}} - {{pacienteEdicao.nome}}
+                    </button>
+                </h2>
+                <div id="accordion-item-paciente" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-12">
+                                <div class="card" style="width: 50rem;">
+                                    <h3 class="card-title" style="text-align: center;">{{pacienteEdicao.nome}} -
+                                        {{calculaIdade(pacienteEdicao.dataNascimento)}} Anos</h3>
+                                    <mat-divider></mat-divider>
+                                    <div class="card-content">
+                                        <div class="row row-card">
+                                            <div class="col col-lg-6 col-md-6 col sm-12">
+                                                RG:
+                                                <strong><span>{{pacienteEdicao.rg}}</span></strong>
+                                            </div>
+                                            <div class="col col-lg-6 col-md-6 col sm-12">
+                                                CPF:
+                                                <strong><span>{{pacienteEdicao.cpf}}</span></strong>
+                                            </div>
+                                        </div>
+                                        <div class="row row-card">
+                                            <div class="col col-lg-6 col-md-6 col sm-12">
+                                                Data Nascimento:
+                                                <strong><span>{{utitlity.formatarData(pacienteEdicao.dataNascimento)}}</span></strong>
+                                            </div>
+                                            <div class="col col-lg-6 col-md-6 col sm-12">
+                                                Estado Civil:
+                                                <strong><span>{{SetValorEnum(pacienteEdicao.estadoCivil,
+                                                        'civil')}}</span></strong>
+                                            </div>
+                                        </div>
+                                        <div class="row row-card">
+                                            <div class="col col-lg-6 col-md-6 col sm-12"
+                                                *ngIf="pacienteEdicao.profissao">
+                                                Profissão:
+                                                <strong><span>{{pacienteEdicao.profissao}}</span></strong>
+                                            </div>
+                                            <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                <a matTooltip="Atualizar Paciente" matTooltipPosition="below"
+                                                    (click)="openModalPaciente(pacienteEdicao)">
+                                                    <mat-icon style="color: blue;">edit</mat-icon>
+                                                </a>
+                                            </div>
+                                            <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                <a matTooltip="Deletar Paciente" matTooltipPosition="below"
+                                                    (click)="DeletarPaciente(pacienteEdicao.id)">
+                                                    <mat-icon style="color: red;">delete</mat-icon>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <mat-divider></mat-divider>
+                                        <div class="container cnt-dados-endereco">
+                                            <div class="row row-card">
+                                                <div class="col col-lg-12 col-md-12 col-sm-12">
+                                                    <a class="btn-collapse" data-bs-toggle="collapse" role="button"
+                                                        aria-expanded="false" href="#collapse-endereco-{{i}}"
+                                                        aria-controls="collapse-endereco-{{i}}"
+                                                        (click)="toggleCollapse(i, 'endereco')">
+                                                        <mat-icon class="collapse-arrow" id="arrow-{{i}}">{{
+                                                            isCollapsed[i] ? 'expand_more' :
+                                                            'chevron_right'}}</mat-icon>
+                                                        <strong class="card-title">Endereço</strong>
+                                                    </a>
+                                                </div>
+                                                <div class="row row-card" id="collapse-endereco-{{i}}"
+                                                    [ngClass]="{'collapse': !isCollapsed[i], 'show': isCollapsed[i]}">
+                                                    <div *ngFor="let endereco of listaEnderecoPaciente">
+                                                        <div class="row row-card">
+                                                            <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                                Logradouro: <span><strong>{{
+                                                                        endereco.logradouro
+                                                                        }}</strong></span>
+                                                            </div>
+                                                            <div class="col col-lg-2 col-md-2 col-sm-12">
+                                                                N°: <span><strong>{{ endereco.numero
+                                                                        }}</strong></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row row-card">
+                                                            <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                                Complemento: <span><strong>{{
+                                                                        endereco.complemento
+                                                                        }}</strong></span>
+                                                            </div>
+                                                            <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                                CEP: <span><strong>{{ endereco.cep
+                                                                        }}</strong></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row row-card">
+                                                            <div class="col col-lg-4 col-md-4 col-sm-12">
+                                                                Cidade: <span><strong>{{ endereco.cidade
+                                                                        }}</strong></span>
+                                                            </div>
+                                                            <div class="col col-lg-2 col-md-2 col-sm-12">
+                                                                UF: <span><strong>{{
+                                                                        SetValorEnum(endereco.estado, 'uf')
+                                                                        }}</strong></span>
+                                                            </div>
+                                                            <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                                <a matTooltip="Atualizar endereço"
+                                                                    matTooltipPosition="below"
+                                                                    (click)="openEnderecoModal(null, endereco)">
+                                                                    <mat-icon style="color: blue;">edit</mat-icon>
+                                                                </a>
+                                                            </div>
+                                                            <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                                <a matTooltip="Deletar endereço"
+                                                                    matTooltipPosition="below"
+                                                                    (click)="DeletarEnderecoPaciente(endereco.id)">
+                                                                    <mat-icon style="color: red;">delete</mat-icon>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <mat-divider></mat-divider>
+                                                    </div>
+                                                    <div class="row row-card">
+                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                            <a matTooltip="Adicionar novo endereço"
+                                                                matTooltipPosition="below"
+                                                                (click)="openEnderecoModal(pacienteEdicao.id)">
+                                                                <mat-icon style="color: blue;">add</mat-icon>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <mat-divider></mat-divider>
+                                        <div class="container cnt-dados-contato">
+                                            <div class="row row-card">
+                                                <div class="col col-lg-12 col-md-12 col-sm-12">
+                                                    <a class="btn-collapse" data-bs-toggle="collapse" role="button"
+                                                        aria-expanded="false" href="#collapse-contato-{{i}}"
+                                                        aria-controls="collapse-contato-{{i}}"
+                                                        (click)="toggleCollapse(i, 'contato')">
+                                                        <mat-icon class="collapse-arrow" id="arrow-{{i}}">{{
+                                                            isCollapsedContato[i] ? 'expand_more' :
+                                                            'chevron_right' }}</mat-icon>
+                                                        <strong class="card-title">Contato</strong>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="row row-card" id="collapse-contato-{{i}}"
+                                                [ngClass]="{'collapse': !isCollapsedContato[i], 'show': isCollapsedContato[i]}">
+                                                <div *ngFor="let contato of listaContatoPaciente">
+                                                    <div class="row row-card">
+                                                        <div class="col col-lg-12 col-md-12 col-sm-12">
+                                                            <h3>{{contato.nome}}</h3>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row row-card">
+                                                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                            Número:
+                                                            <span><strong>{{contato.numeroContato}}</strong></span>
+                                                        </div>
+                                                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                            Email:
+                                                            <span><strong>{{contato.email}}</strong></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row row-card">
+                                                        <div class="col col-lg-4 col-md-4 col-sm-12">
+                                                            Tipo Contato:
+                                                            <span><strong>{{SetValorEnum(contato.tipoContato,
+                                                                    'contato')}}</strong></span>
+                                                        </div>
+                                                        <div class="col col-lg-3 col-md-3 col-sm-12">
+                                                            <mat-slide-toggle style="opacity: 1;"
+                                                                [checked]="contato.horarioComercial" disabled>Horario
+                                                                Comercial</mat-slide-toggle>
+                                                        </div>
+                                                        <div class="col col-lg-3 col-md-3 col-sm-12">
+                                                            <mat-slide-toggle style="opacity: 1;"
+                                                                [checked]="contato.lembretes"
+                                                                disabled>Lembretes</mat-slide-toggle>
+                                                        </div>
+                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                            <a matTooltip="Atualizar contato" matTooltipPosition="below"
+                                                                (click)="openContatoModal(null, contato)">
+                                                                <mat-icon style="color: blue;">edit</mat-icon>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                            <a matTooltip="Deletar contato" matTooltipPosition="below"
+                                                                (click)="DeletarContatoPaciente(contato.id)">
+                                                                <mat-icon style="color: red;">delete</mat-icon>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <mat-divider></mat-divider>
+                                                <div class="row row-card">
+                                                    <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                        <a matTooltip="Adicionar novo contato"
+                                                            matTooltipPosition="below"
+                                                            (click)="openContatoModal(pacienteEdicao.id)">
+                                                            <mat-icon style="color: blue;">add</mat-icon>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <mat-divider></mat-divider>
+                                        <div class="container cnt-dados-convenio">
+                                            <div class="row row-card">
+                                                <div class="col col-lg-12 col-md-12 col-sm-12">
+                                                    <a class="btn-collapse" data-bs-toggle="collapse" role="button"
+                                                        aria-expanded="false" href="#collapse-convenio-{{i}}"
+                                                        aria-controls="collapse-convenio-{{i}}"
+                                                        (click)="toggleCollapse(i, 'convenio')">
+                                                        <mat-icon class="collapse-arrow" id="arrow-{{i}}">{{
+                                                            isCollapsedConvenio[i] ? 'expand_more' :
+                                                            'chevron_right' }}</mat-icon>
+                                                        <strong class="card-title">Convênio</strong>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="row row-card" id="collapse-convenio-{{i}}"
+                                                [ngClass]="{'collapse': !isCollapsedConvenio[i], 'show': isCollapsedConvenio[i]}">
+                                                <div *ngFor="let convenio of listaConvenioPaciente">
+                                                    <div class="row row-card">
+                                                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                            <span>Convênio:
+                                                                <strong>{{getConvenioPaciente(convenio.idConvenio)}}</strong></span>
+                                                        </div>
+                                                        <div class="col col-lg-6 col-md-6 col-sm-12"
+                                                            *ngIf="convenio.contratoPlano">
+                                                            <span>Plano:
+                                                                <strong>{{convenio.contratoPlano}}</strong></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row row-card">
+                                                        <div class="col col-lg-6 col-md-6 col-sm-12"
+                                                            *ngIf="convenio.validade">
+                                                            <span>Validade:
+                                                                <strong>{{utitlity.formatarData(convenio.validade)}}</strong></span>
+                                                        </div>
+                                                        <div class="col col-lg-6 col-md-6 col-sm-12"
+                                                            *ngIf="convenio.observacoes">
+                                                            <span>Observações:
+                                                                <strong>{{convenio.observacoes}}</strong></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row row-card">
+                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                            <a matTooltip="Atualizar convênio"
+                                                                matTooltipPosition="below"
+                                                                (click)="openConvenioModal(null, convenio)">
+                                                                <mat-icon style="color: blue;">edit</mat-icon>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                            <a matTooltip="Deletar convênio" matTooltipPosition="below"
+                                                                (click)="DeletarConvenioPaciente(convenio.id)">
+                                                                <mat-icon style="color: red;">delete</mat-icon>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <mat-divider></mat-divider>
+                                                <div class="row row-card">
+                                                    <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                        <a matTooltip="Adicionar novo convênio"
+                                                            matTooltipPosition="below"
+                                                            (click)="openConvenioModal(pacienteEdicao.id)">
+                                                            <mat-icon style="color: blue;">add</mat-icon>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <mat-divider></mat-divider>
+                                        <div class="container cnt-dados-familiares">
+                                            <div class="row row-card">
+                                                <div class="col col-lg-12 col-md-12 col-sm-12">
+                                                    <a class="btn-collapse" data-bs-toggle="collapse" role="button"
+                                                        aria-expanded="false" href="#collapse-familiar-{{i}}"
+                                                        aria-controls="collapse-convenio-{{i}}"
+                                                        (click)="toggleCollapse(i, 'familiar')">
+                                                        <mat-icon class="collapse-arrow" id="arrow-{{i}}">{{
+                                                            isCollapsedFamiliar[i] ? 'expand_more' :
+                                                            'chevron_right' }}</mat-icon>
+                                                        <strong class="card-title">Familiares</strong>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="row row-card" id="collapse-familiar-{{i}}"
+                                                [ngClass]="{'collapse': !isCollapsedFamiliar[i], 'show': isCollapsedFamiliar[i]}">
+                                                <div *ngFor="let familiar of listaFamiliarPaciente">
+                                                    <div class="row row-card">
+                                                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                            <span>Nome:
+                                                                <strong>{{familiar.nome}}</strong></span>
+                                                        </div>
+                                                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                            <span>Grau de Parentesco:
+                                                                <strong>{{familiar.grauParentesco}}</strong></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row row-card">
+                                                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                            <span>Contato:
+                                                                <strong>{{familiar.telefone}}</strong></span>
+                                                        </div>
+                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                            <a matTooltip="Atualizar familiar"
+                                                                matTooltipPosition="below"
+                                                                (click)="openFamiliarModal(null, familiar)">
+                                                                <mat-icon style="color: blue;">edit</mat-icon>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                            <a matTooltip="Deletar familiar" matTooltipPosition="below"
+                                                                (click)="DeletarFamiliarPaciente(familiar.id)">
+                                                                <mat-icon style="color: red;">delete</mat-icon>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <mat-divider></mat-divider>
+                                                <div class="row row-card">
+                                                    <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                        <a matTooltip="Adicionar novo familiar"
+                                                            matTooltipPosition="below"
+                                                            (click)="openFamiliarModal(pacienteEdicao.id)">
+                                                            <mat-icon style="color: blue;">add</mat-icon>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card-content>
+</mat-card>

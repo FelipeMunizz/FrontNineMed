@@ -1,32 +1,40 @@
 import { HttpClient } from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
-@Injectable({    
+@Injectable({
   providedIn: "root",
 })
-export class UtilityService{
-    constructor(private httpClient: HttpClient, private toastr: ToastrService){}
+export class UtilityService {
+  constructor(private httpClient: HttpClient, private toastr: ToastrService) { }
 
-    public BuscaEndereco(cep: string){
-        return this.httpClient.get<any>(`https://viacep.com.br/ws/${cep}/json/`)
-    }
+  public BuscaEndereco(cep: string) {
+    return this.httpClient.get<any>(`https://viacep.com.br/ws/${cep}/json/`)
+  }
 
-    public BuscaCnpj(cnpj: string){
-      return this.httpClient.get<any>(`https://api.invertexto.com/v1/cnpj/${cnpj}?token=6166|6hBK4CYDjTvRrkcUROmZWRdxWqNSYn3A`)
-    }
+  public BuscaCnpj(cnpj: string) {
+    return this.httpClient.get<any>(`https://api.invertexto.com/v1/cnpj/${cnpj}?token=6166|6hBK4CYDjTvRrkcUROmZWRdxWqNSYn3A`)
+  }
 
-    public MostraToastr(title: string, message: string, tipoMensagem){
-      switch(tipoMensagem){
-        case 'sucesso':
-          this.toastr.success(message, title);
-          break;
-        case 'aviso':
-          this.toastr.warning(message, title);
-          break;
-        case 'erro':
-          this.toastr.error(message, title);
-          break;
-      }
+  public MostraToastr(title: string, message: string, tipoMensagem) {
+    switch (tipoMensagem) {
+      case 'sucesso':
+        this.toastr.success(message, title);
+        break;
+      case 'aviso':
+        this.toastr.warning(message, title);
+        break;
+      case 'erro':
+        this.toastr.error(message, title);
+        break;
     }
+  }
+
+  public formatarData(data: string): string {
+    const dataFormatada = new Date(data);
+    const dia = dataFormatada.getDate().toString().padStart(2, '0');
+    const mes = (dataFormatada.getMonth() + 1).toString().padStart(2, '0');
+    const ano = dataFormatada.getFullYear();
+    return `${dia}/${mes}/${ano}`;
+  }
 }

@@ -20,7 +20,7 @@ export class ClinicaService{
     }
 
     //Obtem Clinica 
-    public ObterClinica(idClinica: number){
+    public ObterClinica(idClinica: number): Observable<any> {
       const url = `${this.baseUrl}/Clinica/ObterClinica/${idClinica}`;
       return this.httpClient.get<any>(url);
     }
@@ -44,13 +44,18 @@ export class ClinicaService{
     }
 
     //Listar Endereco Clinica
-    public ListarEnderecoClinica(idClinica: number){
+    public ListarEnderecoClinica(idClinica: number): Observable<any> {
       const url = `${this.baseUrl}/Clinica/ListaEnderecosClinica/${idClinica}`;
       return this.httpClient.get<any>(url);
     }
 
+    public AdicionarEnderecoClinica(item: EnderecoClinica): Observable<any> {
+      const url = `${this.baseUrl}/Clinica/AdicionarEnderecoClinica`;
+      return this.httpClient.post<any>(url, item);
+    }
+
     //Atualizar Endereco Clinica
-    public AtualizarEnderecoClinica(item: EnderecoClinica){
+    public AtualizarEnderecoClinica(item: EnderecoClinica): Observable<any> {
       const url = `${this.baseUrl}/Clinica/AtualizarEnderecoClinica`;
       return this.httpClient.put<any>(url, item);
     }
@@ -61,13 +66,18 @@ export class ClinicaService{
     }
 
     //Listar Contatos Clinica
-    public ListaContatoClinica(idClinica: number){
+    public ListaContatoClinica(idClinica: number): Observable<any> {
       const url = `${this.baseUrl}/Clinica/ListaContatoClinica/${idClinica}`;
       return this.httpClient.get<any>(url);
     }
 
+    public AdicionarContatoClinica(item: ContatoClinica): Observable<any> {
+      const url = `${this.baseUrl}/Clinica/AdicionarContatoClinica`;
+      return this.httpClient.post<any>(url, item);
+    }
+
     //Atualizar Contato Clinica
-    public AtualizarContatoClinica(item: ContatoClinica){
+    public AtualizarContatoClinica(item: ContatoClinica): Observable<any> {
       const url = `${this.baseUrl}/Clinica/AtualizarContatoClinica`;
       return this.httpClient.put<any>(url, item);
     }
