@@ -34,6 +34,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { PacienteModalComponent } from './paciente/modals/paciente.modal.component';
 import { ContatoPacienteModalComponent } from './paciente/modals/contato-paciente.modal.component';
 import { EnderecoPacienteModalComponent } from './paciente/modals/endereco-paciente.modal.component';
+import { ConvenioPacienteModalComponent } from './paciente/modals/convenio-paciente.modal.component';
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import { EnderecoPacienteModalComponent } from './paciente/modals/endereco-pacie
     PacienteComponent, 
     PacienteModalComponent,
     ContatoPacienteModalComponent,
-    EnderecoPacienteModalComponent
+    EnderecoPacienteModalComponent,
+    ConvenioPacienteModalComponent
   ],
 })
 export class CadastrosModule {}

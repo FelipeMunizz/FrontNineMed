@@ -18,6 +18,7 @@ import { PacienteModalComponent } from './modals/paciente.modal.component';
 import { AppLoaderService } from 'app/shared/services/app-loader/app-loader.service';
 import { EnderecoPacienteModalComponent } from './modals/endereco-paciente.modal.component';
 import { ContatoPacienteModalComponent } from './modals/contato-paciente.modal.component';
+import { ConvenioPacienteModalComponent } from './modals/convenio-paciente.modal.component';
 
 @Component({
   selector: 'app-paciente',
@@ -35,6 +36,8 @@ export class PacienteComponent implements OnInit {
   isAccordionOpen: boolean[] = [];
   isCollapsed: boolean[] = [];
   isCollapsedContato: boolean[] = [];
+  isCollapsedConvenio: boolean[] = [];
+  isCollapsedFamiliar: boolean[] = [];
 
   listaConvenios: Array<SelectedModel>;
   convenioSelected: SelectedModel;
@@ -57,7 +60,7 @@ export class PacienteComponent implements OnInit {
   constructor(
     private authService: JwtAuthService,
     private pacienteService: PacienteService,
-    private utitlity: UtilityService,
+    public utitlity: UtilityService,
     private enumService: EnumService,
     private convenioService: ConvenioService,
     private modal: AppConfirmService,
@@ -216,7 +219,6 @@ export class PacienteComponent implements OnInit {
         this.pacienteService.ListarEnderecoPaciente(idPaciente)
           .subscribe((enderecos) => {
             this.listaEnderecoPaciente = enderecos;
-            console.log(this.listaEnderecoPaciente);
           });
         this.pacienteService.ListaContatoPaciente(idPaciente)
           .subscribe((contatos) => {
@@ -305,8 +307,21 @@ export class PacienteComponent implements OnInit {
     });
   }
 
-  
-  DeletarEnderecoClinica(id: number) {
+  openConvenioModal(idPaciente?: number, convenio?: ConvenioPaciente) {
+    const dialogRef = this.dialog.open(ConvenioPacienteModalComponent, {
+      width: '100vh',
+      height: 'auto',
+      data: { idPaciente, convenio }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result)
+        this.ListaPaciente();
+    });
+  }
+
+
+  DeletarEnderecoPaciente(id: number) {
     this.modal.confirm({ title: 'Confirme', message: 'Tem certeza que deseja deletar o endereço?' })
       .subscribe((retorno) => {
         if (retorno) {
@@ -319,7 +334,39 @@ export class PacienteComponent implements OnInit {
       })
   }
 
+  DeletarContatoPaciente(id: number) {
+    this.modal.confirm({ title: 'Confirme', message: 'Tem certeza que deseja deletar o contato?' })
+      .subscribe((retorno) => {
+        if (retorno) {
+          this.pacienteService.DeletarContatoPaciente(id)
+            .subscribe((response: any) => {
+              this.ListaPaciente();
+              this.utitlity.MostraToastr('', response.message, 'aviso')
+            })
+        }
+      })
+  }
+
+  DeletarConvenioPaciente(id: number) {
+    this.modal.confirm({ title: 'Confirme', message: 'Tem certeza que deseja deletar o convenio?' })
+      .subscribe((retorno) => {
+        if (retorno) {
+          this.pacienteService.DeletarConvenioPaciente(id)
+            .subscribe((response: any) => {
+              this.ListaPaciente();
+              this.utitlity.MostraToastr('', response.message, 'aviso')
+            })
+        }
+      })
+  }
+
   //Metodos Auxiliares
+
+  getConvenioPaciente(idConvenio: number){
+    let convPaciente = new SelectedModel;
+    convPaciente = this.listaConvenios.find(x => x.id === idConvenio);
+    return convPaciente.name;
+  }
 
   calculaIdade(dataNascimento: Date): number {
     const hoje = new Date();
@@ -359,15 +406,6 @@ export class PacienteComponent implements OnInit {
     }
   }
 
-  formatarData(data: string): string {
-    const dataFormatada = new Date(data);
-    const dia = dataFormatada.getDate().toString().padStart(2, '0');
-    const mes = (dataFormatada.getMonth() + 1).toString().padStart(2, '0');
-    const ano = dataFormatada.getFullYear();
-    return `${dia}/${mes}/${ano}`;
-  }
-
-
   toggleAccordion(index: number) {
     this.isAccordionOpen[index] = !this.isAccordionOpen[index];
     const collapse = this.el.nativeElement.querySelector(`#accordion-item-paciente`);
@@ -379,6 +417,12 @@ export class PacienteComponent implements OnInit {
       this.isCollapsed[index] = !this.isCollapsed[index];
     else if (tipo === 'contato') {
       this.isCollapsedContato[index] = !this.isCollapsedContato[index];
+    }
+    else if (tipo === 'convenio') {
+      this.isCollapsedConvenio[index] = !this.isCollapsedConvenio[index];
+    }
+    else if(tipo === 'familiar'){
+      this.isCollapsedFamiliar[index] = !this.isCollapsedFamiliar[index];
     }
   }
 

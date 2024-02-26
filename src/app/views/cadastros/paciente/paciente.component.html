@@ -385,7 +385,7 @@
                                         <div class="row row-card">
                                             <div class="col col-lg-6 col-md-6 col sm-12">
                                                 Data Nascimento:
-                                                <strong><span>{{formatarData(pacienteEdicao.dataNascimento)}}</span></strong>
+                                                <strong><span>{{utitlity.formatarData(pacienteEdicao.dataNascimento)}}</span></strong>
                                             </div>
                                             <div class="col col-lg-6 col-md-6 col sm-12">
                                                 Estado Civil:
@@ -471,7 +471,7 @@
                                                             <div class="col col-lg-1 col-md-1 col-sm-1">
                                                                 <a matTooltip="Deletar endereço"
                                                                     matTooltipPosition="below"
-                                                                    (click)="DeletarEnderecoClinica(endereco.id)">
+                                                                    (click)="DeletarEnderecoPaciente(endereco.id)">
                                                                     <mat-icon style="color: red;">delete</mat-icon>
                                                                 </a>
                                                             </div>
@@ -547,7 +547,7 @@
                                                         </div>
                                                         <div class="col col-lg-1 col-md-1 col-sm-1">
                                                             <a matTooltip="Deletar contato" matTooltipPosition="below"
-                                                                (click)="DeletarContatoClinica(contato.id)">
+                                                                (click)="DeletarContatoPaciente(contato.id)">
                                                                 <mat-icon style="color: red;">delete</mat-icon>
                                                             </a>
                                                         </div>
@@ -559,6 +559,135 @@
                                                         <a matTooltip="Adicionar novo contato"
                                                             matTooltipPosition="below"
                                                             (click)="openContatoModal(pacienteEdicao.id)">
+                                                            <mat-icon style="color: blue;">add</mat-icon>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <mat-divider></mat-divider>
+                                        <div class="container cnt-dados-convenio">
+                                            <div class="row row-card">
+                                                <div class="col col-lg-12 col-md-12 col-sm-12">
+                                                    <a class="btn-collapse" data-bs-toggle="collapse" role="button"
+                                                        aria-expanded="false" href="#collapse-convenio-{{i}}"
+                                                        aria-controls="collapse-convenio-{{i}}"
+                                                        (click)="toggleCollapse(i, 'convenio')">
+                                                        <mat-icon class="collapse-arrow" id="arrow-{{i}}">{{
+                                                            isCollapsedConvenio[i] ? 'expand_more' :
+                                                            'chevron_right' }}</mat-icon>
+                                                        <strong class="card-title">Convênio</strong>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="row row-card" id="collapse-convenio-{{i}}"
+                                                [ngClass]="{'collapse': !isCollapsedConvenio[i], 'show': isCollapsedConvenio[i]}">
+                                                <div *ngFor="let convenio of listaConvenioPaciente">
+                                                    <div class="row row-card">
+                                                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                            <span>Convênio:
+                                                                <strong>{{getConvenioPaciente(convenio.idConvenio)}}</strong></span>
+                                                        </div>
+                                                        <div class="col col-lg-6 col-md-6 col-sm-12"
+                                                            *ngIf="convenio.contratoPlano">
+                                                            <span>Plano:
+                                                                <strong>{{convenio.contratoPlano}}</strong></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row row-card">
+                                                        <div class="col col-lg-6 col-md-6 col-sm-12"
+                                                            *ngIf="convenio.validade">
+                                                            <span>Validade:
+                                                                <strong>{{utitlity.formatarData(convenio.validade)}}</strong></span>
+                                                        </div>
+                                                        <div class="col col-lg-6 col-md-6 col-sm-12"
+                                                            *ngIf="convenio.observacoes">
+                                                            <span>Observações:
+                                                                <strong>{{convenio.observacoes}}</strong></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row row-card">
+                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                            <a matTooltip="Atualizar convênio"
+                                                                matTooltipPosition="below"
+                                                                (click)="openConvenioModal(null, convenio)">
+                                                                <mat-icon style="color: blue;">edit</mat-icon>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                            <a matTooltip="Deletar convênio" matTooltipPosition="below"
+                                                                (click)="DeletarConvenioPaciente(convenio.id)">
+                                                                <mat-icon style="color: red;">delete</mat-icon>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <mat-divider></mat-divider>
+                                                <div class="row row-card">
+                                                    <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                        <a matTooltip="Adicionar novo convênio"
+                                                            matTooltipPosition="below"
+                                                            (click)="openConvenioModal(pacienteEdicao.id)">
+                                                            <mat-icon style="color: blue;">add</mat-icon>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <mat-divider></mat-divider>
+                                        <div class="container cnt-dados-familiares">
+                                            <div class="row row-card">
+                                                <div class="col col-lg-12 col-md-12 col-sm-12">
+                                                    <a class="btn-collapse" data-bs-toggle="collapse" role="button"
+                                                        aria-expanded="false" href="#collapse-familiar-{{i}}"
+                                                        aria-controls="collapse-convenio-{{i}}"
+                                                        (click)="toggleCollapse(i, 'familiar')">
+                                                        <mat-icon class="collapse-arrow" id="arrow-{{i}}">{{
+                                                            isCollapsedFamiliar[i] ? 'expand_more' :
+                                                            'chevron_right' }}</mat-icon>
+                                                        <strong class="card-title">Familiares</strong>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="row row-card" id="collapse-familiar-{{i}}"
+                                                [ngClass]="{'collapse': !isCollapsedFamiliar[i], 'show': isCollapsedFamiliar[i]}">
+                                                <div *ngFor="let familiar of listaFamiliarPaciente">
+                                                    <div class="row row-card">
+                                                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                            <span>Nome:
+                                                                <strong>{{familiar.nome}}</strong></span>
+                                                        </div>
+                                                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                            <span>Grau de Parentesco:
+                                                                <strong>{{familiar.grauParentesco}}</strong></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row row-card">
+                                                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                                                            <span>Contato:
+                                                                <strong>{{familiar.telefone}}</strong></span>
+                                                        </div>
+                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                            <a matTooltip="Atualizar familiar"
+                                                                matTooltipPosition="below"
+                                                                (click)="openFamiliarModal(null, familiar)">
+                                                                <mat-icon style="color: blue;">edit</mat-icon>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                            <a matTooltip="Deletar familiar" matTooltipPosition="below"
+                                                                (click)="DeletarFamiliarPaciente(familiar.id)">
+                                                                <mat-icon style="color: red;">delete</mat-icon>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <mat-divider></mat-divider>
+                                                <div class="row row-card">
+                                                    <div class="col col-lg-1 col-md-1 col-sm-1">
+                                                        <a matTooltip="Adicionar novo familiar"
+                                                            matTooltipPosition="below"
+                                                            (click)="openFamiliarModal(pacienteEdicao.id)">
                                                             <mat-icon style="color: blue;">add</mat-icon>
                                                         </a>
                                                     </div>
