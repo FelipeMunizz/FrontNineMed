@@ -83,9 +83,9 @@ export class ConvenioPaciente {
 
 export class FamiliarPaciente {
     id: number;
-    nomeFamiliar: string;
+    nome: string;
     grauParentesco: string;
-    telefoneFamiliar: string;
+    telefone: string;
     idPaciente: number;
 }
 

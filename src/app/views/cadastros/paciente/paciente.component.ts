@@ -19,6 +19,7 @@ import { AppLoaderService } from 'app/shared/services/app-loader/app-loader.serv
 import { EnderecoPacienteModalComponent } from './modals/endereco-paciente.modal.component';
 import { ContatoPacienteModalComponent } from './modals/contato-paciente.modal.component';
 import { ConvenioPacienteModalComponent } from './modals/convenio-paciente.modal.component';
+import { FamiliarPacienteModalComponent } from './modals/familiar-paciente.modal.component';
 
 @Component({
   selector: 'app-paciente',
@@ -312,6 +313,19 @@ export class PacienteComponent implements OnInit {
       width: '100vh',
       height: 'auto',
       data: { idPaciente, convenio }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result)
+        this.ListaPaciente();
+    });
+  }
+
+  openFamiliarModal(idPaciente?: number, familiar?: FamiliarPaciente) {
+    const dialogRef = this.dialog.open(FamiliarPacienteModalComponent, {
+      width: '100vh',
+      height: 'auto',
+      data: { idPaciente, familiar }
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -12,7 +12,7 @@ import { UtilityService } from "app/shared/services/utility.service";
 
 @Component({
     template: `
-    <h2 mat-dialog-title>Dados Familiar</h2>
+    <h2 mat-dialog-title>Dados Convênio</h2>
     <form [formGroup]="convenioForm">
         <mat-dialog-content>
             <div class="row">
