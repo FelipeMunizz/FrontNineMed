@@ -4,6 +4,7 @@ import { ClinicaComponent } from './clinica/clinica.component';
 import { PacienteComponent } from './paciente/paciente.component';
 import { FuncionarioComponent } from './funcionario/funcionario.component';
 import { ConvenioComponent } from './convenio/convenio.component';
+import { ProcedimentoComponent } from './procedimento/procedimento.component';
 
 export const CadastrosRoutes: Routes = [
   {
@@ -28,6 +29,11 @@ export const CadastrosRoutes: Routes = [
         path: 'convenio',
         component: ConvenioComponent,
         data: { title: 'Convenios', breadcrump: 'Convenios' }
+      },
+      {
+        path: 'procedimento',
+        component: ProcedimentoComponent,
+        data: { title: 'Procedimentos', breadcrump: 'Procedimentos' }
       }]
   }
 ];

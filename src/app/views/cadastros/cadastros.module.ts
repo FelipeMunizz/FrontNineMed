@@ -37,6 +37,7 @@ import { EnderecoPacienteModalComponent } from './paciente/modals/endereco-pacie
 import { ConvenioPacienteModalComponent } from './paciente/modals/convenio-paciente.modal.component';
 import { FamiliarPacienteModalComponent } from './paciente/modals/familiar-paciente.modal.component';
 import { ConvenioComponent } from './convenio/convenio.component';
+import { ProcedimentoComponent } from './procedimento/procedimento.component';
 
 
 @NgModule({
@@ -82,7 +83,8 @@ import { ConvenioComponent } from './convenio/convenio.component';
     EnderecoPacienteModalComponent,
     ConvenioPacienteModalComponent,
     FamiliarPacienteModalComponent,
-    ConvenioComponent
+    ConvenioComponent,
+    ProcedimentoComponent
   ],
 })
 export class CadastrosModule {}
