@@ -22,173 +22,173 @@
             </div>
         </div>
     </mat-card-title>
-    <mat-card-content>
-        <mat-card-content *ngIf="tipoTela == 1">
-            <div class="row">
-                <div class="col col-lg-10 col-md-10 col-sm-10">
-                    <mat-form-field>
-                        <mat-label>Pesquisar</mat-label>
-                        <input matInput (keyup)="AplicaFiltro($event)" placeholder="Ex. João" #input>
-                    </mat-form-field>
-                </div>
+    <mat-card-content *ngIf="tipoTela == 1">
+        <div class="row">
+            <div class="col col-lg-10 col-md-10 col-sm-10">
+                <mat-form-field>
+                    <mat-label>Pesquisar</mat-label>
+                    <input matInput (keyup)="AplicaFiltro($event)" placeholder="Ex. João" #input>
+                </mat-form-field>
             </div>
+        </div>
 
-            <div class="mat-elevation-z8">
-                <table mat-table [dataSource]="dataSource" matSort>
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
 
-                    <!-- ID Column -->
-                    <ng-container matColumnDef="id">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cod. Funcionário </th>
-                        <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-                    </ng-container>
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Cod. Funcionário </th>
+                    <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+                </ng-container>
 
-                    <!-- ID Clinica Column -->
-                    <ng-container matColumnDef="idClinica">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cod. Clinica </th>
-                        <td mat-cell *matCellDef="let row"> {{row.idClinica}} </td>
-                    </ng-container>
+                <!-- ID Clinica Column -->
+                <ng-container matColumnDef="idClinica">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Cod. Clinica </th>
+                    <td mat-cell *matCellDef="let row"> {{row.idClinica}} </td>
+                </ng-container>
 
-                    <!-- Nome Column -->
-                    <ng-container matColumnDef="nome">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
-                        <td mat-cell *matCellDef="let row"> {{row.nome}} </td>
-                    </ng-container>
+                <!-- Nome Column -->
+                <ng-container matColumnDef="nome">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
+                    <td mat-cell *matCellDef="let row"> {{row.nome}} </td>
+                </ng-container>
 
-                    <!-- Profissional Saude Column -->
-                    <ng-container matColumnDef="profissionalSaude">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Profissional Saude </th>
-                        <td mat-cell *matCellDef="let row"> <mat-slide-toggle style="opacity: 1;"
-                                [checked]="row.profissionalSaude" disabled></mat-slide-toggle> </td>
-                    </ng-container>
+                <!-- Profissional Saude Column -->
+                <ng-container matColumnDef="profissionalSaude">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Profissional Saude </th>
+                    <td mat-cell *matCellDef="let row"> <mat-slide-toggle style="opacity: 1;"
+                            [checked]="row.profissionalSaude" disabled></mat-slide-toggle> </td>
+                </ng-container>
 
-                    <!-- Acoes Column -->
-                    <ng-container matColumnDef="acoes">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ações </th>
-                        <td mat-cell *matCellDef="let row">
-                            <div *ngIf="isAutorizado">
-                                <a (click)="LoadDadosForm(row.id, row.email)">
-                                    <mat-icon style="color: blue;" matTooltip="Editar Funcionario" matTooltipPosition="below">edit</mat-icon>
-                                </a> &nbsp;&nbsp;
-                                <a (click)="DeletarFuncionario(row.id, row.email)">
-                                    <mat-icon style="color: red;" matTooltip="Deletar Funcionario" matTooltipPosition="below">delete</mat-icon>
-                                </a>
-                            </div>
-                        </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="dispplayColuns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: dispplayColuns;"></tr>
-
-                    <tr class="mat-row" *matNoDataRow>
-                        <td class="mat-cell" colspan="4" style="text-align: center;">Nenhum dado Encontrado </td>
-                    </tr>
-                </table>
-
-                <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[5, 10, 25, 100]"
-                    showFirstLastButtons aria-label="Select page">
-                </mat-paginator>
-            </div>
-        </mat-card-content>
-
-        <mat-card-content *ngIf="tipoTela != 1">
-            <form [formGroup]="funcionarioForm" (submit)="SalvarClick()">
-                <mat-card>
-                    <mat-card-title>Dados Login</mat-card-title>
-                    <mat-card-content>
-                        <div class="row">
-                            <div class="col col-lg-5 col-md-5 col-sm-12">
-                                <mat-form-field class="full-width">
-                                    <input matInput name="email" formControlName="email" placeholder="Email" value="">
-                                </mat-form-field>
-                                <small *ngIf="funcionarioForm.controls['email'].touched" class="form-error-msg">
-                                </small>
-                            </div>
-                            <div class="col col-lg-3 col-md-3 col-sm-12">
-                                <mat-form-field class="full-width">
-                                    <input matInput [type]="hide ? 'password' : 'text'" name="password" matInput
-                                        [formControl]="funcionarioForm.controls['password']" placeholder="Senha " value="">
-                                    <button type="button" mat-icon-button matSuffix (click)="hide = !hide"
-                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                                    </button>
-                                    <small *ngIf="funcionarioForm.controls['password'].touched" class="form-error-msg">
-                                    </small>
-                                </mat-form-field>
-                            </div>
-                            <div class="row">
-                                <div class="col col-lg-2 col-md-2 col-sm-12">
-                                    <mat-form-field class="full-width">
-                                        <mat-label>Tipo Documento</mat-label>
-                                        <mat-select matNativeControl formControlName="tipoDoc" class="dorpdown-menu">
-                                            <mat-option class="dropdown-item" value="0">CPF</mat-option>
-                                            <mat-option class="dropdown-item" value="1">CNPJ</mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col col-lg-4 col-md-4 col-sm-12">
-                                    <mat-form-field class="full-width">
-                                        <input matInput name="documento" formControlName="documento"
-                                            placeholder="Documento" value=""
-                                            [mask]="(funcionarioForm.controls['tipoDoc'].value == '0') ? maskCPF : maskCNPJ">
-                                    </mat-form-field>
-                                    <small *ngIf="funcionarioForm.controls['documento'].touched" class="form-error-msg">
-                                    </small>
-                                </div>
-                            </div>
+                <!-- Acoes Column -->
+                <ng-container matColumnDef="acoes">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Ações </th>
+                    <td mat-cell *matCellDef="let row">
+                        <div *ngIf="isAutorizado">
+                            <a (click)="LoadDadosForm(row.id, row.email)">
+                                <mat-icon style="color: blue;" matTooltip="Editar Funcionario"
+                                    matTooltipPosition="below">edit</mat-icon>
+                            </a> &nbsp;&nbsp;
+                            <a (click)="DeletarFuncionario(row.id, row.email)">
+                                <mat-icon style="color: red;" matTooltip="Deletar Funcionario"
+                                    matTooltipPosition="below">delete</mat-icon>
+                            </a>
                         </div>
-                    </mat-card-content>
-                </mat-card>
-                <mat-card>
-                    <mat-card-title>Dados Funcionário</mat-card-title>
-                    <mat-card-content>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="dispplayColuns"></tr>
+                <tr mat-row *matRowDef="let row; columns: dispplayColuns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4" style="text-align: center;">Nenhum dado Encontrado </td>
+                </tr>
+            </table>
+
+            <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons
+                aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="tipoTela == 2">
+        <form [formGroup]="funcionarioForm" (submit)="SalvarClick()">
+            <mat-card>
+                <mat-card-title>Dados Login</mat-card-title>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col col-lg-5 col-md-5 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput name="email" formControlName="email" placeholder="Email" value="">
+                            </mat-form-field>
+                            <small *ngIf="funcionarioForm.controls['email'].touched" class="form-error-msg">
+                            </small>
+                        </div>
+                        <div class="col col-lg-3 col-md-3 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput [type]="hide ? 'password' : 'text'" name="password" matInput
+                                    [formControl]="funcionarioForm.controls['password']" placeholder="Senha " value="">
+                                <button type="button" mat-icon-button matSuffix (click)="hide = !hide"
+                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                                <small *ngIf="funcionarioForm.controls['password'].touched" class="form-error-msg">
+                                </small>
+                            </mat-form-field>
+                        </div>
                         <div class="row">
-                            <div class="col col-lg-6 col-md-6 col-sm-12">
-                                <mat-form-field class="full-width">
-                                    <input matInput name="nome" formControlName="nome" placeholder="Nome" value="">
-                                </mat-form-field>
-                                <small *ngIf="funcionarioForm.controls['nome'].touched" class="form-error-msg"> </small>
-                            </div>
                             <div class="col col-lg-2 col-md-2 col-sm-12">
                                 <mat-form-field class="full-width">
-                                    <mat-label>Perfil - Nivel acesso</mat-label>
-                                    <mat-select matNativeControl formControlName="perfil" class="dorpdown-menu">
-                                        <mat-option class="dropdown-item" *ngFor="let perfil of perfils"
-                                            [value]="perfil.value">
-                                            {{ perfil.label }}</mat-option>
+                                    <mat-label>Tipo Documento</mat-label>
+                                    <mat-select matNativeControl formControlName="tipoDoc" class="dorpdown-menu">
+                                        <mat-option class="dropdown-item" value="0">CPF</mat-option>
+                                        <mat-option class="dropdown-item" value="1">CNPJ</mat-option>
                                     </mat-select>
                                 </mat-form-field>
-                                <small *ngIf="funcionarioForm.controls['perfil'].touched" class="form-error-msg">
+                            </div>
+                            <div class="col col-lg-4 col-md-4 col-sm-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="documento" formControlName="documento" placeholder="Documento"
+                                        value=""
+                                        [mask]="(funcionarioForm.controls['tipoDoc'].value == '0') ? maskCPF : maskCNPJ">
+                                </mat-form-field>
+                                <small *ngIf="funcionarioForm.controls['documento'].touched" class="form-error-msg">
                                 </small>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col col-lg-2 col-md-2 col-sm-12">
-                                <mat-checkbox name="profissionalSaude" formControlName="profissionalSaude" class="pb-16"
-                                    #ProfSaude>Profissional da Saude</mat-checkbox>
-                            </div>
-                            <div class="col col-lg-5 col-md-5 col-sm-12"
-                                *ngIf="funcionarioForm.get('profissionalSaude').value">
-                                <mat-form-field class="full-width">
-                                    <input matInput name="registroProfissional" formControlName="registroProfissional"
-                                        placeholder="Registro Profissional" value="">
-                                </mat-form-field>
-                            </div>
-                            <div class="col col-lg-5 col-md-5 col-sm-12"
-                                *ngIf="funcionarioForm.get('profissionalSaude').value">
-                                <mat-form-field class="full-width">
-                                    <input matInput name="especialidade" formControlName="especialidade"
-                                        placeholder="Especialidade" value="">
-                                </mat-form-field>
-                            </div>
-                        </div>
-                    </mat-card-content>
-                </mat-card>
-                <div class="row">
-                    <div class="col align-self-end">
-                        <input type="submit" class="btn btn-primary btn-clinica-submit" value="Salvar">
                     </div>
+                </mat-card-content>
+            </mat-card>
+            <mat-card>
+                <mat-card-title>Dados Funcionário</mat-card-title>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput name="nome" formControlName="nome" placeholder="Nome" value="">
+                            </mat-form-field>
+                            <small *ngIf="funcionarioForm.controls['nome'].touched" class="form-error-msg"> </small>
+                        </div>
+                        <div class="col col-lg-2 col-md-2 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <mat-label>Perfil - Nivel acesso</mat-label>
+                                <mat-select matNativeControl formControlName="perfil" class="dorpdown-menu">
+                                    <mat-option class="dropdown-item" *ngFor="let perfil of perfils"
+                                        [value]="perfil.value">
+                                        {{ perfil.label }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <small *ngIf="funcionarioForm.controls['perfil'].touched" class="form-error-msg">
+                            </small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-lg-2 col-md-2 col-sm-12">
+                            <mat-checkbox name="profissionalSaude" formControlName="profissionalSaude" class="pb-16"
+                                #ProfSaude>Profissional da Saude</mat-checkbox>
+                        </div>
+                        <div class="col col-lg-5 col-md-5 col-sm-12"
+                            *ngIf="funcionarioForm.get('profissionalSaude').value">
+                            <mat-form-field class="full-width">
+                                <input matInput name="registroProfissional" formControlName="registroProfissional"
+                                    placeholder="Registro Profissional" value="">
+                            </mat-form-field>
+                        </div>
+                        <div class="col col-lg-5 col-md-5 col-sm-12"
+                            *ngIf="funcionarioForm.get('profissionalSaude').value">
+                            <mat-form-field class="full-width">
+                                <input matInput name="especialidade" formControlName="especialidade"
+                                    placeholder="Especialidade" value="">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <div class="row">
+                <div class="col align-self-end">
+                    <input type="submit" class="btn btn-primary btn-clinica-submit" value="Salvar">
                 </div>
-            </form>
-        </mat-card-content>
+            </div>
+        </form>
     </mat-card-content>
 </mat-card>
