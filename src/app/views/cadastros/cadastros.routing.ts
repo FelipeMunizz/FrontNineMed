@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { ClinicaComponent } from './clinica/clinica.component';
 import { PacienteComponent } from './paciente/paciente.component';
 import { FuncionarioComponent } from './funcionario/funcionario.component';
+import { ConvenioComponent } from './convenio/convenio.component';
 
 export const CadastrosRoutes: Routes = [
   {
@@ -16,12 +17,17 @@ export const CadastrosRoutes: Routes = [
       {
         path: 'paciente',
         component: PacienteComponent,
-        data: {title: 'Pacientes', breadcrump: 'Paciente'}
+        data: { title: 'Pacientes', breadcrump: 'Paciente' }
       },
       {
         path: 'funcionario',
         component: FuncionarioComponent,
-        data: {title: 'Funcionarios', breadcrump: 'Funcionario'}
+        data: { title: 'Funcionarios', breadcrump: 'Funcionario' }
+      },
+      {
+        path: 'convenio',
+        component: ConvenioComponent,
+        data: { title: 'Convenios', breadcrump: 'Convenios' }
       }]
   }
 ];

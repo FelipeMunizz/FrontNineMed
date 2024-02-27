@@ -24,7 +24,7 @@ export class FuncionarioComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<Funcionario> = new MatTableDataSource<Funcionario>();
   user: User = {}
   isAutorizado: boolean = true;
-  tipoTela: number
+  tipoTela: number;
   hide: boolean = false;
   perfils: { value: number; label: string }[] = [];
   maskCNPJ: string = '00.000.000/0000-00';
