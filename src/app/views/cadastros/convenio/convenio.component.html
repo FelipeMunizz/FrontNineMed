@@ -13,7 +13,7 @@
                         <mat-icon>add</mat-icon>
                     </button>
                 </div>
-                <div class="demo-button-container" *ngIf="tipoTela != 1">
+                <div class="demo-button-container" *ngIf="tipoTela == 2">
                     <button mat-raised-button color="primary" class="btn-card" matTooltip="Lista Convênios"
                         matTooltipPosition="below" (click)="ListaConvenio()">
                         <mat-icon>list</mat-icon>
@@ -23,6 +23,7 @@
         </div>
     </mat-card-title>
 
+    <!--Tela Listagem-->
     <mat-card-content *ngIf="tipoTela == 1">
         <div class="row">
             <div class="col col-lg-10 col-md-10 col-sm-10">
@@ -90,5 +91,87 @@
                 aria-label="Select page">
             </mat-paginator>
         </div>
+    </mat-card-content>
+
+    <!--Tela Cadastro-->
+    <mat-card-content *ngIf="tipoTela == 2">
+        <form [formGroup]="convenioForm">
+            <mat-card>
+                <mat-card-title>Dados Convênio</mat-card-title>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput name="nome" formControlName="nome" placeholder="Nome" value="">
+                            </mat-form-field>
+                            <small *ngIf="convenioForm.controls['nome'].touched" class="form-error-msg"> </small>
+                        </div>
+                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput name="registroAns" formControlName="registroAns"
+                                    placeholder="Registro ANS" value="">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput name="nomeFantasia" formControlName="nomeFantasia"
+                                    placeholder="Nome Fantasia" value="">
+                            </mat-form-field>
+                        </div>
+                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput name="executante" formControlName="executante"
+                                    placeholder="Executante" value="">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput name="codOperadora" formControlName="codOperadora"
+                                    placeholder="Cod. Operadora" value="">
+                            </mat-form-field>
+                        </div>
+                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput name="versaoTiss" formControlName="versaoTiss"
+                                    placeholder="Versão TISS" value="">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput name="proximoLote" formControlName="proximoLote"
+                                    placeholder="Proximo Lote" value="">
+                            </mat-form-field>
+                        </div>
+                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput name="proximaGuia" formControlName="proximaGuia"
+                                    placeholder="Proxima Guia" value="">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-lg-2 col-md-2 col-sm-12">
+                            <mat-checkbox name="ativo" formControlName="ativo" class="pb-16"
+                                #ativo>Ativo</mat-checkbox>
+                        </div>
+                        <div class="col col-lg-2 col-md-2 col-sm-12">
+                            <mat-checkbox name="sadt" formControlName="sadt" class="pb-16"
+                                #sadt>SADT</mat-checkbox>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <div class="row">
+                <div class="col align-self-end">
+                    <input type="submit" class="btn btn-primary btn-clinica-submit" value="Salvar">
+                </div>
+            </div>
+        </form>
     </mat-card-content>
 </mat-card>

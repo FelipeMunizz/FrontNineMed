@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -34,6 +34,7 @@ export class ConvenioComponent implements OnInit {
   ngOnInit(): void {
     this.isAutorizado = this.auth.ValidaRolesFuncionario('sa');
     this.ListaConvenio();
+    this.InicializaForm();
   }
 
   ListaConvenio() {
@@ -45,6 +46,26 @@ export class ConvenioComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
+  }
+
+  InicializaForm() {
+    this.convenioForm = new UntypedFormGroup({
+      nome: new UntypedFormControl('', [Validators.required]),
+      registroAns: new UntypedFormControl('', []),
+      ativo: new UntypedFormControl(false, []),
+      nomeFantasia: new UntypedFormControl('', []),
+      executante: new UntypedFormControl('', []),
+      codOperadora: new UntypedFormControl('', []),
+      versaoTiss: new UntypedFormControl('', []),
+      proximoLote: new UntypedFormControl('', []),
+      proximaGuia: new UntypedFormControl('', []),
+      sadt: new UntypedFormControl(false, [])
+    })
+  }
+
+  TelaCadastro() {
+    this.tipoTela = 2;
+    this.convenioForm.reset();
   }
 
   //Metodos Auxiliares
