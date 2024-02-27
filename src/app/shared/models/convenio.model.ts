@@ -6,7 +6,7 @@ export class Convenio{
     nomeFantasia: string;
     executante: string;
     codOperadora: string;
-    versaoTiss: string;
+    versaoTISS: string;
     proximoLote: string;
     proximaGuia: string;
     sadt: boolean;

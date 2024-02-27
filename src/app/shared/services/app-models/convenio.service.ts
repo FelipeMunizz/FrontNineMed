@@ -21,9 +21,9 @@ export class ConvenioService {
     }
 
     //Obter Convenio
-    public ObterConvenio(idConvenio: number): Observable<any>{
+    public ObterConvenio(idConvenio: number): Observable<Convenio>{
         const url = `${this.baseUrl}/ObterConvenio/${idConvenio}`;
-        return this.httpClient.get<any>(url);
+        return this.httpClient.get<Convenio>(url);
     }
 
     //Adicionar Convenio
