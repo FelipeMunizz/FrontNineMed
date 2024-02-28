@@ -45,6 +45,7 @@ export class NavigationService {
         { name: 'Clinica', state: 'cadastros/clinica', icon: 'store' },
         { name: 'Funcionarios', state: 'cadastros/funcionario', icon: 'support_agent' },
         { name: 'Convenios', state: 'cadastros/convenio', icon: 'volunteer_activism' },
+        { name: 'Procedimentos', state: 'cadastros/procedimento', icon: 'vaccines' },
       ]
     }
   ];
