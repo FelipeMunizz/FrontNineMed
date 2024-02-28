@@ -36,6 +36,7 @@ export class ProcedimentoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isAutorizado = this.authService.ValidaRolesFuncionario('sa');
     this.ListaProcedimento();
     this.InicializaForm();
   }
