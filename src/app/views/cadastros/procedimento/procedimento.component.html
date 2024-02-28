@@ -15,7 +15,7 @@
                 </div>
                 <div class="demo-button-container" *ngIf="tipoTela == 2">
                     <button mat-raised-button color="primary" class="btn-card" matTooltip="Lista Procedimentos"
-                        matTooltipPosition="below" (click)="ListaConvenio()">
+                        matTooltipPosition="below" (click)="ListaProcedimento()">
                         <mat-icon>list</mat-icon>
                     </button>
                 </div>
@@ -24,6 +24,118 @@
     </mat-card-title>
 
     <mat-card-content *ngIf="tipoTela == 1">
+        <div class="row">
+            <div class="col col-lg-10 col-md-10 col-sm-10">
+                <mat-form-field>
+                    <mat-label>Pesquisar</mat-label>
+                    <input matInput (keyup)="AplicaFiltro($event)" placeholder="Ex. Particular" #input>
+                </mat-form-field>
+            </div>
+        </div>
 
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Cod. Procedimento </th>
+                    <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+                </ng-container>
+
+                <!-- Nome Column -->
+                <ng-container matColumnDef="nome">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
+                    <td mat-cell *matCellDef="let row"> {{row.nome}} </td>
+                </ng-container>
+
+                <!-- Preço Column -->
+                <ng-container matColumnDef="preco">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Preço </th>
+                    <td mat-cell *matCellDef="let row"> R${{row.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2
+                        })}} </td>
+                </ng-container>
+
+                <!-- Duracao Column -->
+                <ng-container matColumnDef="duracao">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Duração </th>
+                    <td mat-cell *matCellDef="let row"> {{row.duracao}}min </td>
+                </ng-container>
+
+                <!-- Acoes Column -->
+                <ng-container matColumnDef="acoes">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Ações </th>
+                    <td mat-cell *matCellDef="let row">
+                        <div *ngIf="isAutorizado">
+                            <a (click)="LoadDadosForm(row.id)">
+                                <mat-icon style="color: blue;" matTooltip="Editar Procedimento"
+                                    matTooltipPosition="below">edit</mat-icon>
+                            </a> &nbsp;&nbsp;
+                            <a (click)="DeletarProcedimento(row.id)">
+                                <mat-icon style="color: red;" matTooltip="Deletar Procedimento"
+                                    matTooltipPosition="below">delete</mat-icon>
+                            </a>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="dispplayColuns"></tr>
+                <tr mat-row *matRowDef="let row; columns: dispplayColuns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4" style="text-align: center;">Nenhum dado Encontrado </td>
+                </tr>
+            </table>
+
+            <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons
+                aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="tipoTela == 2">
+        <form [formGroup]="procedimentoForm" (submit)="SalvarClick()">
+            <mat-card>
+                <mat-card-title>Dados Procedimento</mat-card-title>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput name="nome" formControlName="nome" placeholder="Nome" value="">
+                            </mat-form-field>
+                            <small *ngIf="procedimentoForm.controls['nome'].touched" class="form-error-msg"> </small>
+                        </div>
+                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput name="preco" formControlName="preco" placeholder="Preço" value=""
+                                    [mask]="'separator.2'" thousandSeparator="." decimalMarker=",">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput name="duracao" formControlName="duracao" placeholder="Duração" value=""
+                                    mask="00">
+                                <button type="button" mat-icon-button matSuffix
+                                    matTooltip="Em minutos a duração do procedimento">
+                                    <mat-icon>info</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput name="codTribMunicipio" formControlName="codTribMunicipio"
+                                    placeholder="Cod. Tributação do Municipio" value="">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <div class="row">
+                <div class="col align-self-end">
+                    <input type="submit" class="btn btn-primary btn-clinica-submit" value="Salvar">
+                </div>
+            </div>
+        </form>
     </mat-card-content>
 </mat-card>
