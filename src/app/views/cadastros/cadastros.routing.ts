@@ -5,6 +5,7 @@ import { PacienteComponent } from './paciente/paciente.component';
 import { FuncionarioComponent } from './funcionario/funcionario.component';
 import { ConvenioComponent } from './convenio/convenio.component';
 import { ProcedimentoComponent } from './procedimento/procedimento.component';
+import { TotenComponent } from './toten/toten.component';
 
 export const CadastrosRoutes: Routes = [
   {
@@ -34,6 +35,11 @@ export const CadastrosRoutes: Routes = [
         path: 'procedimento',
         component: ProcedimentoComponent,
         data: { title: 'Procedimentos', breadcrump: 'Procedimentos' }
+      },
+      {
+        path: 'toten',
+        component: TotenComponent,
+        data: { title: 'Totens', breadcrump: 'Totens' }
       }]
   }
 ];
