@@ -39,6 +39,11 @@ export const rootRouterConfig: Routes = [
         path: 'configuracoes',
         loadChildren: () => import('./views/configuracoes/configuracoes.module').then(m => m.ConfiguracoesModule),
         data: { title: 'Perfil', breadcrumb: 'Perfil'}
+      } ,
+      {
+        path: 'financeiro',
+        loadChildren: () => import('./views/financeiro/financeiro.module').then(m => m.FinanceiroModule),
+        data: { title: 'Financeiro', breadcrumb: 'Financeiro'}
       }    
     ]
   },
