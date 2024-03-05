@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 import { SharedPipesModule } from 'app/shared/pipes/shared-pipes.module';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { NgChartsModule } from 'ng2-charts';
-import { NgxEchartsModule } from 'ngx-echarts';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -19,9 +18,6 @@ import { ControleComponent } from './controle/controle.component';
         SharedMaterialModule,
         FlexLayoutModule,
         NgChartsModule,
-        NgxEchartsModule.forRoot({
-            echarts: () => import('echarts')
-        }),
         SharedPipesModule,
         RouterModule.forChild(FinanceiroRoutes),
         MatTooltipModule,
