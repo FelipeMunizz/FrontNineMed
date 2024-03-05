@@ -53,7 +53,7 @@ export class NavigationService {
       name: 'Financeiro',
       state: 'financeiro/controle',
       type: 'link',
-      icon: 'payments'
+      icon: 'attach_money'
     },
   ];
 
