@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgxMaskModule } from 'ngx-mask';
 import { ControleComponent } from './controle/controle.component';
+import { CadastroFinanceiroComponent } from './cadastro-financeiro/cadastro-financeiro.component';
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import { ControleComponent } from './controle/controle.component';
         MatSelectModule,
     ],
     declarations: [
-        ControleComponent
+        ControleComponent,
+        CadastroFinanceiroComponent,
     ],
     exports: []
 })

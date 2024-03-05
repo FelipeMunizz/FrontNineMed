@@ -30,6 +30,17 @@
                             </div>
                         </div>
                         <mat-divider></mat-divider>
+                        <div class="row p-12">
+                            <h3 class="text-blue">Saldo Geral</h3>
+                        </div>
+                        <div class="container d-flex text-{{color}}">
+                            <small class="small-text">R$</small>
+                            <span class="content-saldo">{{valorSadoGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2
+                            })}}</span>
+                        </div>
+                        <div class="container d-flex justify-content-end">
+                            <span><strong>Conta Padrão:</strong> &nbsp; Caixa - Empresa</span>
+                        </div>
                     </mat-card-content>
                 </mat-card>
             </div>
@@ -46,7 +57,7 @@
                             <p class="m-0 text-muted mb-4">Banco, Contas, Categorias, e etc.</p>
                         </div>
                     </div>
-                    <button mat-icon-button matTooltip="Cadastros Financeiro">
+                    <button mat-icon-button matTooltip="Cadastros Financeiro" (click)="TelaCadastro()">
                         <mat-icon class="mat-18">arrow_right_alt</mat-icon>
                     </button>
                 </mat-card>
