@@ -12,7 +12,7 @@ import { JwtAuthService } from 'app/shared/services/auth/jwt-auth.service';
 export class ControleComponent implements OnInit {
 
   color: string;
-  valorSadoGeral: number;
+  valorSadoGeral: number = 0;
 
   constructor(
     private router: Router,
@@ -25,16 +25,20 @@ export class ControleComponent implements OnInit {
     this.SaldoGeral();
   }
 
-  TelaCadastro(){
-    this.router.navigateByUrl('financeiro/cadastro-financeiro')
+  TelaCadastro(path: string){
+    this.router.navigateByUrl(`financeiro/${path}`)
   }
 
   SaldoGeral(){
+    //Ajustar o parametro apos criar as telas de cadastro e configuracao, 
+    //o idContaBancaria deve ser o cadastrado nas configurações do financeiro
+    
     this.lancamentoService.RetornoSaldoGeral(1)
-    .subscribe((valor) => {
+    .subscribe((valor) => {      
       this.valorSadoGeral = valor.result;
-      if(this.valorSadoGeral >= 0.00)
+      if(this.valorSadoGeral >= 0){
         this.color = 'blue';
+      }
       else
         this.color = 'danger';
     });

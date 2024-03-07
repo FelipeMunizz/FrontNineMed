@@ -51,13 +51,55 @@
             <div fxFlex="100" fxFlex.sm="100" fxFlex.gt-sm="100">
                 <mat-card class="p-24" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
                     <div fxLayout="row" fxLayoutAlign="center center">
-                        <mat-icon class="text-48 text-blue">add</mat-icon>
+                        <mat-icon class="text-48 text-blue">account_balance</mat-icon>
                         <div class="ml-12">
-                            <h2 class="m-0 text-blue">Cadastros do Financeiro</h2>
-                            <p class="m-0 text-muted mb-4">Banco, Contas, Categorias, e etc.</p>
+                            <h2 class="m-0 text-blue">Bancos</h2>
+                            <p class="m-0 text-muted mb-4">Lista, cadastros, edição e deleção.</p>
                         </div>
                     </div>
-                    <button mat-icon-button matTooltip="Cadastros Financeiro" (click)="TelaCadastro()">
+                    <button mat-icon-button matTooltip="Bancos" (click)="TelaCadastro('banco')">
+                        <mat-icon class="mat-18">arrow_right_alt</mat-icon>
+                    </button>
+                </mat-card>
+            </div>
+            <div fxFlex="100" fxFlex.sm="100" fxFlex.gt-sm="100">
+                <mat-card class="p-24" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-icon class="text-48 text-accent">account_balance_wallet</mat-icon>
+                        <div class="ml-12">
+                            <h2 class="m-0 text-accent">Contas Bancárias</h2>
+                            <p class="m-0 text-muted mb-4">Lista, cadastros, edição e deleção.</p>
+                        </div>
+                    </div>
+                    <button mat-icon-button matTooltip="Contas Bancárias" (click)="TelaCadastro('conta-bancaria')">
+                        <mat-icon class="mat-18">arrow_right_alt</mat-icon>
+                    </button>
+                </mat-card>
+            </div>
+            <div fxFlex="100" fxFlex.sm="100" fxFlex.gt-sm="100">
+                <mat-card class="p-24" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-icon class="text-48 text-blue">category</mat-icon>
+                        <div class="ml-12">
+                            <h2 class="m-0 text-blue">Categorias Financeira</h2>
+                            <p class="m-0 text-muted mb-4">Lista, cadastros, edição e deleção.</p>
+                        </div>
+                    </div>
+                    <button mat-icon-button matTooltip="Categorias e Sub Categorias" (click)="TelaCadastro('categoria-financeira')">
+                        <mat-icon class="mat-18">arrow_right_alt</mat-icon>
+                    </button>
+                </mat-card>
+            </div>
+            <div fxFlex="100" fxFlex.sm="100" fxFlex.gt-sm="100">
+                <mat-card class="p-24" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-icon class="text-48 text-accent">monetization_on</mat-icon>
+                        <div class="ml-12">
+                            <h2 class="m-0 text-accent">Centro Custo</h2>
+                            <p class="m-0 text-muted mb-4">Lista, cadastros, edição e deleção.</p>
+                        </div>
+                    </div>
+                    <button mat-icon-button matTooltip="Centro Custo" (click)="TelaCadastro('centro-custo')">
                         <mat-icon class="mat-18">arrow_right_alt</mat-icon>
                     </button>
                 </mat-card>
@@ -65,13 +107,13 @@
             <div fxFlex="100" fxFlex.sm="50" fxFlex.gt-sm="100">
                 <mat-card class="p-24" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
                     <div fxLayout="row" fxLayoutAlign="center center">
-                        <mat-icon class="text-48 text-accent">settings</mat-icon>
+                        <mat-icon class="text-48 text-blue">settings</mat-icon>
                         <div class="ml-12">
-                            <h2 class="m-0 text-accent">Configuração do Financeiro</h2>
+                            <h2 class="m-0 text-blue">Configuração do Financeiro</h2>
                             <p class="m-0 text-muted mb-4">Defina as configurações padrões.</p>
                         </div>
                     </div>
-                    <button mat-icon-button matTooltip="Configurações Financeira">
+                    <button mat-icon-button matTooltip="Configurações Financeira" (click)="TelaCadastro('configuracao-financeira')">
                         <mat-icon class="mat-18">arrow_right_alt</mat-icon>
                     </button>
                 </mat-card>

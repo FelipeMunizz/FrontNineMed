@@ -11,7 +11,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgxMaskModule } from 'ngx-mask';
 import { ControleComponent } from './controle/controle.component';
-import { CadastroFinanceiroComponent } from './cadastro-financeiro/cadastro-financeiro.component';
+import { BancoComponent } from './banco/banco.component';
+import { ContaBancariaComponent } from './conta-bancaria/conta-bancaria.component';
+import { CategoriaFinanceiraComponent } from './categoria-financeira/categoria-financeira.component';
+import { CentroCustoComponent } from './centro-custo/centro-custo.component';
+import { ConfiguracaoFinanceiraComponent } from './configuracao-financeira/configuracao-financeira.component';
 
 @NgModule({
     imports: [
@@ -28,7 +32,11 @@ import { CadastroFinanceiroComponent } from './cadastro-financeiro/cadastro-fina
     ],
     declarations: [
         ControleComponent,
-        CadastroFinanceiroComponent,
+        BancoComponent,
+        ContaBancariaComponent,
+        CategoriaFinanceiraComponent,
+        CentroCustoComponent,
+        ConfiguracaoFinanceiraComponent,
     ],
     exports: []
 })
