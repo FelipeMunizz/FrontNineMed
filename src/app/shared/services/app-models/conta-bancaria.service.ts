@@ -13,7 +13,7 @@ export class ContaBancariaService{
         private httpClient: HttpClient
     ){}
     
-    private readonly baseUrl = environment.apiURL;
+    private readonly baseUrl = environment.apiURL + '/ContaBancaria';
     
      // Lista ContaBancarias
      public ListaContasBancariaBanco(idBanco: number): Observable<any> {
