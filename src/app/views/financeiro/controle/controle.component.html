@@ -23,7 +23,8 @@
                                 </button>
                             </div>
                             <div class="col col-lg-4 col-md-4 col-sm-4">
-                                <button class="btn btn-light border border-dark align-items-center" style="width: 100%;">
+                                <button class="btn btn-light border border-dark align-items-center"
+                                    style="width: 100%;">
                                     <mat-icon>swap_vert</mat-icon> &nbsp;&nbsp;
                                     Transferência
                                 </button>
@@ -35,8 +36,9 @@
                         </div>
                         <div class="container d-flex text-{{color}}">
                             <small class="small-text">R$</small>
-                            <span class="content-saldo">{{valorSadoGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2
-                            })}}</span>
+                            <span class="content-saldo">{{valorSadoGeral.toLocaleString('pt-BR', {
+                                minimumFractionDigits: 2
+                                })}}</span>
                         </div>
                         <div class="container d-flex justify-content-end">
                             <span><strong>Conta Padrão:</strong> &nbsp; {{contaBancaria}}</span>
@@ -85,7 +87,8 @@
                             <p class="m-0 text-muted mb-4">Lista, cadastros, edição e deleção.</p>
                         </div>
                     </div>
-                    <button mat-icon-button matTooltip="Categorias e Sub Categorias" (click)="TelaCadastro('categoria-financeira')">
+                    <button mat-icon-button matTooltip="Categorias e Sub Categorias"
+                        (click)="TelaCadastro('categoria-financeira')">
                         <mat-icon class="mat-18">arrow_right_alt</mat-icon>
                     </button>
                 </mat-card>
@@ -113,7 +116,8 @@
                             <p class="m-0 text-muted mb-4">Defina as configurações padrões.</p>
                         </div>
                     </div>
-                    <button mat-icon-button matTooltip="Configurações Financeira" (click)="TelaCadastro('configuracao-financeira')">
+                    <button mat-icon-button matTooltip="Configurações Financeira"
+                        (click)="TelaCadastro('configuracao-financeira')">
                         <mat-icon class="mat-18">arrow_right_alt</mat-icon>
                     </button>
                 </mat-card>
