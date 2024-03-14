@@ -34,6 +34,7 @@ import { MatTableModule } from '@angular/material/table';
 import { CustomPaginator } from 'app/shared/helpers/custom-paginator';
 import { FileUploadModule } from 'ng2-file-upload';
 import { QuillModule } from 'ngx-quill';
+import { SubCategoriaComponent } from './categoria-financeira/sub-categoria/sub-categoria.component';
 
 @NgModule({
     imports: [
@@ -73,6 +74,7 @@ import { QuillModule } from 'ngx-quill';
         CategoriaFinanceiraComponent,
         CentroCustoComponent,
         ConfiguracaoFinanceiraComponent,
+        SubCategoriaComponent,
     ],
     exports: []
 })

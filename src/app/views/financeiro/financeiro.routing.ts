@@ -5,6 +5,7 @@ import { CategoriaFinanceiraComponent } from "./categoria-financeira/categoria-f
 import { CentroCustoComponent } from "./centro-custo/centro-custo.component";
 import { ConfiguracaoFinanceiraComponent } from "./configuracao-financeira/configuracao-financeira.component";
 import { ContaBancariaComponent } from "./conta-bancaria/conta-bancaria.component";
+import { SubCategoriaComponent } from "./categoria-financeira/sub-categoria/sub-categoria.component";
 
 export const FinanceiroRoutes: Routes = [
     {
@@ -20,23 +21,27 @@ export const FinanceiroRoutes: Routes = [
     {
       path: "categoria-financeira",
       component: CategoriaFinanceiraComponent,
-      data: { title: 'Categoria Financeira', breadcrumb: 'Controle'}
+      data: { title: 'Categoria Financeira', breadcrumb: 'Categorias'}
     },
     {
       path: "centro-custo",
       component: CentroCustoComponent,
-      data: { title: 'Centro Custo', breadcrumb: 'Controle'}
+      data: { title: 'Centro Custo', breadcrumb: 'CentroCusto'}
     },
     {
       path: "configuracao-financeira",
       component: ConfiguracaoFinanceiraComponent,
-      data: { title: 'Configuração Financeira', breadcrumb: 'Controle'}
+      data: { title: 'Configuração Financeira', breadcrumb: 'Config'}
     },
     {
       path: "conta-bancaria",
       component: ContaBancariaComponent,
-      data: { title: 'Conta Bancária', breadcrumb: 'Controle'}
-    }
-    
+      data: { title: 'Conta Bancária', breadcrumb: 'Conta'}
+    },
+    {
+      path: "sub-categoria",
+      component: SubCategoriaComponent,
+      data: { title: 'Sub Categoria', breadcrumb: 'Sub Categoria'}
+    }    
   ];
   

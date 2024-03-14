@@ -33,7 +33,7 @@ export class SubCategoriaFinanceiraService{
 
     // Atualizar SubCategoriaFinanceiras
     public AtualizarSubCategoriaFinanceira(subCategoriaFinanceira: SubCategoria): Observable<any> {
-        const url = `${this.baseUrl}/AtualizarSubCategoriaFinanceira`
+        const url = `${this.baseUrl}/AtualizarSubCategoria`
         return this.httpClient.put<any>(url, subCategoriaFinanceira);
     }
 
