@@ -29,8 +29,8 @@ export class BancoComponent implements OnInit {
 
   constructor(
     private bancoService: BancoService,
-    private authService: JwtAuthService,
     private utility: UtilityService,
+    private authService: JwtAuthService,
     private modal: AppConfirmService
   ) { }
 
@@ -113,7 +113,7 @@ export class BancoComponent implements OnInit {
     this.tipoTela = 2
   }
 
-  DeletarToten(idBanco: number) {
+  DeletarBanco(idBanco: number) {
     this.modal.confirm({ title: 'Confirme', message: 'Tem certeza que deseja deletar o banco?' })
       .subscribe((retorno) => {
         if (retorno) {

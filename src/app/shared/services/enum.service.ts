@@ -118,5 +118,11 @@ export class EnumService {
       {value: 2, label: 'Vacina'},
     ]
   }
+  getTipoCategoriaFinanceira(){
+    return [
+      {value: 0, label: 'Receita'},
+      {value: 1, label: 'Despesa'}
+    ]
+  }
 }
 
