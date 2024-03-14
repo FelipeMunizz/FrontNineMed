@@ -1,12 +1,12 @@
 <mat-card class="p0">
     <mat-card-title>
         <div class="row">
-            <div class="col col-lg-8 col-md-8 col-sm-10">
+            <div class="col col-lg-10 col-md-10 col-sm-10">
                 <mat-card-title class="text-muted">
                     Sub Categorias Financeira
                 </mat-card-title>
             </div>
-            <div class="col col-lg-4 col-md-4 col-sm-4">
+            <div class="col col-lg-2 col-md-2 col-sm-2">
                 <div class="demo-button-container" *ngIf="tipoTela == 1">
                     <button mat-raised-button color="primary" class="btn-card" matTooltip="Retornar para Categoria"
                         TooltipPosition="below" (click)="CategoriaNavigate()">
@@ -48,7 +48,7 @@
 
                 <!-- ID Column -->
                 <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Cod. Categoria </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Cod. Sub Categoria </th>
                     <td mat-cell *matCellDef="let row">
                         {{row.id}}
                     </td>
