@@ -4,6 +4,9 @@ import { AppLoaderService } from 'app/shared/services/app-loader/app-loader.serv
 import { LancamentoService } from 'app/shared/services/app-models/lancamento.service';
 import { JwtAuthService } from 'app/shared/services/auth/jwt-auth.service';
 import { ContaBancariaService } from 'app/shared/services/app-models/conta-bancaria.service';
+import { ConfiguracaoFinanceiraService } from 'app/shared/services/app-models/configuracao-financeira.service';
+import { ConfiguracaoFinanceira } from 'app/shared/models/configuracao-financeira.model';
+import { User } from 'app/shared/models/user.model';
 
 @Component({
   selector: 'app-controle',
@@ -12,54 +15,51 @@ import { ContaBancariaService } from 'app/shared/services/app-models/conta-banca
 })
 export class ControleComponent implements OnInit {
 
+  user: User = {}
   color: string;
   valorSadoGeral: number = 0;
   contaBancaria: string = '';
 
   constructor(
     private router: Router,
-    private atuhService: JwtAuthService,
+    private authService: JwtAuthService,
     private loader: AppLoaderService,
     private lancamentoService: LancamentoService,
-    private contaBancariaService: ContaBancariaService
+    private contaBancariaService: ContaBancariaService,
+    private configFinanceiraService: ConfiguracaoFinanceiraService
   ) { }
 
   ngOnInit(): void {
     this.LoadDadosIniciais();
   }
 
-  TelaCadastro(path: string){
+  TelaCadastro(path: string) {
     this.router.navigateByUrl(`financeiro/${path}`)
   }
 
-  LoadDadosIniciais(){
-    this.SaldoGeral();
-    this.ContaBancariaPadrao();
-  }
+  LoadDadosIniciais() {
+    this.loader.open('Aguarde');
 
-  SaldoGeral(){
-    //Ajustar o parametro apos criar as telas de cadastro e configuracao, 
-    //o idContaBancaria deve ser o cadastrado nas configurações do financeiro
-    
-    this.lancamentoService.RetornoSaldoGeral(1)
-    .subscribe((valor) => {      
-      this.valorSadoGeral = valor.result;
-      if(this.valorSadoGeral >= 0){
-        this.color = 'blue';
-      }
-      else
-        this.color = 'danger';
-    });
-  }
+    this.user = this.authService.getUser();
 
-  ContaBancariaPadrao(){
-    //Ajustar o parametro apos criar as telas de cadastro e configuracao, 
-    //o idContaBancaria deve ser o cadastrado nas configurações do financeiro
-    
-    this.contaBancariaService.ObterContaBancaria(1)
-    .subscribe((conta) => {
-      this.contaBancaria = conta.nome
-    })
-  }
+    this.configFinanceiraService.ListarConfiguracaoFinanceirasClinica(+this.user.idClinica)
+      .subscribe((configuracao) => {
+        this.lancamentoService.RetornoSaldoGeral(configuracao[0].idContaBancaria)
+          .subscribe((valor) => {
+            this.valorSadoGeral = valor.result;
+            if (this.valorSadoGeral >= 0) {
+              this.color = 'blue';
+            }
+            else
+              this.color = 'danger';
+          });
 
+        this.contaBancariaService.ObterContaBancaria(configuracao[0].idContaBancaria)
+          .subscribe((conta) => {
+            this.contaBancaria = conta.nome
+          });
+      })
+
+    this.loader.close();
+  }
 }
