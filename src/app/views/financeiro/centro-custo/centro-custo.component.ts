@@ -36,6 +36,7 @@ export class CentroCustoComponent implements OnInit {
 
   ngOnInit(): void {
     this.InicializaForm();
+    this.ListarCentroCusto();
   }
 
   InicializaForm() {
