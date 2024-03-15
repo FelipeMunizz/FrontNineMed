@@ -107,12 +107,26 @@
                     </button>
                 </mat-card>
             </div>
+            <div fxFlex="100" fxFlex.sm="100" fxFlex.gt-sm="100">
+                <mat-card class="p-24" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-icon class="text-48 text-blue">payments</mat-icon>
+                        <div class="ml-12">
+                            <h2 class="m-0 text-blue">Formas de Pagamento</h2>
+                            <p class="m-0 text-muted mb-4">Lista, cadastros, edição e deleção.</p>
+                        </div>
+                    </div>
+                    <button mat-icon-button matTooltip="Centro Custo" (click)="TelaCadastro('forma-pagamento')">
+                        <mat-icon class="mat-18">arrow_right_alt</mat-icon>
+                    </button>
+                </mat-card>
+            </div>
             <div fxFlex="100" fxFlex.sm="50" fxFlex.gt-sm="100">
                 <mat-card class="p-24" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
                     <div fxLayout="row" fxLayoutAlign="center center">
-                        <mat-icon class="text-48 text-blue">settings</mat-icon>
+                        <mat-icon class="text-48 text-accent">settings</mat-icon>
                         <div class="ml-12">
-                            <h2 class="m-0 text-blue">Configuração do Financeiro</h2>
+                            <h2 class="m-0 text-accent">Configuração do Financeiro</h2>
                             <p class="m-0 text-muted mb-4">Defina as configurações padrões.</p>
                         </div>
                     </div>

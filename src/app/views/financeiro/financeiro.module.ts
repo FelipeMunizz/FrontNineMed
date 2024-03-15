@@ -35,6 +35,7 @@ import { CustomPaginator } from 'app/shared/helpers/custom-paginator';
 import { FileUploadModule } from 'ng2-file-upload';
 import { QuillModule } from 'ngx-quill';
 import { SubCategoriaComponent } from './categoria-financeira/sub-categoria/sub-categoria.component';
+import { FormaPagamentoComponent } from './forma-pagamento/forma-pagamento.component';
 
 @NgModule({
     imports: [
@@ -75,6 +76,7 @@ import { SubCategoriaComponent } from './categoria-financeira/sub-categoria/sub-
         CentroCustoComponent,
         ConfiguracaoFinanceiraComponent,
         SubCategoriaComponent,
+        FormaPagamentoComponent,
     ],
     exports: []
 })

@@ -6,6 +6,7 @@ import { CentroCustoComponent } from "./centro-custo/centro-custo.component";
 import { ConfiguracaoFinanceiraComponent } from "./configuracao-financeira/configuracao-financeira.component";
 import { ContaBancariaComponent } from "./conta-bancaria/conta-bancaria.component";
 import { SubCategoriaComponent } from "./categoria-financeira/sub-categoria/sub-categoria.component";
+import { FormaPagamentoComponent } from "./forma-pagamento/forma-pagamento.component";
 
 export const FinanceiroRoutes: Routes = [
     {
@@ -42,6 +43,11 @@ export const FinanceiroRoutes: Routes = [
       path: "sub-categoria",
       component: SubCategoriaComponent,
       data: { title: 'Sub Categoria', breadcrumb: 'Sub Categoria'}
+    } ,
+    {
+      path: "forma-pagamento",
+      component: FormaPagamentoComponent,
+      data: { title: 'Formas de Pagamento', breadcrumb: 'Formas de Pagamento'}
     }    
   ];
   
