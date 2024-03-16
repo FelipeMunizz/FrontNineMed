@@ -7,6 +7,8 @@ import { ContaBancariaService } from 'app/shared/services/app-models/conta-banca
 import { ConfiguracaoFinanceiraService } from 'app/shared/services/app-models/configuracao-financeira.service';
 import { ConfiguracaoFinanceira } from 'app/shared/models/configuracao-financeira.model';
 import { User } from 'app/shared/models/user.model';
+import { MatDialog } from '@angular/material/dialog';
+import { LancamentoModalComponent } from '../lancamento-modal/lancamento-modal.component';
 
 @Component({
   selector: 'app-controle',
@@ -18,7 +20,8 @@ export class ControleComponent implements OnInit {
   user: User = {}
   color: string;
   valorSadoGeral: number = 0;
-  contaBancaria: string = '';
+  contaBancaria: string = '';  tipos: { value: number; label: string }[] = [];
+
 
   constructor(
     private router: Router,
@@ -26,11 +29,26 @@ export class ControleComponent implements OnInit {
     private loader: AppLoaderService,
     private lancamentoService: LancamentoService,
     private contaBancariaService: ContaBancariaService,
-    private configFinanceiraService: ConfiguracaoFinanceiraService
+    private configFinanceiraService: ConfiguracaoFinanceiraService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
     this.LoadDadosIniciais();
+    this.openFamiliarModal();
+  }
+
+  openFamiliarModal() {
+    const dialogRef = this.dialog.open(LancamentoModalComponent, {
+      width: '50%',
+      height: 'auto',
+      data: {  }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result)
+        this.LoadDadosIniciais();
+    });
   }
 
   TelaCadastro(path: string) {

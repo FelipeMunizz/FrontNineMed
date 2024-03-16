@@ -15,6 +15,7 @@ import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { PerfilComponent } from './views/configuracoes/perfil/perfil.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { AsyncPipe } from '@angular/common';
 
 
 // AoT requires an exported function for factories
@@ -36,7 +37,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       }
     }),
     RouterModule.forRoot(rootRouterConfig, { useHash: false, relativeLinkResolution: 'legacy' }),
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    AsyncPipe
   ],
   declarations: [AppComponent],
   providers: [

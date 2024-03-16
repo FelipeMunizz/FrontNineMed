@@ -41,7 +41,7 @@ export class CategoriaFinanceiraComponent implements OnInit {
   ngOnInit(): void {
     this.InicializaForm();
     this.ListarCategorias();
-    this.tipos = this.enumService.getTipoCategoriaFinanceira();
+    this.tipos = this.enumService.getTipoLancamento();
   }
 
   InicializaForm() {
