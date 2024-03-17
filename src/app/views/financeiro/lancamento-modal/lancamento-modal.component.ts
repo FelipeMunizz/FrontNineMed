@@ -37,11 +37,11 @@ export class LancamentoModalComponent implements OnInit {
       configFinanceira?: ConfiguracaoFinanceira,
       paciente?: Paciente,
       funcionario?: Funcionario,
-      // tipoLancamento?: string
+      tipoLancamento?: string
     }
   ) {
     this.configuracaoFinanceira = data.configFinanceira;
-    // this.tipoLancamento = data.tipoLancamento;
+    this.tipoLancamento = data.tipoLancamento;
     this.paciente = data.paciente;
     this.funcionario = data.funcionario
   }
@@ -76,7 +76,7 @@ export class LancamentoModalComponent implements OnInit {
       })
   }
 
-  //Métodos Auxiliares
+  // Métodos Auxiliares
 
   private dadosForm(){
     return this.lancamentoForm.controls;

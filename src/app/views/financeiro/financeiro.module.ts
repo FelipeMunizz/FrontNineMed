@@ -36,6 +36,8 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { QuillModule } from 'ngx-quill';
 import { SubCategoriaComponent } from './categoria-financeira/sub-categoria/sub-categoria.component';
 import { FormaPagamentoComponent } from './forma-pagamento/forma-pagamento.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { LancamentoModalComponent } from './lancamento-modal/lancamento-modal.component';
 
 @NgModule({
     imports: [
@@ -64,6 +66,7 @@ import { FormaPagamentoComponent } from './forma-pagamento/forma-pagamento.compo
         MatDialogModule,
         NgxMaskModule.forRoot(),
         MatSelectModule,
+        MatFormFieldModule,
     ],
     providers: [
         { provide: MatPaginatorIntl, useClass: CustomPaginator }
@@ -77,6 +80,7 @@ import { FormaPagamentoComponent } from './forma-pagamento/forma-pagamento.compo
         ConfiguracaoFinanceiraComponent,
         SubCategoriaComponent,
         FormaPagamentoComponent,
+        LancamentoModalComponent
     ],
     exports: []
 })
