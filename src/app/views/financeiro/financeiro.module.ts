@@ -38,6 +38,7 @@ import { SubCategoriaComponent } from './categoria-financeira/sub-categoria/sub-
 import { FormaPagamentoComponent } from './forma-pagamento/forma-pagamento.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { LancamentoModalComponent } from './lancamento-modal/lancamento-modal.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
     imports: [
@@ -67,6 +68,7 @@ import { LancamentoModalComponent } from './lancamento-modal/lancamento-modal.co
         NgxMaskModule.forRoot(),
         MatSelectModule,
         MatFormFieldModule,
+        MatAutocompleteModule
     ],
     providers: [
         { provide: MatPaginatorIntl, useClass: CustomPaginator }

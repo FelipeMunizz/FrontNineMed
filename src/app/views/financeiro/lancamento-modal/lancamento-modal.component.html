@@ -5,10 +5,34 @@
         <div class="row">
             <div class="col col-12">
                 <mat-form-field class="full-width">
-                    <mat-label>Paciente</mat-label>
-                    <mat-select matNativeControl formControlName="paciente" class="dorpdown-menu">
-                        <mat-option class="dropdown-item" *ngFor="let paciente of listaPacientes" [value]="paciente.id">
+                    <input type="text" matInput placeholder="Paciente" formControlName="paciente"
+                        [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                        <mat-option *ngFor="let paciente of filterPacientes(dadosForm().paciente.value)"
+                            [value]="paciente">
                             {{ paciente.name }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-lg-4 col-md-4 col-sm-12">
+                <mat-form-field class="full-width">
+                    <mat-label>Profissional</mat-label>
+                    <mat-select matNativeControl formControlName="profissional" class="dorpdown-menu">
+                        <mat-option class="dropdown-item" *ngFor="let profissional of listaProfissionais" [value]="profissional.id">
+                            {{ profissional.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col col-lg-4 col-md-4 col-sm-12">
+                <mat-form-field class="full-width">
+                    <mat-label>Convênio</mat-label>
+                    <mat-select matNativeControl formControlName="convenio" class="dorpdown-menu">
+                        <mat-option class="dropdown-item" *ngFor="let convenio of listaConvenios" [value]="convenio.id">
+                            {{ convenio.name }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
