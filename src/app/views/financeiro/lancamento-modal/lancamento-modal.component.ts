@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ConfiguracaoFinanceira } from 'app/shared/models/configuracao-financeira.model';
 import { Funcionario } from 'app/shared/models/funcionario.model';
 import { Paciente } from 'app/shared/models/paciente.model';
@@ -16,6 +16,10 @@ import { SubCategoriaFinanceiraService } from 'app/shared/services/app-models/su
 import { CentroCustoService } from 'app/shared/services/app-models/centro-custo.service';
 import { FormaPagamentoService } from 'app/shared/services/app-models/forma-pagamento.service';
 import { AppLoaderService } from 'app/shared/services/app-loader/app-loader.service';
+import { UtilityService } from 'app/shared/services/utility.service';
+import { Lancamento } from 'app/shared/models/lancamento.model';
+import { ContaBancariaService } from 'app/shared/services/app-models/conta-bancaria.service';
+import { LancamentoService } from 'app/shared/services/app-models/lancamento.service';
 
 @Component({
   selector: 'app-lancamento-modal',
@@ -53,6 +57,9 @@ export class LancamentoModalComponent implements OnInit {
   listaForma: Array<SelectedModel>;
   formaSelected: SelectedModel;
 
+  listaConta: Array<SelectedModel>;
+  contaSelected: SelectedModel;
+
   constructor(
     private enumService: EnumService,
     private pacienteService: PacienteService,
@@ -63,7 +70,11 @@ export class LancamentoModalComponent implements OnInit {
     private categoriaService: SubCategoriaFinanceiraService,
     private centroCustoService: CentroCustoService,
     private formaPagamentoService: FormaPagamentoService,
+    private contaService: ContaBancariaService,
+    private lancamentoService: LancamentoService,
+    private utility: UtilityService,
     private loader: AppLoaderService,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: {
       configFinanceira?: ConfiguracaoFinanceira,
       paciente?: Paciente,
@@ -81,6 +92,7 @@ export class LancamentoModalComponent implements OnInit {
     this.tipos = this.enumService.getTipoLancamento();
     this.InicializaForm();
     this.InicializaListas();
+    this.SetValoresPadroes();
   }
 
   InicializaForm() {
@@ -92,14 +104,55 @@ export class LancamentoModalComponent implements OnInit {
       valor: new UntypedFormControl('', Validators.required),
       descricao: new UntypedFormControl("", []),
       categoria: new UntypedFormControl('', []),
-      conta: new UntypedFormControl('', []),      
+      conta: new UntypedFormControl('', [Validators.required]),
       formaPagamento: new UntypedFormControl('', Validators.required),
       centroCusto: new UntypedFormControl('', []),
       dataVencimento: new UntypedFormControl('', [])
     })
   }
 
-  InicializaListas(){    
+  SetValoresPadroes() {
+    var dados = this.dadosForm();
+
+    dados['conta'].setValue(this.configuracaoFinanceira.idContaBancaria);
+    dados['formaPagamento'].setValue(this.configuracaoFinanceira.idFormaPagamento);
+    dados['centroCusto'].setValue(this.configuracaoFinanceira.idCentroCusto);
+  }
+
+  SalvarClick() {
+    this.loader.open('Aguarde...');
+
+
+    var dados = this.dadosForm();
+    var item = new Lancamento;
+    this.user = this.authService.getUser();
+
+    var paciente = dados['paciente'].value;
+
+    item.IdClinica = +this.user.idClinica;
+    item.IdPaciente = paciente.id;
+    item.IdProcedimento = dados['procedimento'].value;
+    item.IdFuncionario = dados['profissional'].value;
+    item.IdConvenio = dados['convenio'].value;
+    item.Valor = dados['valor'].value;
+    item.Descricao = dados['descricao'].value;
+    item.IdSubCategoria = dados['categoria'].value;
+    item.IdContaBancaria = dados['conta'].value;
+    item.IdFormaPagamento = dados['formaPagamento'].value;
+    item.IdCentroCusto = dados['centroCusto'].value;
+    item.DataVencimento = dados['dataVencimento'].value;
+    item.DataLancamento = new Date;
+    
+    this.lancamentoService.AdicionarLancamento(item)
+      .subscribe((response) => {
+        if (response.success) {          
+          this.utility.MostraToastr('sucesso', response.message, 'sucesso');
+          this.dialog.closeAll()
+        }
+      })
+  }
+
+  InicializaListas() {
     this.loader.open('Aguarde');
     this.ListPacientes();
     this.ListProfissional();
@@ -108,6 +161,7 @@ export class LancamentoModalComponent implements OnInit {
     this.ListCategoria();
     this.ListCentroCusto();
     this.ListForma();
+    this.ListConta();
     this.loader.close();
   }
 
@@ -147,7 +201,6 @@ export class LancamentoModalComponent implements OnInit {
       })
   }
 
-  
   ListConvenio() {
     this.user = this.authService.getUser();
 
@@ -240,12 +293,28 @@ export class LancamentoModalComponent implements OnInit {
       })
   }
 
-  ProcedimentoSelecionado(idProcedimento: number){
+  ListConta() {
+    this.contaService.ListaContasBancariaBanco(this.configuracaoFinanceira.idBanco)
+      .subscribe((contas) => {
+        var listContas = [];
+        contas.forEach(x => {
+          var item = new SelectedModel();
+          item.id = x.id;
+          item.name = x.nome;
+
+          listContas.push(item);
+        });
+
+        this.listaConta = listContas;
+      })
+  }
+
+  ProcedimentoSelecionado(idProcedimento: number) {
     this.procedimentoService.ObterProcedimento(idProcedimento)
-    .subscribe((procedimento) => {
-      var dados = this.dadosForm();
-      dados['valor'].setValue(procedimento.preco);
-    })
+      .subscribe((procedimento) => {
+        var dados = this.dadosForm();
+        dados['valor'].setValue(procedimento.preco);
+      })
   }
 
 

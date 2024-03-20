@@ -21,7 +21,7 @@ export class ControleComponent implements OnInit {
   color: string;
   valorSadoGeral: number = 0;
   contaBancaria: string = '';  tipos: { value: number; label: string }[] = [];
-
+  configFinanceira: ConfiguracaoFinanceira;
 
   constructor(
     private router: Router,
@@ -41,11 +41,13 @@ export class ControleComponent implements OnInit {
     const dialogRef = this.dialog.open(LancamentoModalComponent, {
       width: '50%',
       height: 'auto',
-      data: { tipoLancamento: tipo }
+      data: { 
+        tipoLancamento: tipo,
+        configFinanceira: this.configFinanceira
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result)
         this.LoadDadosIniciais();
     });
   }
@@ -61,6 +63,7 @@ export class ControleComponent implements OnInit {
 
     this.configFinanceiraService.ListarConfiguracaoFinanceirasClinica(+this.user.idClinica)
       .subscribe((configuracao) => {
+        this.configFinanceira = configuracao[0];
         this.lancamentoService.RetornoSaldoGeral(configuracao[0].idContaBancaria)
           .subscribe((valor) => {
             this.valorSadoGeral = valor.result;
