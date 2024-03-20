@@ -35,14 +35,13 @@ export class ControleComponent implements OnInit {
 
   ngOnInit(): void {
     this.LoadDadosIniciais();
-    this.openFamiliarModal();
   }
 
-  openFamiliarModal() {
+  openLancamentoModal(tipo: string) {
     const dialogRef = this.dialog.open(LancamentoModalComponent, {
       width: '50%',
       height: 'auto',
-      data: {  }
+      data: { tipoLancamento: tipo }
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -16,8 +16,12 @@ export class SubCategoriaFinanceiraService{
     private readonly baseUrl = environment.apiURL + '/SubCategoria';
 
      // Lista SubCategoriaFinanceiras
-     public ListarSubCategoriaFinanceiras(idClinica: number): Observable<any> {
-        return this.httpClient.get<any>(`${this.baseUrl}/ListarSubCategoriaFinanceiras/${idClinica}`)
+    public ListarSubCategoriaFinanceiras(idCategoriaFinanceira: number): Observable<any> {
+        return this.httpClient.get<any>(`${this.baseUrl}/ListarSubCategoriaFinanceiras/${idCategoriaFinanceira}`)
+    }
+
+    public ListaSubCategoriaTipo(idClinica: number, tipo: number): Observable<any> {
+        return this.httpClient.get<any>(`${this.baseUrl}/ListaSubCategoriaTipo/${idClinica}?tipo=${tipo}`)
     }
 
     // Obter SubCategoriaFinanceiras
