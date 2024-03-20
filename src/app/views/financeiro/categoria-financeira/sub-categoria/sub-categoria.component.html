@@ -1,0 +1,110 @@
+<mat-card class="p0">
+    <mat-card-title>
+        <div class="row">
+            <div class="col col-lg-10 col-md-10 col-sm-10">
+                <mat-card-title class="text-muted">
+                    Sub Categorias Financeira
+                </mat-card-title>
+            </div>
+            <div class="col col-lg-2 col-md-2 col-sm-2">
+                <div class="demo-button-container" *ngIf="tipoTela == 1">
+                    <button mat-raised-button color="primary" class="btn-card" matTooltip="Retornar para Categoria"
+                        TooltipPosition="below" (click)="CategoriaNavigate()">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    &nbsp;
+                    <button mat-raised-button color="primary" class="btn-card" matTooltip="Adicionar nova Categoria"
+                        TooltipPosition="below" (click)="TelaCadastro()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+                <div class="demo-button-container" *ngIf="tipoTela == 2">
+                    <button mat-raised-button color="primary" class="btn-card" matTooltip="Retornar para Categoria"
+                        TooltipPosition="below" (click)="CategoriaNavigate()">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    &nbsp;
+                    <button mat-raised-button color="primary" class="btn-card" matTooltip="Listar Categorias"
+                        matTooltipPosition="below" (click)="ListarCategorias()">
+                        <mat-icon>list</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-card-title>
+
+    <mat-card-content *ngIf="tipoTela == 1">
+        <div class="row">
+            <div class="col col-lg-10 col-md-10 col-sm-10">
+                <mat-form-field>
+                    <mat-label>Pesquisar</mat-label>
+                    <input matInput (keyup)="AplicaFiltro($event)" placeholder="Ex. Atendimentos" #input>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Cod. Sub Categoria </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.id}}
+                    </td>
+                </ng-container>
+
+                <!-- Nome Column -->
+                <ng-container matColumnDef="nome">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
+                    <td mat-cell *matCellDef="let row">{{row.nome}}</td>
+                </ng-container>
+
+                <!-- Acoes Column -->
+                <ng-container matColumnDef="acoes">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Ações </th>
+                    <td mat-cell *matCellDef="let row">
+                        <a (click)="LoadDadosForm(row.id)">
+                            <mat-icon style="color: blue;" matTooltip="Editar Categoria"
+                                matTooltipPosition="below">edit</mat-icon>
+                        </a> &nbsp;&nbsp;
+                        <a (click)="DeletarCategoria(row.id)">
+                            <mat-icon style="color: red;" matTooltip="Deletar Categoria"
+                                matTooltipPosition="below">delete</mat-icon>
+                        </a>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="dispplayColuns"></tr>
+                <tr mat-row *matRowDef="let row; columns: dispplayColuns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4" style="text-align: center;">Nenhum dado Encontrado </td>
+                </tr>
+            </table>
+
+            <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons
+                aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="tipoTela == 2">
+        <form [formGroup]="subCategoriaForm" (submit)="SalvarClick()">
+            <mat-card-title>Dados Categoria</mat-card-title>
+            <div class="row">
+                <div class="col col-lg-6 col-md-6 col-sm-12">
+                    <mat-form-field class="full-width">
+                        <input matInput name="nome" formControlName="nome" placeholder="Nome" value="">
+                    </mat-form-field>
+                    <small *ngIf="subCategoriaForm.controls['nome'].touched" class="form-error-msg"> </small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col align-self-end">
+                    <input type="submit" class="btn btn-primary" value="Salvar">
+                </div>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

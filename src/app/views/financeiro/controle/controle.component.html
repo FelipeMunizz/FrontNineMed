@@ -1,0 +1,141 @@
+<div class="mt--72">
+    <div fxFlex="100" fxFlex.sm="70" fxFlex.gt-sm="70">
+        <div fxLayout="row">
+            <div fxFlex="100" fxFlex.sm="100" fxFlex.gt-sm="100">
+                <mat-card fxFlex="100">
+                    <div class="ml-12">
+                        <h2 class="card-title text-blue">Transações</h2>
+                        <p class="m-0 text-muted mb-4">Lançamentos de receitas, despesas e transferências entre contas.
+                        </p>
+                    </div>
+                    <mat-card-content>
+                        <div class="row row-padding">
+                            <div class="col col-lg-4 col-md-4 col-sm-4">
+                                <button class="btn btn-primary align-items-center" style="width: 100%;" (click)="openLancamentoModal('Receita')">
+                                    <mat-icon>arrow_upward</mat-icon> &nbsp;&nbsp;
+                                    Receita
+                                </button>
+                            </div>
+                            <div class="col col-lg-4 col-md-4 col-sm-4">
+                                <button class="btn btn-danger align-items-center" style="width: 100%;" (click)="openLancamentoModal('Despesa')">
+                                    <mat-icon>arrow_downward</mat-icon> &nbsp;&nbsp;
+                                    Despesa
+                                </button>
+                            </div>
+                            <div class="col col-lg-4 col-md-4 col-sm-4">
+                                <button class="btn btn-light border border-dark align-items-center"
+                                    style="width: 100%;">
+                                    <mat-icon>swap_vert</mat-icon> &nbsp;&nbsp;
+                                    Transferência
+                                </button>
+                            </div>
+                        </div>
+                        <mat-divider></mat-divider>
+                        <div class="row p-12">
+                            <h3 class="text-blue">Saldo Geral</h3>
+                        </div>
+                        <div class="container d-flex text-{{color}}">
+                            <small class="small-text">R$</small>
+                            <span class="content-saldo">{{valorSadoGeral.toLocaleString('pt-BR', {
+                                minimumFractionDigits: 2
+                                })}}</span>
+                        </div>
+                        <div class="container d-flex justify-content-end">
+                            <span><strong>Conta Padrão:</strong> &nbsp; {{contaBancaria}}</span>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <div fxFlex="100" fxFlex.sm="30" fxFlex.gt-sm="30">
+        <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.sm="100" fxFlex.gt-sm="100">
+                <mat-card class="p-24" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-icon class="text-48 text-blue">account_balance</mat-icon>
+                        <div class="ml-12">
+                            <h2 class="m-0 text-blue">Bancos</h2>
+                            <p class="m-0 text-muted mb-4">Lista, cadastros, edição e deleção.</p>
+                        </div>
+                    </div>
+                    <button mat-icon-button matTooltip="Bancos" (click)="TelaCadastro('banco')">
+                        <mat-icon class="mat-18">arrow_right_alt</mat-icon>
+                    </button>
+                </mat-card>
+            </div>
+            <div fxFlex="100" fxFlex.sm="100" fxFlex.gt-sm="100">
+                <mat-card class="p-24" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-icon class="text-48 text-accent">account_balance_wallet</mat-icon>
+                        <div class="ml-12">
+                            <h2 class="m-0 text-accent">Contas Bancárias</h2>
+                            <p class="m-0 text-muted mb-4">Lista, cadastros, edição e deleção.</p>
+                        </div>
+                    </div>
+                    <button mat-icon-button matTooltip="Contas Bancárias" (click)="TelaCadastro('conta-bancaria')">
+                        <mat-icon class="mat-18">arrow_right_alt</mat-icon>
+                    </button>
+                </mat-card>
+            </div>
+            <div fxFlex="100" fxFlex.sm="100" fxFlex.gt-sm="100">
+                <mat-card class="p-24" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-icon class="text-48 text-blue">category</mat-icon>
+                        <div class="ml-12">
+                            <h2 class="m-0 text-blue">Categorias Financeira</h2>
+                            <p class="m-0 text-muted mb-4">Lista, cadastros, edição e deleção.</p>
+                        </div>
+                    </div>
+                    <button mat-icon-button matTooltip="Categorias e Sub Categorias"
+                        (click)="TelaCadastro('categoria-financeira')">
+                        <mat-icon class="mat-18">arrow_right_alt</mat-icon>
+                    </button>
+                </mat-card>
+            </div>
+            <div fxFlex="100" fxFlex.sm="100" fxFlex.gt-sm="100">
+                <mat-card class="p-24" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-icon class="text-48 text-accent">monetization_on</mat-icon>
+                        <div class="ml-12">
+                            <h2 class="m-0 text-accent">Centro Custo</h2>
+                            <p class="m-0 text-muted mb-4">Lista, cadastros, edição e deleção.</p>
+                        </div>
+                    </div>
+                    <button mat-icon-button matTooltip="Centro Custo" (click)="TelaCadastro('centro-custo')">
+                        <mat-icon class="mat-18">arrow_right_alt</mat-icon>
+                    </button>
+                </mat-card>
+            </div>
+            <div fxFlex="100" fxFlex.sm="100" fxFlex.gt-sm="100">
+                <mat-card class="p-24" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-icon class="text-48 text-blue">payments</mat-icon>
+                        <div class="ml-12">
+                            <h2 class="m-0 text-blue">Formas de Pagamento</h2>
+                            <p class="m-0 text-muted mb-4">Lista, cadastros, edição e deleção.</p>
+                        </div>
+                    </div>
+                    <button mat-icon-button matTooltip="Centro Custo" (click)="TelaCadastro('forma-pagamento')">
+                        <mat-icon class="mat-18">arrow_right_alt</mat-icon>
+                    </button>
+                </mat-card>
+            </div>
+            <div fxFlex="100" fxFlex.sm="50" fxFlex.gt-sm="100">
+                <mat-card class="p-24" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-icon class="text-48 text-accent">settings</mat-icon>
+                        <div class="ml-12">
+                            <h2 class="m-0 text-accent">Configuração do Financeiro</h2>
+                            <p class="m-0 text-muted mb-4">Defina as configurações padrões.</p>
+                        </div>
+                    </div>
+                    <button mat-icon-button matTooltip="Configurações Financeira"
+                        (click)="TelaCadastro('configuracao-financeira')">
+                        <mat-icon class="mat-18">arrow_right_alt</mat-icon>
+                    </button>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>

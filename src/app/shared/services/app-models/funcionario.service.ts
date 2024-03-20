@@ -19,6 +19,11 @@ export class FuncionarioService{
       return this.httpClient.get<any>(url);
     }
 
+    public ListarProfissionaisSaude(idClinica: number): Observable<any> {
+      const url = `${this.baseUrl}/Funcionario/ListarProfissionaisSaude/${idClinica}`;
+      return this.httpClient.get<any>(url);
+    }
+
     public ObterFuncionario(idFuncionario: number): Observable<any> {
       const url = `${this.baseUrl}/Funcionario/ObterFuncionario/${idFuncionario}`;
       return this.httpClient.get<any>(url);

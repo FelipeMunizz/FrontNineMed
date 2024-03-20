@@ -48,7 +48,13 @@ export class NavigationService {
         { name: 'Procedimentos', state: 'cadastros/procedimento', icon: 'vaccines' },
         { name: 'Totens', state: 'cadastros/toten', icon: 'view_timeline' },
       ]
-    }
+    },
+    {
+      name: 'Financeiro',
+      state: 'financeiro/controle',
+      type: 'link',
+      icon: 'attach_money'
+    },
   ];
 
   // Icon menu TITLE at the very top of navigation.
