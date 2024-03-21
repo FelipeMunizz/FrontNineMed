@@ -122,26 +122,27 @@ export class LancamentoModalComponent implements OnInit {
   SalvarClick() {
     this.loader.open('Aguarde...');
 
-
+    debugger
     var dados = this.dadosForm();
     var item = new Lancamento;
     this.user = this.authService.getUser();
 
-    var paciente = dados['paciente'].value;
-
     item.IdClinica = +this.user.idClinica;
+
+    var paciente = dados['paciente'].value;
     item.IdPaciente = paciente.id;
-    item.IdProcedimento = dados['procedimento'].value;
-    item.IdFuncionario = dados['profissional'].value;
-    item.IdConvenio = dados['convenio'].value;
+    item.IdProcedimento = dados['procedimento'].value? dados['procedimento'].value : null;
+    item.IdConvenio = dados['convenio'].value? dados['convenio'].value : null;
     item.Valor = dados['valor'].value;
     item.Descricao = dados['descricao'].value;
-    item.IdSubCategoria = dados['categoria'].value;
-    item.IdContaBancaria = dados['conta'].value;
-    item.IdFormaPagamento = dados['formaPagamento'].value;
     item.IdCentroCusto = dados['centroCusto'].value;
     item.DataVencimento = dados['dataVencimento'].value;
     item.DataLancamento = new Date;
+    
+    item.IdFuncionario = dados['profissional'].value;
+    item.IdSubCategoria = dados['categoria'].value;
+    item.IdContaBancaria = dados['conta'].value;
+    item.IdFormaPagamento = dados['formaPagamento'].value;
     
     this.lancamentoService.AdicionarLancamento(item)
       .subscribe((response) => {
