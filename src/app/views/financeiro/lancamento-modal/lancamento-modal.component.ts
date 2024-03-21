@@ -30,7 +30,7 @@ export class LancamentoModalComponent implements OnInit {
   configuracaoFinanceira: ConfiguracaoFinanceira;
   paciente: Paciente;
   funcionario: Funcionario;
-  tipoLancamento: string = 'Receita';
+  tipoLancamento: string;
 
   user: User = {};
   lancamentoForm: UntypedFormGroup;
@@ -126,6 +126,8 @@ export class LancamentoModalComponent implements OnInit {
     var dados = this.dadosForm();
     var item = new Lancamento;
     this.user = this.authService.getUser();
+    
+    var tipo = this.tipoLancamento === 'Receita' ? 0 : 1;
 
     item.IdClinica = +this.user.idClinica;
 
@@ -143,6 +145,7 @@ export class LancamentoModalComponent implements OnInit {
     item.IdSubCategoria = dados['categoria'].value;
     item.IdContaBancaria = dados['conta'].value;
     item.IdFormaPagamento = dados['formaPagamento'].value;
+    item.Tipo = tipo;
     
     this.lancamentoService.AdicionarLancamento(item)
       .subscribe((response) => {
