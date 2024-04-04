@@ -32,7 +32,6 @@ export class AutoAtendimentoComponent implements OnInit {
     this.totenService.AdicionarSenhaToten(item)
       .subscribe((retorno) => {
         if (retorno.success) {
-          debugger
           let conteudo = `
             <style>
               @media print {
