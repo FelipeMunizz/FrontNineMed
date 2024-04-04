@@ -85,7 +85,6 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
   }
 
   isTotenRoute(): boolean {
-    debugger
     var teste = this.router.url.includes('toten');
     return teste
   }
