@@ -30,16 +30,60 @@ export class AutoAtendimentoComponent implements OnInit {
     item.idToten = this.idToten;
 
     this.totenService.AdicionarSenhaToten(item)
-    .subscribe((retorno) => {
-      if(retorno.success){
-        console.log(retorno.result.senhaPainel)
-      }
-      else{
-        this.utilityService.MostraToastr('Erro', retorno.message, 'erro')
-      }
-    },
-    (retorno) => {
-      this.utilityService.MostraToastr('Erro', retorno.message, 'erro')
-    })
+      .subscribe((retorno) => {
+        if (retorno.success) {
+          debugger
+          let conteudo = `
+            <style>
+              @media print {
+                @page {
+                  size: 320px;
+                }
+                body {
+                  width: 320px;
+                }
+                .conteudo {
+                  text-align: center;
+                }
+              }
+            </style>
+            <div class="conteudo">
+              <div style="font-size: 32px;">${retorno.result.senhaPainel}</div>
+              <div style="font-size: 12px;">${this.formatarData(retorno.result.dataHoraCriacao)}</div>
+            </div>
+          `;
+          let janelaImprimir = window.open('', '_blank');
+          janelaImprimir.document.open();
+          janelaImprimir.document.write(`
+            <html>
+              <head>
+                <title>Impressão</title>
+              </head>
+              <body>${conteudo}</body>
+            </html>`
+          );
+          janelaImprimir.document.close();
+          janelaImprimir.print();
+        }
+        else {
+          this.utilityService.MostraToastr('Erro', retorno.message, 'erro')
+        }
+      },
+        (retorno) => {
+          this.utilityService.MostraToastr('Erro', retorno.message, 'erro')
+        })
+  }
+
+  formatarData(dataString: string): string {
+    const data = new Date(dataString)
+    const options: Intl.DateTimeFormatOptions = {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    };
+    return data.toLocaleDateString('pt-BR', options);
   }
 }
