@@ -87,3 +87,4 @@ export class AutoAtendimentoComponent implements OnInit {
     return data.toLocaleDateString('pt-BR', options);
   }
 }
+ 
