@@ -45,5 +45,5 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
 
       this.auth.setUserAndToken(this.auth.getJwtToken(), this.user, this.auth.isLoggedIn())
     })
-  }  
+  }
 }

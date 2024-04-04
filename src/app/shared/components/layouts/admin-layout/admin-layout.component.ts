@@ -5,7 +5,8 @@ import {
   RouteConfigLoadStart, 
   RouteConfigLoadEnd, 
   ResolveStart, 
-  ResolveEnd 
+  ResolveEnd, 
+  ActivatedRoute
 } from '@angular/router';
 import { Subscription } from "rxjs";
 import { TranslateService } from '@ngx-translate/core';
@@ -34,9 +35,14 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
     public themeService: ThemeService,
     private layout: LayoutService,
     private cdr: ChangeDetectorRef,
-    private jwtAuth: JwtAuthService
+    private jwtAuth: JwtAuthService,
+    private route: ActivatedRoute
   ) {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
 
+    })
     // Close sidenav after route change in mobile
     this.routerEventSub = router.events.pipe(filter(event => event instanceof NavigationEnd))
     .subscribe((routeChange: NavigationEnd) => {
@@ -76,6 +82,12 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
   
   ngAfterViewInit() {
 
+  }
+
+  isTotenRoute(): boolean {
+    debugger
+    var teste = this.router.url.includes('toten');
+    return teste
   }
   
   scrollToTop() {

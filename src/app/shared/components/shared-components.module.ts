@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { SharedMaterialModule } from '../shared-material.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchModule } from '../search/search.module';
 import { SharedPipesModule } from '../pipes/shared-pipes.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -23,6 +23,19 @@ import { AppComfirmComponent } from '../services/app-confirm/app-confirm.compone
 import { AppLoaderComponent } from '../services/app-loader/app-loader.component';
 import { ButtonLoadingComponent } from './button-loading/button-loading.component';
 import { MatxSidebarComponent, MatxSidebarTogglerDirective } from './matx-sidebar/matx-sidebar.component';
+import { TotenModalComponent } from './header-side/modal/totens.modal.componentt';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatStepperModule } from '@angular/material/stepper';
 
 
 const components = [
@@ -38,6 +51,7 @@ const components = [
   MatxSidebarComponent,
   FooterComponent,
   MatxSidebarTogglerDirective,
+  TotenModalComponent
 ]
 
 @NgModule({
@@ -50,7 +64,13 @@ CommonModule,
     SearchModule,
     SharedPipesModule,
     SharedDirectivesModule,
-    SharedMaterialModule
+    SharedMaterialModule,
+    SharedMaterialModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatListModule,
+    MatCardModule,
   ],
   declarations: components,
   exports: components

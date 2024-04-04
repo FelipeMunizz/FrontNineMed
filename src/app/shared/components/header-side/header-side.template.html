@@ -27,6 +27,10 @@
     <button mat-menu-item [routerLink]="['/configuracoes/configuracao-clinica']">
       <mat-icon>settings_applications</mat-icon>
       <span>Config. Clinica</span>
+    </button>    
+    <button mat-menu-item (click)="OpenToten()">
+       <mat-icon>table_chart</mat-icon>
+       <span>Toten</span>
     </button>
     <button mat-menu-item (click)="jwtAuth.signout()">
       <mat-icon>exit_to_app</mat-icon>

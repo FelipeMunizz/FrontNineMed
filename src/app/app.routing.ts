@@ -16,7 +16,7 @@ export const rootRouterConfig: Routes = [
       {
         path: 'sessions',
         loadChildren: () => import('./views/sessions/sessions.module').then(m => m.SessionsModule),
-        data: { title: 'Session'}
+        data: { title: 'Session' }
       }
     ]
   },
@@ -28,23 +28,29 @@ export const rootRouterConfig: Routes = [
       {
         path: 'dashboard',
         loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule),
-        data: { title: 'Dashboard', breadcrumb: 'DASHBOARD'}
+        data: { title: 'Dashboard', breadcrumb: 'DASHBOARD' }
       },
       {
         path: 'cadastros',
         loadChildren: () => import('./views/cadastros/cadastros.module').then(m => m.CadastrosModule),
-        data: { title: 'Cadastros', breadcrumb: 'Cadastros'}
+        data: { title: 'Cadastros', breadcrumb: 'Cadastros' }
       },
       {
         path: 'configuracoes',
         loadChildren: () => import('./views/configuracoes/configuracoes.module').then(m => m.ConfiguracoesModule),
-        data: { title: 'Perfil', breadcrumb: 'Perfil'}
-      } ,
+        data: { title: 'Perfil', breadcrumb: 'Perfil' }
+      },
       {
         path: 'financeiro',
         loadChildren: () => import('./views/financeiro/financeiro.module').then(m => m.FinanceiroModule),
-        data: { title: 'Financeiro', breadcrumb: 'Financeiro'}
-      }    
+        data: { title: 'Financeiro', breadcrumb: 'Financeiro' }
+      },
+      {
+        path: 'toten',
+        loadChildren: () => import('./views/toten/toten.module').then(m => m.TotenModule),
+        data: {title: 'Toten', breadcrumb: 'Toten'}
+      }
+
     ]
   },
   {

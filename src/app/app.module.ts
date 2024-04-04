@@ -15,6 +15,7 @@ import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { AsyncPipe } from '@angular/common';
+import { AutoAtendimentoComponent } from './views/toten/auto-atendimento/auto-atendimento.component';
 
 
 // AoT requires an exported function for factories
