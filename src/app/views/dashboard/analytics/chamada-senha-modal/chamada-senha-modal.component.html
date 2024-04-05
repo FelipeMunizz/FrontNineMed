@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Chamar Senhas</h2>
+
+<mat-dialog-content>
+    <div class="row">
+        <div class="col col-6">
+            <button class="btn btn-primary" type="button" style="width: 100%;">Prioritário</button>       
+        </div>
+        <div class="col col-6">  
+            <button class="btn btn-primary" type="button" style="width: 100%;">Comum</button>             
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col col-6">
+            <button class="btn btn-primary" type="button" style="width: 100%;">Prioritário Agendado</button>        
+        </div>
+        <div class="col col-6">          
+            <button class="btn btn-primary" type="button" style="width: 100%;">Comum Agendado</button>    
+        </div>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button type="button" mat-button [mat-dialog-close]="false">Fechar</button>
+</mat-dialog-actions>
