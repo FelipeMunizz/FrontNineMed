@@ -27,6 +27,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { TotenRoutes } from './toten.routing';
 import { ListaChamadaComponent } from './lista-chamada/lista-chamada.component';
 import { AutoAtendimentoComponent } from './auto-atendimento/auto-atendimento.component';
+import { QrCodeModule } from 'ng-qrcode';
+
 
 
 @NgModule({
@@ -56,6 +58,7 @@ import { AutoAtendimentoComponent } from './auto-atendimento/auto-atendimento.co
     MatDialogModule,
     NgxMaskModule.forRoot(),
     MatSelectModule,
+    QrCodeModule
   ],
   providers: [
     { provide: MatPaginatorIntl, useClass: CustomPaginator }

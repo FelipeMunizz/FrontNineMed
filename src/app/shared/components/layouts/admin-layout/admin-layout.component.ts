@@ -93,8 +93,7 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
   }
 
   isTotenRoute(): boolean {
-    var teste = this.router.url.includes('toten');
-    return teste
+    return !this.router.url.includes('cadastros/toten') && this.router.url.includes('toten');
   }
   
   scrollToTop() {
