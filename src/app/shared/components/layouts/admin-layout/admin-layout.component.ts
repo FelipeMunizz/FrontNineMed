@@ -80,6 +80,8 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
         this.isModuleLoading = false;
       }
     });
+
+    this.UserFuncionario();
   }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
