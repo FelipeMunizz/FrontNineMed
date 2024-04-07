@@ -38,7 +38,7 @@ import { ConvenioPacienteModalComponent } from './paciente/modals/convenio-pacie
 import { FamiliarPacienteModalComponent } from './paciente/modals/familiar-paciente.modal.component';
 import { ConvenioComponent } from './convenio/convenio.component';
 import { ProcedimentoComponent } from './procedimento/procedimento.component';
-import { TotenComponent } from './toten/toten.component';
+import { TotenComponent } from './totens/toten.component';
 
 
 @NgModule({

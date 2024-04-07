@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SenhaToten } from 'app/shared/models/toten.model';
+import { AppConfirmService } from 'app/shared/services/app-confirm/app-confirm.service';
 import { TotenService } from 'app/shared/services/app-models/toten.service';
 import { UtilityService } from 'app/shared/services/utility.service';
 
@@ -11,11 +12,14 @@ import { UtilityService } from 'app/shared/services/utility.service';
 })
 export class AutoAtendimentoComponent implements OnInit {
   idToten: number;
+  geraQrCode: boolean = false;
+  stringQrCode: string = '';
 
   constructor(
     private route: ActivatedRoute,
     private totenService: TotenService,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
+    private modalConfirm: AppConfirmService
   ) { }
 
   ngOnInit(): void {
@@ -28,42 +32,54 @@ export class AutoAtendimentoComponent implements OnInit {
     var item = new SenhaToten;
     item.tipoAtendimento = tipoAtendimento;
     item.idToten = this.idToten;
+    var imprimir = false;
 
     this.totenService.AdicionarSenhaToten(item)
       .subscribe((retorno) => {
+        var senhaPainel = retorno.result.senhaPainel;
+        var dataHoraCriacao = retorno.result.dataHoraCriacao;
+        var conteudo = '';
         if (retorno.success) {
-          debugger
-          let conteudo = `
-            <style>
-              @media print {
-                @page {
-                  size: 320px;
-                }
-                body {
-                  width: 320px;
-                }
-                .conteudo {
-                  text-align: center;
-                }
+          this.modalConfirm.confirm({ title: 'Confirme', message: 'Nossa senha é gerada em QR code, deseja imprimir a senha?' })
+            .subscribe((retorno) => {
+              if (retorno) {
+                conteudo = `
+                  <style>
+                    @media print {
+                      @page {
+                        size: 320px;
+                      }
+                      body {
+                        width: 320px;
+                      }
+                      .conteudo {
+                        text-align: center;
+                      }
+                    }
+                  </style>
+                  <div class="conteudo">
+                    <div style="font-size: 32px;">${senhaPainel}</div>
+                    <div style="font-size: 12px;">${this.formatarData(dataHoraCriacao)}</div>
+                  </div>
+                `;
+                let janelaImprimir = window.open('', '_blank');
+                janelaImprimir.document.open();
+                janelaImprimir.document.write(`
+                  <html>
+                    <head>
+                      <title>Impressão</title>
+                    </head>
+                    <body>${conteudo}</body>
+                  </html>`
+                );
+                janelaImprimir.document.close();
+                janelaImprimir.print();
               }
-            </style>
-            <div class="conteudo">
-              <div style="font-size: 32px;">${retorno.result.senhaPainel}</div>
-              <div style="font-size: 12px;">${this.formatarData(retorno.result.dataHoraCriacao)}</div>
-            </div>
-          `;
-          let janelaImprimir = window.open('', '_blank');
-          janelaImprimir.document.open();
-          janelaImprimir.document.write(`
-            <html>
-              <head>
-                <title>Impressão</title>
-              </head>
-              <body>${conteudo}</body>
-            </html>`
-          );
-          janelaImprimir.document.close();
-          janelaImprimir.print();
+              else{
+                this.stringQrCode = senhaPainel;
+                this.geraQrCode = true;
+              }
+            })          
         }
         else {
           this.utilityService.MostraToastr('Erro', retorno.message, 'erro')

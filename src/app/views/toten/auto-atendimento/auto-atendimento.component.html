@@ -1,4 +1,4 @@
-<div class="container-button">
+<div class="container-button" *ngIf="!this.geraQrCode">
     <div class="row row-t">
         <div class="col-md-8 offset-md-1">
             <button type="button" class="btn btn-primary padding" style="width: 100%;" (click)="GerarSenha(0)">
@@ -27,4 +27,8 @@
             </button>
         </div>
     </div>
+</div>
+
+<div class="container-qr" *ngIf="this.geraQrCode">
+    <qr-code value="{{stringQrCode}}" size="400" errorCorrectionLevel="H"></qr-code>
 </div>

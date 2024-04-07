@@ -14,6 +14,9 @@ import { ThemeService } from '../../../services/theme.service';
 import { LayoutService } from '../../../services/layout.service';
 import { filter } from 'rxjs/operators';
 import { JwtAuthService } from '../../../services/auth/jwt-auth.service';
+import { User } from 'app/shared/models/user.model';
+import { FuncionarioService } from 'app/shared/services/app-models/funcionario.service';
+import { EnumService } from 'app/shared/services/enum.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -24,6 +27,7 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
   private moduleLoaderSub: Subscription;
   private layoutConfSub: Subscription;
   private routerEventSub: Subscription;
+  private user: User = {  }
 
   public  scrollConfig = {}
   public layoutConf: any = {};
@@ -35,8 +39,10 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
     public themeService: ThemeService,
     private layout: LayoutService,
     private cdr: ChangeDetectorRef,
-    private jwtAuth: JwtAuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,    
+    private funcionarioService: FuncionarioService,
+    private auth: JwtAuthService,
+    private enumService: EnumService
   ) {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -74,6 +80,8 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
         this.isModuleLoading = false;
       }
     });
+
+    this.UserFuncionario();
   }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -85,8 +93,7 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
   }
 
   isTotenRoute(): boolean {
-    var teste = this.router.url.includes('toten');
-    return teste
+    return !this.router.url.includes('cadastros/toten') && this.router.url.includes('toten');
   }
   
   scrollToTop() {
@@ -147,6 +154,24 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
       'sidebar-closed': layoutConf.sidebarStyle === 'closed',
       'fixed-topbar': layoutConf.topbarFixed && layoutConf.navigationPos === 'side'
     }
+  }
+
+  
+  //Atribui Funcionario ao User
+  UserFuncionario(){
+    this.user = this.auth.getUser();
+    this.funcionarioService.ObterFuncionarioEmail(this.user.displayName)
+    .subscribe((func) => {
+      this.user = new User();
+      this.user.displayName = func.email;
+      this.user.name = func.nome;
+      this.user.idClinica = func.idClinica;
+      this.user.idFuncionario = func.id;
+      let perfil = this.enumService.getPerfilUsuario().find((role) => role.value === func.perfil);
+      this.user.role = perfil.label;
+
+      this.auth.setUserAndToken(this.auth.getJwtToken(), this.user, this.auth.isLoggedIn())
+    })
   }
   
 }
