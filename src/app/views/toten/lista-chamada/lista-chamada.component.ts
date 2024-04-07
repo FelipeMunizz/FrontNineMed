@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { SenhaToten } from 'app/shared/models/toten.model';
 import { TotenService } from 'app/shared/services/app-models/toten.service';
-import { Subscription, interval, switchMap } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lista-chamada',
@@ -15,12 +15,11 @@ import { Subscription, interval, switchMap } from 'rxjs';
 export class ListaChamadaComponent implements OnInit {
   idToten: number;
   dispplayColuns: string[] = ['senhaPainel', 'dataHora'];
-  dataSource: MatTableDataSource<SenhaToten> = new MatTableDataSource<SenhaToten>();   
+  dataSource: MatTableDataSource<SenhaToten> = new MatTableDataSource<SenhaToten>();
+  senhaChamada: SenhaToten = new SenhaToten;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  
-  private timerSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,26 +32,19 @@ export class ListaChamadaComponent implements OnInit {
     });
 
     this.ListarSenhasPainel();
-
-    this.timerSubscription = interval(1000).pipe(
-      switchMap(() => interval(10000)) 
-    ).subscribe(() => {
-      this.ListarSenhasPainel();
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this.timerSubscription) {
-      this.timerSubscription.unsubscribe();
-    }
   }
 
   ListarSenhasPainel() {
     this.totenService.ListarSenhasPainel(this.idToten)
       .subscribe((senhas) => {
+        this.senhaChamada = senhas.shift();
         this.dataSource = new MatTableDataSource(senhas);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
+
+        setTimeout(() => {
+          this.ListarSenhasPainel();
+        }, 5000);
       });
   }
 
@@ -67,5 +59,15 @@ export class ListaChamadaComponent implements OnInit {
       second: '2-digit'
     };
     return data.toLocaleDateString('pt-BR', options);
+  }
+
+  isEven(row: any): boolean {
+    const index = this.dataSource.data.indexOf(row);
+    return index % 2 === 0;
+  }
+
+  AtualizaLista() {
+    //timer
+    this.ListarSenhasPainel();
   }
 }

@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { SenhaToten, Toten } from "app/shared/models/toten.model";
 import { config } from "config";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -23,12 +23,12 @@ export class TotenService {
     }
 
     //Lista Senhas Tipo Atendimento
-    public ListaSenhaTotenTipoAtendimento(tipoAtendimento: number, idToten: number): Observable<any>{
+    public ListaSenhaTotenTipoAtendimento(tipoAtendimento: number, idToten: number): Observable<any> {
         return this.httpClient.get<any>(`${this.baseUrl}/ListaSenhaTotenTipoAtendimento/${tipoAtendimento}/${idToten}`);
     }
 
     //Lista Senhas Painel
-    public ListarSenhasPainel(idToten: number): Observable<any>{
+    public ListarSenhasPainel(idToten: number): Observable<any> {
         return this.httpClient.get<any>(`${this.baseUrl}/ListarSenhasPainel/${idToten}`);
     }
 
