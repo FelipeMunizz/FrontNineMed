@@ -27,6 +27,11 @@ export class TotenService {
         return this.httpClient.get<any>(`${this.baseUrl}/ListaSenhaTotenTipoAtendimento/${tipoAtendimento}/${idToten}`);
     }
 
+    //Lista Senhas Painel
+    public ListarSenhasPainel(idToten: number): Observable<any>{
+        return this.httpClient.get<any>(`${this.baseUrl}/ListarSenhasPainel/${idToten}`);
+    }
+
     // Obter Senha
     public ObterSenhaToten(idSenha: number): Observable<any> {
         return this.httpClient.get<any>(`${this.baseUrl}/ObterSenhaToten/${idSenha}`)

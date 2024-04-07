@@ -55,9 +55,6 @@ export class ChamadaSenhaModalComponent implements OnInit {
 
     if (listaSenhasPrioritario && listaSenhasPrioritario.length > 0) {
       let senhaChamada = listaSenhasPrioritario.shift();
-
-      this.localStorage.setItem('senhasPrioritario', listaSenhasPrioritario);
-      this.localStorage.setItem('senhaChamada', senhaChamada);
       this.utility.MostraToastr('Sucesso', 'Senha chamada.', 'sucesso');
       this.Atualizarsenha(senhaChamada);
       this.dialog.closeAll();
@@ -71,9 +68,6 @@ export class ChamadaSenhaModalComponent implements OnInit {
 
     if (listaSenhasPrioritarioAgendado && listaSenhasPrioritarioAgendado.length > 0) {
       let senhaChamada = listaSenhasPrioritarioAgendado.shift();
-
-      this.localStorage.setItem('senhasPrioritarioAgendado', listaSenhasPrioritarioAgendado);
-      this.localStorage.setItem('senhaChamada', senhaChamada);
       this.utility.MostraToastr('Sucesso', 'Senha chamada.', 'sucesso');      
       this.Atualizarsenha(senhaChamada);
       this.dialog.closeAll();
@@ -87,9 +81,6 @@ export class ChamadaSenhaModalComponent implements OnInit {
 
     if (listaSenhasComum && listaSenhasComum.length > 0) {
       let senhaChamada = listaSenhasComum.shift();
-
-      this.localStorage.setItem('senhasComum', listaSenhasComum);
-      this.localStorage.setItem('senhaChamada', senhaChamada);
       this.utility.MostraToastr('Sucesso', 'Senha chamada.', 'sucesso');
       this.Atualizarsenha(senhaChamada);
       this.dialog.closeAll();
@@ -103,9 +94,6 @@ export class ChamadaSenhaModalComponent implements OnInit {
 
     if (listaSenhasComumAgendado && listaSenhasComumAgendado.length > 0) {
       let senhaChamada = listaSenhasComumAgendado.shift();
-
-      this.localStorage.setItem('senhasComumAgendado', listaSenhasComumAgendado);
-      this.localStorage.setItem('senhaChamada', senhaChamada);
       this.utility.MostraToastr('Sucesso', 'Senha chamada.', 'sucesso');
       this.Atualizarsenha(senhaChamada);
       this.dialog.closeAll();
