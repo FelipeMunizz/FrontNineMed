@@ -29,6 +29,7 @@ import { SubCategoriaFinanceiraService } from './services/app-models/sub-categor
 import { TotenService } from './services/app-models/toten.service';
 import { UtilityService } from './services/utility.service';
 import { EnumService } from './services/enum.service';
+import { MidiaService } from './services/midia.service';
 
 @NgModule({
   imports: [
@@ -60,7 +61,8 @@ import { EnumService } from './services/enum.service';
     SubCategoriaFinanceiraService,
     TotenService,
     UtilityService,
-    EnumService
+    EnumService,
+    MidiaService
   ],
   exports: [
     SharedComponentsModule,

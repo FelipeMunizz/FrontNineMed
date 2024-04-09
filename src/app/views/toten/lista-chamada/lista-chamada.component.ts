@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { SenhaToten } from 'app/shared/models/toten.model';
 import { TotenService } from 'app/shared/services/app-models/toten.service';
+import { MidiaService } from 'app/shared/services/midia.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -23,7 +24,8 @@ export class ListaChamadaComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private totenService: TotenService
+    private totenService: TotenService,
+    private midiaService: MidiaService
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +39,11 @@ export class ListaChamadaComponent implements OnInit {
   ListarSenhasPainel() {
     this.totenService.ListarSenhasPainel(this.idToten)
       .subscribe((senhas) => {
+        if(senhas[0].id != this.senhaChamada.id){
+          this.midiaService.playSound();
+          this.midiaService.speak(`Senha ${senhas[0].senhaPainel}`)
+        }
+
         this.senhaChamada = senhas.shift();
         this.dataSource = new MatTableDataSource(senhas);
         this.dataSource.sort = this.sort;
@@ -44,7 +51,7 @@ export class ListaChamadaComponent implements OnInit {
 
         setTimeout(() => {
           this.ListarSenhasPainel();
-        }, 5000);
+        }, 3000);
       });
   }
 
