@@ -36,6 +36,11 @@ export const rootRouterConfig: Routes = [
         data: { title: 'Cadastros', breadcrumb: 'Cadastros' }
       },
       {
+        path: 'recepcao',
+        loadChildren: () => import('./views/recepcao/recepcao.module').then(m => m.RecepcaoModule),
+        data: { title: 'Recepção', breadcrumb: 'Recepção' }
+      },
+      {
         path: 'configuracoes',
         loadChildren: () => import('./views/configuracoes/configuracoes.module').then(m => m.ConfiguracoesModule),
         data: { title: 'Perfil', breadcrumb: 'Perfil' }

@@ -36,6 +36,12 @@ export class NavigationService {
       icon: 'dashboard',
     },
     {
+      name: 'Recepção',
+      state: 'recepcao/agenda',
+      type: 'link',
+      icon: 'event_note'
+    },
+    {
       name: 'Cadastros',
       type: 'dropDown',
       tooltip: 'Pages',

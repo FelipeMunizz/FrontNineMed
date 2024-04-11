@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, LOCALE_ID } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,8 +14,6 @@ import { ErrorHandlerService } from './shared/services/error-handler.service';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { AsyncPipe } from '@angular/common';
-import { AutoAtendimentoComponent } from './views/toten/auto-atendimento/auto-atendimento.component';
 
 
 // AoT requires an exported function for factories
@@ -25,7 +23,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 
 @NgModule({
   imports: [
-  BrowserModule,
+    BrowserModule,
     BrowserAnimationsModule,
     SharedModule,
     HttpClientModule,
@@ -38,7 +36,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     }),
     RouterModule.forRoot(rootRouterConfig, { useHash: false, relativeLinkResolution: 'legacy' }),
     ToastrModule.forRoot(),
-    AsyncPipe
   ],
   declarations: [AppComponent],
   providers: [
@@ -50,7 +47,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       useClass: TokenInterceptor,
       multi: true,
     },
-    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    { provide: LOCALE_ID, useValue: 'pt-BR' }
   ],
   bootstrap: [AppComponent],
 })
