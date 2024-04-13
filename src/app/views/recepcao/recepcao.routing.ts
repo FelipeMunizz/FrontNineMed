@@ -8,7 +8,7 @@ export const RecepcaoRoutes: Routes = [
       {
         path: 'agenda',
         component: AgendaComponent,
-        data: { title: 'Augenda', breadcrumb: 'Agenda' }
+        data: { title: 'Agenda', breadcrumb: 'Agenda' }
       }
     ]
   }

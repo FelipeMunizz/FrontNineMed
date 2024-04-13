@@ -1,7 +1,8 @@
 .topbar {
   &.mat-toolbar {
     position: relative;
-    min-height: 70px;
+    height: 38px;
+   // min-height: 70px;
     box-shadow: 0 10px 30px 0 rgba(47,60,74,.08);
     z-index: 1001;
   }

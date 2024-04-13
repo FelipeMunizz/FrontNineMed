@@ -14,10 +14,13 @@ import { ErrorHandlerService } from './shared/services/error-handler.service';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { registerLocaleData } from '@angular/common';
+import localePtBr from '@angular/common/locales/pt';
 
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
+  registerLocaleData(localePtBr);
   return new TranslateHttpLoader(httpClient);
 }
 
@@ -47,7 +50,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       useClass: TokenInterceptor,
       multi: true,
     },
-    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    //{ provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     { provide: LOCALE_ID, useValue: 'pt-BR' }
   ],
   bootstrap: [AppComponent],
