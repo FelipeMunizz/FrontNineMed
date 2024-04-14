@@ -102,17 +102,16 @@
                         <div class="row">
                             <div class="col col-lg-6 col-md-6 col-sm-12">
                                 <mat-form-field class="full-width">
-                                    <input matInput name="nome" formControlName="nome" placeholder="Nome" value=""
-                                        class="p-16">
+                                    <input matInput name="nome" formControlName="nome" placeholder="Nome" value=""  >
                                 </mat-form-field>
                                 <small *ngIf="pacienteForm.controls['nome'].touched" class="form-error-msg"> </small>
                             </div>
                             <div class="col col-lg-6 col-md-6 col-sm-12">
                                 <mat-form-field class="full-width">
-                                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
-                                    <input matInput [matDatepicker]="picker" formControlName="dataNascimento"
-                                        placeholder="Data de Nascimento">
+                                    <input matInput [matDatepicker]="picker" placeholder="Data de Nascimento"
+                                        name="dataNascimento">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker touchUi #picker></mat-datepicker>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -286,8 +285,7 @@
                             <div class="col col-lg-2 col-md-2 col-sm-12">
                                 <mat-form-field class="full-width">
                                     <mat-label>Convenio</mat-label>
-                                    <mat-select matNativeControl formControlName="idConvenio"
-                                        class="dorpdown-menu p-16">
+                                    <mat-select matNativeControl formControlName="idConvenio" class="dorpdown-menu">
                                         <mat-option *ngFor="let convenio of listaConvenios"
                                             [value]="convenio.id">{{convenio.name}}</mat-option>
                                     </mat-select>
@@ -296,15 +294,14 @@
                             <div class="col col-lg-5 col-md-5 col-sm-12">
                                 <mat-form-field class="full-width">
                                     <input matInput name="numeroCarteirinha" formControlName="numeroCarteirinha"
-                                        placeholder="Número Carteirinha" value="" class="p-16">
+                                        placeholder="Número Carteirinha" value="">
                                 </mat-form-field>
                             </div>
                             <div class="col col-lg-5 col-md-5 col-sm-12">
                                 <mat-form-field class="full-width">
-                                    <mat-datepicker-toggle matIconSuffix [for]="pickerId"></mat-datepicker-toggle>
-                                    <mat-datepicker #pickerId></mat-datepicker>
-                                    <input matInput [matDatepicker]="pickerId" formControlName="validade"
-                                        placeholder="Validade">
+                                    <input matInput [matDatepicker]="picker" placeholder="Validade" name="validade">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker touchUi #picker></mat-datepicker>
                                 </mat-form-field>
                             </div>
                         </div>

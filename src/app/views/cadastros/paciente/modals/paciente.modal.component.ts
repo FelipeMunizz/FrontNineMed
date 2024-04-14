@@ -21,10 +21,9 @@ import { UtilityService } from "app/shared/services/utility.service";
             </div>
             <div class="col col-lg-6 col-md-6 col-sm-12">
                 <mat-form-field class="full-width">
-                    <mat-datepicker-toggle matIconSuffix [for]="picker" style="display: flex; align-items: end; justify-content: end;"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <input matInput [matDatepicker]="picker" formControlName="dataNascimento"
-                        placeholder="Data de Nascimento">
+                <input matInput [matDatepicker]="picker" placeholder="Escolha a data" name="dataNascimento">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #picker></mat-datepicker>
                 </mat-form-field>
             </div>
             </div>

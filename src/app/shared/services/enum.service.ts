@@ -71,7 +71,7 @@ export class EnumService {
   }
   getRepeticaoAgendamento(){
     return [
-      {value: 0, label: 'NaoRepete'}, 
+      {value: 0, label: 'Não se Repete'}, 
       {value: 0, label: 'Diaria'},    
       {value: 0, label: 'Semanal'},     
       {value: 0, label: 'Quinzenal'},     

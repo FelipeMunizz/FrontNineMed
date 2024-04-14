@@ -5,6 +5,8 @@ import { Subject } from 'rxjs';
 import { EventColor } from 'calendar-utils';
 import { MatDialog } from '@angular/material/dialog';
 import { PacienteModalComponent } from 'app/views/cadastros/paciente/modals/paciente.modal.component';
+import { AgendamentoService } from 'app/shared/services/app-models/agendamento.service';
+import { AgendamentoComponent } from './agendamento/agendamento.component';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -73,9 +75,13 @@ export class AgendaComponent implements OnInit {
     // },
   ];
 
-  constructor(private modal: MatDialog) { }
+  constructor(
+    private modal: MatDialog,
+    private agendamentoService: AgendamentoService
+  ) { }
 
   ngOnInit(): void {
+   
   }
 
   modalData: {
@@ -125,20 +131,10 @@ export class AgendaComponent implements OnInit {
   }
 
   addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
+    this.modal.open(AgendamentoComponent,{
+      width: '100vh',
+      height: 'auto',
+    })
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {

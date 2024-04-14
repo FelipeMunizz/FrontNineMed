@@ -29,7 +29,7 @@ import { RecepcaoRoutes } from './recepcao.routing';
 import { AgendaComponent } from './agenda/agenda.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-
+import { AgendamentoComponent } from './agenda/agendamento/agendamento.component';
 
 @NgModule({
   imports: [
@@ -68,7 +68,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     { provide: MatPaginatorIntl, useClass: CustomPaginator }
   ],
   declarations: [    
-    AgendaComponent
+    AgendaComponent, AgendamentoComponent
   ],
 })
 export class RecepcaoModule {}
