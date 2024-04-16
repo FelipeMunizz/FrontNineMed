@@ -193,7 +193,7 @@ export class AgendamentoComponent implements OnInit {
         this.utility.MostraToastr('Sucesso', response.message, 'sucesso');
       },
       (error) => {
-        this.utility.MostraToastr('Erro', 'Erro ao atualizar o agendamento', 'erro');
+        this.utility.MostraToastr('Erro', error.message, 'erro');
       })
     }
   }

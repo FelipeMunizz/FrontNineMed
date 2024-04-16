@@ -128,11 +128,15 @@ export class AgendaComponent implements OnInit {
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    this.modal.open(AgendamentoComponent, {
+    const dialogRef = this.modal.open(AgendamentoComponent, {
       width: '100vh',
       height: 'auto',
       data: {agendamento: event.meta}
-    })
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+        this.ListaAgendamentos();
+    });
   }
 
   addEvent(): void {
@@ -143,7 +147,6 @@ export class AgendaComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result)
         this.ListaAgendamentos();
     });
   }
