@@ -4,7 +4,7 @@ export class Agendamento {
     repeticao: number;
     situacaoAgendamento: number;
     lembrete: boolean;
-    observacao?: string | null;
+    observacao?: string;
     idsProcedimento: number[];
     idClinica: number;
     idPaciente: number;

@@ -30,6 +30,7 @@ import { AgendaComponent } from './agenda/agenda.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { AgendamentoComponent } from './agenda/agendamento/agendamento.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   imports: [
@@ -63,6 +64,7 @@ import { AgendamentoComponent } from './agenda/agendamento/agendamento.component
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
+    MatAutocompleteModule
   ],
   providers: [
     { provide: MatPaginatorIntl, useClass: CustomPaginator }

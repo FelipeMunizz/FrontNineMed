@@ -36,7 +36,7 @@ import { UtilityService } from "app/shared/services/utility.service";
             <div class="row">
                 <div class="col col-lg-5 col-md-5 col-sm-12">
                     <mat-form-field class="full-width">
-                    <input matInput [matDatepicker]="picker" placeholder="Validade" name="validade">
+                    <input matInput [matDatepicker]="picker" placeholder="Validade" formControlName="validade">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker touchUi #picker></mat-datepicker>
                     </mat-form-field>

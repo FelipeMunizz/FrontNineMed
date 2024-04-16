@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarView, CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent } from 'angular-calendar';
 import { addDays, addHours, endOfDay, endOfMonth, isSameDay, isSameMonth, startOfDay, subDays } from 'date-fns';
-import { Subject } from 'rxjs';
+import { Subject, forkJoin } from 'rxjs';
 import { EventColor } from 'calendar-utils';
 import { MatDialog } from '@angular/material/dialog';
 import { PacienteModalComponent } from 'app/views/cadastros/paciente/modals/paciente.modal.component';
 import { AgendamentoService } from 'app/shared/services/app-models/agendamento.service';
 import { AgendamentoComponent } from './agendamento/agendamento.component';
+import { Agendamento } from 'app/shared/models/agendamento.model';
+import { User } from 'app/shared/models/user.model';
+import { PacienteService } from 'app/shared/services/app-models/paciente.service';
+import { Paciente } from 'app/shared/models/paciente.model';
+import { JwtAuthService } from 'app/shared/services/auth/jwt-auth.service';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -30,58 +35,24 @@ const colors: Record<string, EventColor> = {
 })
 
 export class AgendaComponent implements OnInit {
+  user: User = {}
   view: CalendarView = CalendarView.Month;
+  listaAgendamentos: Array<Agendamento>
   CalendarView = CalendarView;
   viewDate: Date = new Date();
 
-  events: CalendarEvent[] = [
-    // {
-    //   start: subDays(startOfDay(new Date()), 1),
-    //   end: addDays(new Date(), 1),
-    //   title: 'A 3 day event',
-    //   color: { ...colors.red },
-    //   actions: this.actions,
-    //   allDay: true,
-    //   resizable: {
-    //     beforeStart: true,
-    //     afterEnd: true,
-    //   },
-    //   draggable: true,
-    // },
-    // {
-    //   start: startOfDay(new Date()),
-    //   title: 'An event with no end date',
-    //   color: { ...colors.yellow },
-    //   actions: this.actions,
-    // },
-    // {
-    //   start: subDays(endOfMonth(new Date()), 3),
-    //   end: addDays(endOfMonth(new Date()), 3),
-    //   title: 'A long event that spans 2 months',
-    //   color: { ...colors.blue },
-    //   allDay: true,
-    // },
-    // {
-    //   start: addHours(startOfDay(new Date()), 2),
-    //   end: addHours(new Date(), 2),
-    //   title: 'A draggable and resizable event',
-    //   color: { ...colors.yellow },
-    //   actions: this.actions,
-    //   resizable: {
-    //     beforeStart: true,
-    //     afterEnd: true,
-    //   },
-    //   draggable: true,
-    // },
-  ];
+  events: CalendarEvent[] = [];
 
   constructor(
     private modal: MatDialog,
-    private agendamentoService: AgendamentoService
+    private agendamentoService: AgendamentoService,
+    private pacienteService: PacienteService,
+    private authService: JwtAuthService
   ) { }
 
   ngOnInit(): void {
-   
+    this.user = this.authService.getUser();
+    this.ListaAgendamentos();
   }
 
   modalData: {
@@ -89,9 +60,39 @@ export class AgendaComponent implements OnInit {
     event: CalendarEvent;
   };
 
-  refresh = new Subject<void>();  
+  refresh = new Subject<void>();
 
   activeDayIsOpen: boolean = false;
+
+  ListaAgendamentos(): void {
+    this.agendamentoService.ListarAgendamentosClinica(+this.user.idClinica)
+      .subscribe((response) => {
+        this.listaAgendamentos = response;
+        const observables = this.listaAgendamentos.map(agendamento =>
+          this.pacienteService.ObterPaciente(agendamento.idPaciente)
+        );
+
+        forkJoin(observables).subscribe((pacientes) => {
+          this.events = this.listaAgendamentos.map((agendamento, index) =>
+            this.mapToCalendarEvent(agendamento, pacientes[index])
+          );
+        });
+      },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
+
+  private mapToCalendarEvent(agendamento: Agendamento, paciente: Paciente): CalendarEvent {
+    return {
+      start: new Date(agendamento.dataAgendamento),
+      title: paciente.nome,
+      color: { ...colors.blue },
+      allDay: false,
+      meta: agendamento
+    };
+  }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -127,14 +128,24 @@ export class AgendaComponent implements OnInit {
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    this.modal.open(PacienteModalComponent);
+    this.modal.open(AgendamentoComponent, {
+      width: '100vh',
+      height: 'auto',
+      data: {agendamento: event.meta}
+    })
   }
 
   addEvent(): void {
-    this.modal.open(AgendamentoComponent,{
+    const dialogRef = this.modal.open(AgendamentoComponent, {
       width: '100vh',
       height: 'auto',
-    })
+      data: {agendamento: undefined}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result)
+        this.ListaAgendamentos();
+    });
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
