@@ -20,6 +20,7 @@ import { EnderecoPacienteModalComponent } from './modals/endereco-paciente.modal
 import { ContatoPacienteModalComponent } from './modals/contato-paciente.modal.component';
 import { ConvenioPacienteModalComponent } from './modals/convenio-paciente.modal.component';
 import { FamiliarPacienteModalComponent } from './modals/familiar-paciente.modal.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-paciente',
@@ -59,6 +60,7 @@ export class PacienteComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
+    private route: ActivatedRoute,
     private authService: JwtAuthService,
     private pacienteService: PacienteService,
     public utitlity: UtilityService,
@@ -72,10 +74,12 @@ export class PacienteComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(param => this.tipoTela = +param['tipoTela']);
     this.estados = this.enumService.getEstados();
     this.estadosCivil = this.enumService.getEstadoCivil();
     this.LoadForm();
-    this.ListaPaciente();
+    if (this.tipoTela != 2)
+      this.ListaPaciente();
     this.ListaConvenios();
   }
 
@@ -205,7 +209,7 @@ export class PacienteComponent implements OnInit {
     this.pacienteService.AdicionarPaciente(paciente)
       .subscribe((response) => {
         this.utitlity.MostraToastr('Sucesso', 'Paciente adicionado com sucesso', 'sucesso');
-        this.ListaPaciente();
+        this.ListaPaciente();        
       },
         (error) => {
           this.utitlity.MostraToastr('Error', 'Erro ao adicionar o paciente', 'erro')
@@ -376,7 +380,7 @@ export class PacienteComponent implements OnInit {
 
   //Metodos Auxiliares
 
-  getConvenioPaciente(idConvenio: number){
+  getConvenioPaciente(idConvenio: number) {
     let convPaciente = new SelectedModel;
     convPaciente = this.listaConvenios.find(x => x.id === idConvenio);
     return convPaciente.name;
@@ -435,7 +439,7 @@ export class PacienteComponent implements OnInit {
     else if (tipo === 'convenio') {
       this.isCollapsedConvenio[index] = !this.isCollapsedConvenio[index];
     }
-    else if(tipo === 'familiar'){
+    else if (tipo === 'familiar') {
       this.isCollapsedFamiliar[index] = !this.isCollapsedFamiliar[index];
     }
   }

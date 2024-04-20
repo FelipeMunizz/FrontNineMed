@@ -12,6 +12,7 @@ import { User } from 'app/shared/models/user.model';
 import { PacienteService } from 'app/shared/services/app-models/paciente.service';
 import { Paciente } from 'app/shared/models/paciente.model';
 import { JwtAuthService } from 'app/shared/services/auth/jwt-auth.service';
+import { Router } from '@angular/router';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -44,6 +45,7 @@ export class AgendaComponent implements OnInit {
   events: CalendarEvent[] = [];
 
   constructor(
+    private router: Router,
     private modal: MatDialog,
     private agendamentoService: AgendamentoService,
     private pacienteService: PacienteService,
@@ -149,6 +151,10 @@ export class AgendaComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
         this.ListaAgendamentos();
     });
+  }
+
+  CadastroPaciente(){
+    this.router.navigateByUrl('cadastros/paciente?tipoTela=2')
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {

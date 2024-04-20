@@ -30,5 +30,10 @@
 </div>
 
 <div class="container-qr" *ngIf="this.geraQrCode">
-    <qr-code value="{{stringQrCode}}" size="400" errorCorrectionLevel="H"></qr-code>
+    <qr-code value="{{stringQrCode}}" size="400" errorCorrectionLevel="H"></qr-code>    
+</div>
+<div class="row" *ngIf="this.geraQrCode">
+    <button class="btn btn-primary" style="width: 30%;" (click)="Reload()">
+        Voltar
+    </button>
 </div>

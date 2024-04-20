@@ -23,7 +23,8 @@ export class ListaChamadaComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private totenService: TotenService
+    private totenService: TotenService,
+    
   ) { }
 
   ngOnInit(): void {
@@ -44,7 +45,7 @@ export class ListaChamadaComponent implements OnInit {
 
         setTimeout(() => {
           this.ListarSenhasPainel();
-        }, 5000);
+        }, 2000);
       });
   }
 
