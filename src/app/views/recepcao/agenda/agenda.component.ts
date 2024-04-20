@@ -87,7 +87,7 @@ export class AgendaComponent implements OnInit {
   private mapToCalendarEvent(agendamento: Agendamento, paciente: Paciente): CalendarEvent {
     return {
       start: new Date(agendamento.dataAgendamento),
-      title: paciente.nome,
+      title: paciente.nome + ' ' + agendamento.horaAgendamento,
       color: { ...colors.blue },
       allDay: false,
       meta: agendamento

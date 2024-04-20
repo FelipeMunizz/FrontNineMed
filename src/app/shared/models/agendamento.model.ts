@@ -1,6 +1,9 @@
+import { Time } from "@angular/common";
+
 export class Agendamento {
     id: number;
     dataAgendamento: Date;
+    horaAgendamento: string;
     repeticao: number;
     situacaoAgendamento: number;
     lembrete: boolean;

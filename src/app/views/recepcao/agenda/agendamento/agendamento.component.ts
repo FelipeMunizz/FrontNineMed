@@ -66,6 +66,7 @@ export class AgendamentoComponent implements OnInit {
     this.agendamentoForm = new UntypedFormGroup({
       paciente: new UntypedFormControl(0, [Validators.required]),
       dataAgendamento: new UntypedFormControl(new Date(), Validators.required),
+      horaAgendamento: new UntypedFormControl('', [Validators.required]),
       repeticao: new UntypedFormControl(0, []),
       situacaoAgendamento: new UntypedFormControl(0, []),
       lembretes: new UntypedFormControl(false, []),
@@ -84,6 +85,7 @@ export class AgendamentoComponent implements OnInit {
     dados['convenio'].setValue(agendamento.idConvenio);
     dados['funcionario'].setValue(agendamento.idFuncionario);
     dados['dataAgendamento'].setValue(agendamento.dataAgendamento);
+    dados['horaAgendamento'].setValue(agendamento.horaAgendamento);
     dados['repeticao'].setValue(agendamento.repeticao);
     dados['situacaoAgendamento'].setValue(agendamento.situacaoAgendamento);
     dados['lembretes'].setValue(agendamento.lembrete);
@@ -164,6 +166,14 @@ export class AgendamentoComponent implements OnInit {
     var dados = this.dadosForm();
     var item = new Agendamento;
     item.dataAgendamento = dados['dataAgendamento'].value;
+
+    const hora = dados['horaAgendamento'].value.substring(0, 2);
+    const minutos = dados['horaAgendamento'].value.substring(3, 5);
+    var segundos = dados['horaAgendamento'].value.substring(6, 8);
+    if(!segundos)
+      segundos = '00';
+    // Formatar e atribuir a horaAgendamento
+    item.horaAgendamento = `${hora}:${minutos}:${segundos}`;
     item.repeticao = dados['repeticao'].value;
     item.situacaoAgendamento = dados['situacaoAgendamento'].value;
     item.lembrete = dados['lembretes'].value;
