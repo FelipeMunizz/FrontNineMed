@@ -170,7 +170,7 @@ export class AgendamentoComponent implements OnInit {
     const hora = dados['horaAgendamento'].value.substring(0, 2);
     const minutos = dados['horaAgendamento'].value.substring(3, 5);
     var segundos = '00';
-    // Formatar e atribuir a horaAgendamento
+    
     item.horaAgendamento = `${hora}:${minutos}:${segundos}`;
     item.repeticao = dados['repeticao'].value;
     item.situacaoAgendamento = dados['situacaoAgendamento'].value;
