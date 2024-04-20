@@ -42,7 +42,7 @@
             </div>
             <div class="col col-lg-4 col-md-4 col-sm-12">
                 <mat-form-field class="full-width">
-                    <input matInput name="horaAgendamento" formControlName="horaAgendamento" placeholder="Hora Agendamento" value="" mask="00:00:00">
+                    <input matInput name="horaAgendamento" formControlName="horaAgendamento" placeholder="Hora Agendamento" value="" mask="00:00">
                     <mat-error *ngIf="agendamentoForm.controls['horaAgendamento'].hasError('pattern')">Formato de hora inválido (hh:mm).</mat-error>
                 </mat-form-field>
             </div>
