@@ -55,9 +55,9 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
     this.doughNutPieOptions = {
       backgroundColor: "transparent",
       color: [
-        "#f44336",
-        "#ff9e43",
-        "rgba(116, 103, 239, 1)"
+        "#F0D500",
+        "#14870c",
+        "#ffd700"
       ],
       legend: {
         show: true,
@@ -70,9 +70,9 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
         }
       },
       tooltip: {
-        show: true,
         trigger: "item",
-        formatter: "{a} <br/>{b}: {c} ({d}%)"
+        formatter: "{a} <br/>{b}: {c} ({d}%)",
+        position: ['20%', '80%']
       },
       xAxis: [
         {
@@ -97,51 +97,75 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
 
       series: [
         {
-          name: "Agendamentos",
-          type: "pie",
+          name: 'Agendamentos',
+          type: 'pie',
           radius: ["45%", "72.55%"],
-          center: ["50%", "50%"],
           avoidLabelOverlap: false,
-          hoverOffset: 0,
-          emphasis: {disabled: true},
-          stillShowZeroSum: false,
-
           label: {
-            normal: {
-              show: false,
-              position: "center",
-              textStyle: {
-                fontSize: "13",
-                fontWeight: "normal"
-              },
-              formatter: "{a}"
-            },
-            emphasis: {
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
               show: true,
-              textStyle: {
-                fontSize: "15",
-                fontWeight: "normal",
-                color: "rgba(116, 103, 239, 1)"
-              },
-              formatter: "{b} \n{c} ({d}%)"
+              fontSize: 12,
+              fontWeight: 'bold'
             }
           },
           labelLine: {
-            normal: {
-              show: false
-            }
+            show: true
           },
           data: response.result,
-
-          itemStyle: {
-            emphasis: {
-              shadowBlur: 10,
-              shadowOffsetX: 0,
-              shadowColor: "rgba(0, 0, 0, 0.5)"
-            }
-          }
         }
       ]
+
+      // series: [
+      //   {
+      //     name: "Agendamentos",
+      //     type: "pie",
+      //     radius: ["45%", "72.55%"],
+      //     center: ["50%", "50%"],
+      //     avoidLabelOverlap: false,
+      //     hoverOffset: 0,
+      //     emphasis: {disabled: true},
+      //     stillShowZeroSum: false,
+
+      //     label: {
+      //       normal: {
+      //         show: false,
+      //         position: "center",
+      //         textStyle: {
+      //           fontSize: "13",
+      //           fontWeight: "normal"
+      //         },
+      //         formatter: "{a}"
+      //       },
+      //       emphasis: {
+      //         show: true,
+      //         textStyle: {
+      //           fontSize: "15",
+      //           fontWeight: "normal",
+      //           color: "rgba(116, 103, 239, 1)"
+      //         },
+      //         formatter: "{b} \n{c} ({d}%)"
+      //       }
+      //     },
+      //     labelLine: {
+      //       normal: {
+      //         show: false
+      //       }
+      //     },
+      //     data: response.result,
+
+      //     itemStyle: {
+      //       emphasis: {
+      //         shadowBlur: 10,
+      //         shadowOffsetX: 0,
+      //         shadowColor: "rgba(0, 0, 0, 0.5)"
+      //       }
+      //     }
+      //   }
+      // ]
     };
     })
   }
