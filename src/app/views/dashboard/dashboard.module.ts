@@ -26,6 +26,9 @@ import { FileUploadModule } from "ng2-file-upload";
 import { NgxMaskModule } from "ngx-mask";
 import { QuillModule } from "ngx-quill";
 import { ChamadaSenhaModalComponent } from './analytics/chamada-senha-modal/chamada-senha-modal.component';
+import { NgChartsModule } from "ng2-charts";
+import { NgxEchartsModule } from "ngx-echarts";
+import { SharedPipesModule } from "app/shared/pipes/shared-pipes.module";
 
 @NgModule({
   imports: [
@@ -53,7 +56,12 @@ import { ChamadaSenhaModalComponent } from './analytics/chamada-senha-modal/cham
     MatDialogModule,
     NgxMaskModule.forRoot(),
     MatSelectModule,
-    RouterModule.forChild(DashboardRoutes)
+    RouterModule.forChild(DashboardRoutes),
+    NgChartsModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    }),
+    SharedPipesModule,
   ],
   declarations: [AnalyticsComponent, ChamadaSenhaModalComponent],
   exports: []

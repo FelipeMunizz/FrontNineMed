@@ -13,6 +13,7 @@ import { PacienteService } from 'app/shared/services/app-models/paciente.service
 import { Paciente } from 'app/shared/models/paciente.model';
 import { JwtAuthService } from 'app/shared/services/auth/jwt-auth.service';
 import { Router } from '@angular/router';
+import { ChamadaSenhaModalComponent } from 'app/views/dashboard/analytics/chamada-senha-modal/chamada-senha-modal.component';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -167,5 +168,15 @@ export class AgendaComponent implements OnInit {
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
+  }
+  
+  openModalChamada() {
+    const dialogRef = this.modal.open(ChamadaSenhaModalComponent, {
+      width: '50%',
+      height: 'auto',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 }

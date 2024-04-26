@@ -58,4 +58,9 @@ export class AgendamentoService{
     public DeletarAgendamento(idAgendamento: number): Observable<any> {
         return this.httpClient.delete<any>(`${this.baseUrl}/DeletarAgendamento/${idAgendamento}`)
     }
+
+    //Grafico Agendamento ultimos 30 dias
+    public GraficoAgendamento(idClinica: number): Observable<any>{
+        return this.httpClient.get<any>(`${this.baseUrl}/GraficoAgendamento/${idClinica}`)
+    }
 }

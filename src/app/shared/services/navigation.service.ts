@@ -36,12 +36,6 @@ export class NavigationService {
       icon: 'dashboard',
     },
     {
-      name: 'Recepção',
-      state: 'recepcao/agenda',
-      type: 'link',
-      icon: 'event_note'
-    },
-    {
       name: 'Cadastros',
       type: 'dropDown',
       tooltip: 'Pages',
@@ -54,6 +48,12 @@ export class NavigationService {
         { name: 'Procedimentos', state: 'cadastros/procedimento', icon: 'vaccines' },
         { name: 'Totens', state: 'cadastros/totens', icon: 'view_timeline' },
       ]
+    },
+    {
+      name: 'Recepção',
+      state: 'recepcao/agenda',
+      type: 'link',
+      icon: 'event_note'
     },
     {
       name: 'Financeiro',

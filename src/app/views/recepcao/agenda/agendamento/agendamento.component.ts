@@ -84,8 +84,11 @@ export class AgendamentoComponent implements OnInit {
     dados['paciente'].setValue(this.pacienteSelected);
     dados['convenio'].setValue(agendamento.idConvenio);
     dados['funcionario'].setValue(agendamento.idFuncionario);
-    dados['dataAgendamento'].setValue(agendamento.dataAgendamento);
-    dados['horaAgendamento'].setValue(agendamento.horaAgendamento);
+    dados['dataAgendamento'].setValue(agendamento.dataAgendamento);    
+    const hora = agendamento.horaAgendamento.substring(0, 2);
+    const minutos = agendamento.horaAgendamento.substring(3, 5);
+    
+    dados['horaAgendamento'].setValue(`${hora}${minutos}`);
     dados['repeticao'].setValue(agendamento.repeticao);
     dados['situacaoAgendamento'].setValue(agendamento.situacaoAgendamento);
     dados['lembretes'].setValue(agendamento.lembrete);
