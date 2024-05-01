@@ -27,7 +27,7 @@
         <tr mat-row *matRowDef="let row; columns: dispplayColuns;"></tr>
 
         <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="4" style="text-align: center;">Nenhum agendamento encontrado </td>
+          <td class="mat-cell" colspan="2" style="text-align: center;">Nenhum agendamento encontrado </td>
         </tr>
       </table>
       <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[5]" showFirstLastButtons
