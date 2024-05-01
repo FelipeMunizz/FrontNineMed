@@ -33,7 +33,7 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() { }
   ngOnInit() {
-      this.IniciaGraficoAgendamentos();
+    this.IniciaGraficoAgendamentos();
   }
 
   openModalChamada() {
@@ -50,123 +50,90 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
     this.user = this.auth.getUser();
 
     this.agendamentoService.GraficoAgendamento(+this.user.idClinica)
-    .subscribe((response) => {
-      
-    this.doughNutPieOptions = {
-      backgroundColor: "transparent",
-      color: [
-        "#F0D500",
-        "#14870c",
-        "#ffd700"
-      ],
-      legend: {
-        show: true,
-        itemGap: 20,
-        icon: "circle",
-        bottom: 0,
-        textStyle: {
-          fontSize: 13,
-          fontFamily: "roboto"
-        }
-      },
-      tooltip: {
-        trigger: "item",
-        formatter: "{a} <br/>{b}: {c} ({d}%)",
-        position: ['20%', '80%']
-      },
-      xAxis: [
-        {
-          axisLine: {
-            show: false
-          },
-          splitLine: {
-            show: false
-          }
-        }
-      ],
-      yAxis: [
-        {
-          axisLine: {
-            show: false
-          },
-          splitLine: {
-            show: false
-          }
-        }
-      ],
+      .subscribe((response) => {
+        const total = response.result.reduce((acc, curr) => acc + curr.value, 0);
 
-      series: [
-        {
-          name: 'Agendamentos',
-          type: 'pie',
-          radius: ["45%", "72.55%"],
-          avoidLabelOverlap: false,
-          label: {
-            show: false,
-            position: 'center'
-          },
-          emphasis: {
-            label: {
-              show: true,
+        this.doughNutPieOptions = {
+          backgroundColor: "transparent",
+          color: [
+            "#F0D500", //Aguardando Confirmação
+            "#14870c", // Confirmados
+            "#f32013"  // Cancelado
+          ],
+          legend: {
+            show: true,
+            itemGap: 5,
+            icon: "circle",
+            bottom: 0,
+            textStyle: {
               fontSize: 12,
-              fontWeight: 'bold'
+              fontFamily: "roboto"
             }
           },
-          labelLine: {
-            show: true
+          tooltip: {
+            trigger: "item",
+            formatter: "{a} <br/>{b}: {c} ({d}%)",
+            position: ['20%', '80%']
           },
-          data: response.result,
-        }
-      ]
+          xAxis: [
+            {
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                show: false
+              }
+            }
+          ],
+          yAxis: [
+            {
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                show: false
+              }
+            }
+          ],
 
-      // series: [
-      //   {
-      //     name: "Agendamentos",
-      //     type: "pie",
-      //     radius: ["45%", "72.55%"],
-      //     center: ["50%", "50%"],
-      //     avoidLabelOverlap: false,
-      //     hoverOffset: 0,
-      //     emphasis: {disabled: true},
-      //     stillShowZeroSum: false,
-
-      //     label: {
-      //       normal: {
-      //         show: false,
-      //         position: "center",
-      //         textStyle: {
-      //           fontSize: "13",
-      //           fontWeight: "normal"
-      //         },
-      //         formatter: "{a}"
-      //       },
-      //       emphasis: {
-      //         show: true,
-      //         textStyle: {
-      //           fontSize: "15",
-      //           fontWeight: "normal",
-      //           color: "rgba(116, 103, 239, 1)"
-      //         },
-      //         formatter: "{b} \n{c} ({d}%)"
-      //       }
-      //     },
-      //     labelLine: {
-      //       normal: {
-      //         show: false
-      //       }
-      //     },
-      //     data: response.result,
-
-      //     itemStyle: {
-      //       emphasis: {
-      //         shadowBlur: 10,
-      //         shadowOffsetX: 0,
-      //         shadowColor: "rgba(0, 0, 0, 0.5)"
-      //       }
-      //     }
-      //   }
-      // ]
-    };
-    })
+          series: [
+            {
+              name: 'Agendamentos',
+              type: 'pie',
+              radius: ["40%", "70%"],
+              avoidLabelOverlap: true,
+              label: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
+                label: {
+                  show: false,
+                  fontSize: 12,
+                  fontWeight: 'bold',
+                  distance: 50
+                }
+              },
+              labelLine: {
+                show: true
+              },
+              data: response.result,
+            }
+          ],
+          graphic: [
+            {
+              type: 'text',
+              left: 'center',
+              top: 'middle',
+              style: {
+                text: total,
+                textAlign: 'center',
+                fill: '#333',
+                fontSize: 50
+              }
+            }
+          ]
+        };
+      })
   }
 }
