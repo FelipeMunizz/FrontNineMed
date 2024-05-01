@@ -177,4 +177,40 @@
             </div>
         </form>
     </mat-card-content>
+
+    <mat-card-content *ngIf="tipoTela == 2 && convenioEdicao">
+        <form [formGroup]="profissionalConvenioForm" (submit)="SalvarProfissionalConvenio()">
+            <mat-card>
+                <mat-card-title>Relação Funcionário e Convênio</mat-card-title>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <input matInput name="convenio" formControlName="convenio" placeholder="Convênio"
+                                    [value]="convenioEdicao.id">
+                            </mat-form-field>
+                            <small *ngIf="profissionalConvenioForm.controls['convenio'].touched" class="form-error-msg">
+                            </small>
+                        </div>
+                        <div class="col col-lg-6 col-md-6 col-sm-12">
+                            <mat-form-field class="full-width">
+                                <mat-label>Funcionário</mat-label>
+                                <mat-select matNativeControl formControlName="funcionario"
+                                    class="dorpdown-menu">
+                                    <mat-option class="dropdown-item" *ngFor="let funcionario of funcionarios"
+                                        [value]="funcionario.id">
+                                        {{ funcionario.nome }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <div class="row">
+                <div class="col align-self-end">
+                    <input type="submit" class="btn btn-primary btn-clinica-submit" value="Salvar">
+                </div>
+            </div>
+        </form>
+    </mat-card-content>
 </mat-card>

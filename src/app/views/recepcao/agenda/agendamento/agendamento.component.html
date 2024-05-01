@@ -1,0 +1,112 @@
+<h3 mat-dialog-title>Agendamento</h3>
+
+<form [formGroup]="agendamentoForm">
+    <mat-dialog-content>
+        <div class="row">
+            <div class="col col-12">
+                <mat-form-field class="full-width">
+                    <input type="text" matInput placeholder="Paciente" formControlName="paciente"
+                        [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                        <mat-option *ngFor="let paciente of filterPacientes(dadosForm().paciente.value)"
+                            [value]="paciente">
+                            {{ paciente.name }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <small *ngIf="agendamentoForm.controls['paciente'].touched" class="form-error-msg"> </small>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-12">
+                <mat-form-field class="full-width">
+                    <mat-label>Profissional da Saúde</mat-label>
+                    <mat-select matNativeControl formControlName="funcionario" class="dorpdown-menu">
+                        <mat-option class="dropdown-item" *ngFor="let funcionario of listaFuncionarios"
+                            [value]="funcionario.id">
+                            {{ funcionario.name }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <small *ngIf="agendamentoForm.controls['funcionario'].touched" class="form-error-msg"> </small>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-lg-4 col-md-4 col-sm-12">
+                <mat-form-field class="full-width">
+                    <input matInput [matDatepicker]="picker" placeholder="Escolha a data"
+                        formControlName="dataAgendamento">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #picker></mat-datepicker>
+                </mat-form-field>
+                <small *ngIf="agendamentoForm.controls['dataAgendamento'].touched" class="form-error-msg"> </small>
+            </div>
+            <div class="col col-lg-4 col-md-4 col-sm-12">
+                <mat-form-field class="full-width">
+                    <input matInput name="horaAgendamento" formControlName="horaAgendamento" placeholder="Hora Agendamento" value="" mask="00:00">
+                    <mat-error *ngIf="agendamentoForm.controls['horaAgendamento'].hasError('pattern')">Formato de hora inválido (hh:mm).</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col col-lg-4 col-md-4 col-sm-12">
+                <mat-form-field class="full-width">
+                    <mat-label>Repetições do agendamento</mat-label>
+                    <mat-select matNativeControl formControlName="repeticao" class="dorpdown-menu">
+                        <mat-option class="dropdown-item" *ngFor="let repeticaoAgendamento of repeticoesAgendamentos"
+                            [value]="repeticaoAgendamento.value">
+                            {{ repeticaoAgendamento.label }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field class="full-width">
+                    <mat-label>Situação do Agendamento</mat-label>
+                    <mat-select matNativeControl formControlName="situacaoAgendamento" class="dorpdown-menu">
+                        <mat-option class="dropdown-item" *ngFor="let situacaoAgendamento of situacoesAgendamentos"
+                            [value]="situacaoAgendamento.value">
+                            {{ situacaoAgendamento.label }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col col-lg-6 col-md-6 col-sm-12">
+                <mat-checkbox name="lembretes" formControlName="lembretes" class="pb-16">
+                    Lembretes
+                </mat-checkbox>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-12">
+                <mat-form-field class="full-width">
+                    <input matInput name="observacao" formControlName="observacao" placeholder="Observações" value="">
+                </mat-form-field>
+            </div>
+        </div>        
+        <div class="row">
+            <div class="col col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field class="full-width">
+                    <mat-label>Convênio</mat-label>
+                    <mat-select matNativeControl formControlName="convenio" class="dorpdown-menu">
+                        <mat-option class="dropdown-item" *ngFor="let convenio of listaConvenios"
+                            [value]="convenio.id">
+                            {{ convenio.name }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field class="full-width">
+                    <mat-label>Procedimentos</mat-label>
+                    <mat-select matNativeControl multiple formControlName="procedimento" class="dorpdown-menu">
+                        <mat-option class="dropdown-item" *ngFor="let procedimento of procedimentos"
+                            [value]="procedimento.id">
+                            {{ procedimento.nome }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-dialog-content>
+</form>
+<mat-dialog-actions align="end">
+    <button type="button" mat-button [mat-dialog-close]="false">Cancelar</button>
+    <span fxFlex></span>
+    <button class="btn btn-primary" [mat-dialog-close]="true" (click)="SalvarClick()" cdkFocusInitial>Salvar</button>
+</mat-dialog-actions>

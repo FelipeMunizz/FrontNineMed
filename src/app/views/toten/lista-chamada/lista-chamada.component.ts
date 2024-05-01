@@ -51,7 +51,7 @@ export class ListaChamadaComponent implements OnInit {
 
         setTimeout(() => {
           this.ListarSenhasPainel();
-        }, 3000);
+        }, 2000);
       });
   }
 

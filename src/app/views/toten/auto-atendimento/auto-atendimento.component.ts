@@ -28,6 +28,10 @@ export class AutoAtendimentoComponent implements OnInit {
     })
   }
 
+  Reload(){
+    window.location.reload();
+  }
+
   GerarSenha(tipoAtendimento: number) {
     var item = new SenhaToten;
     item.tipoAtendimento = tipoAtendimento;

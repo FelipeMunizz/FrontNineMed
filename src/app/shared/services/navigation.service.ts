@@ -50,6 +50,12 @@ export class NavigationService {
       ]
     },
     {
+      name: 'Recepção',
+      state: 'recepcao/agenda',
+      type: 'link',
+      icon: 'event_note'
+    },
+    {
       name: 'Financeiro',
       state: 'financeiro/controle',
       type: 'link',

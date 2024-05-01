@@ -14,7 +14,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatListModule } from "@angular/material/list";
-import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatPaginatorIntl, MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatSelectModule } from "@angular/material/select";
@@ -26,6 +26,10 @@ import { FileUploadModule } from "ng2-file-upload";
 import { NgxMaskModule } from "ngx-mask";
 import { QuillModule } from "ngx-quill";
 import { ChamadaSenhaModalComponent } from './analytics/chamada-senha-modal/chamada-senha-modal.component';
+import { NgChartsModule } from "ng2-charts";
+import { NgxEchartsModule } from "ngx-echarts";
+import { SharedPipesModule } from "app/shared/pipes/shared-pipes.module";
+import { CustomPaginator } from "app/shared/helpers/custom-paginator";
 
 @NgModule({
   imports: [
@@ -53,7 +57,15 @@ import { ChamadaSenhaModalComponent } from './analytics/chamada-senha-modal/cham
     MatDialogModule,
     NgxMaskModule.forRoot(),
     MatSelectModule,
-    RouterModule.forChild(DashboardRoutes)
+    RouterModule.forChild(DashboardRoutes),
+    NgChartsModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    }),
+    SharedPipesModule,
+  ],
+  providers: [
+    { provide: MatPaginatorIntl, useClass: CustomPaginator }
   ],
   declarations: [AnalyticsComponent, ChamadaSenhaModalComponent],
   exports: []

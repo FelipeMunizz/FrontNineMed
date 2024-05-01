@@ -58,7 +58,7 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
     
     // Translator init
     const browserLang: string = translate.getBrowserLang();
-    translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
+    translate.use(browserLang.match(/pt-BR|en|fr/) ? browserLang : 'en');
   }
 
   ngOnInit() {
