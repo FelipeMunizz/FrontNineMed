@@ -30,6 +30,7 @@ import { TotenService } from './services/app-models/toten.service';
 import { UtilityService } from './services/utility.service';
 import { EnumService } from './services/enum.service';
 import { AgendamentoService } from './services/app-models/agendamento.service';
+import { MidiaService } from './services/midia.service';
 
 @NgModule({
   imports: [
@@ -62,7 +63,8 @@ import { AgendamentoService } from './services/app-models/agendamento.service';
     TotenService,
     UtilityService,
     EnumService,
-    AgendamentoService
+    AgendamentoService,
+    MidiaService
   ],
   exports: [
     SharedComponentsModule,
