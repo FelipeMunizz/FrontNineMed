@@ -1,13 +1,13 @@
-<div fxFlex="100" fxFlex.sm="30" fxFlex.gt-sm="30">
+<div fxFlex="100" fxFlex.sm="100" fxFlex.gt-sm="100">
   <div fxLayout="row wrap">
-    &nbsp;
-    <!--Ficará dados quantitativos de pacientes-->
-  </div>
-  <div fxLayout="row wrap">
-    <mat-card fxFlex="100">
+    <mat-card fxFlex="25">
       <mat-card-title class="mb-0">Agendamentos</mat-card-title>
       <small class="text-muted">Últimos 30 dias</small>
-      <div echarts [options]="doughNutPieOptions" style="height: 280px"></div>
+      <div echarts [options]="graficoAgendamento" style="height: 280px"></div>
+    </mat-card>
+    <mat-card fxFlex="25">
+      <mat-card-title class="mb-0">Pacientes por Convênio</mat-card-title>
+      <div echarts [options]="graficoPacienteConvenio" style="height: 280px"></div>
     </mat-card>
   </div>
 </div>

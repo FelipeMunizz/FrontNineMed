@@ -20,6 +20,11 @@ export class PacienteService {
         return this.httpClient.get<any>(`${this.baseUrl}/ListaPacientesClinica/${idClinica}`)
     }
 
+    //GraficoPacienteConvenio
+    public GraficoPacienteConvenio(idClinica: number): Observable<any>{
+        return this.httpClient.get<any>(`${this.baseUrl}/GraficoPacienteConvenio/${idClinica}`)
+    }
+
     //Obter Paciente
     public ObterPaciente(idPaciente: number): Observable<any> {
         return this.httpClient.get<any>(`${this.baseUrl}/ObterPaciente/${idPaciente}`)

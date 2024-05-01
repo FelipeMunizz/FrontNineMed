@@ -12,6 +12,7 @@ import { EnumService } from "app/shared/services/enum.service";
 import { ChamadaSenhaModalComponent } from "./chamada-senha-modal/chamada-senha-modal.component";
 import { ThemeService } from "app/shared/services/theme.service";
 import { AgendamentoService } from "app/shared/services/app-models/agendamento.service";
+import { PacienteService } from "app/shared/services/app-models/paciente.service";
 
 @Component({
   selector: "app-analytics",
@@ -21,10 +22,12 @@ import { AgendamentoService } from "app/shared/services/app-models/agendamento.s
 })
 export class AnalyticsComponent implements OnInit, AfterViewInit {
   user: User = {}
-  doughNutPieOptions: any;
+  graficoAgendamento: any;
+  graficoPacienteConvenio: any;
 
   constructor(
     private agendamentoService: AgendamentoService,
+    private pacienteService: PacienteService,
     private auth: JwtAuthService,
     private enumService: EnumService,
     private dialog: MatDialog,
@@ -34,6 +37,7 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() { }
   ngOnInit() {
     this.IniciaGraficoAgendamentos();
+    this.IniciaGraficoPacienteConvenio();
   }
 
   openModalChamada() {
@@ -51,9 +55,9 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
 
     this.agendamentoService.GraficoAgendamento(+this.user.idClinica)
       .subscribe((response) => {
-        const total = response.result.reduce((acc, curr) => acc + curr.value, 0);
+        var total = response.result.reduce((acc, curr) => acc + curr.value, 0);
 
-        this.doughNutPieOptions = {
+        this.graficoAgendamento = {
           backgroundColor: "transparent",
           color: [
             "#F0D500", //Aguardando Confirmação
@@ -73,7 +77,7 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
           tooltip: {
             trigger: "item",
             formatter: "{a} <br/>{b}: {c} ({d}%)",
-            position: ['20%', '80%']
+            position: ['0%', '80%']
           },
           xAxis: [
             {
@@ -135,5 +139,90 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
           ]
         };
       })
+  }
+
+  IniciaGraficoPacienteConvenio(){
+    this.user = this.auth.getUser();
+
+    this.pacienteService.GraficoPacienteConvenio(+this.user.idClinica)
+    .subscribe((response) => {
+      var total = response.result.reduce((acc, curr) => acc + curr.value, 0);
+      this.graficoPacienteConvenio = {
+        backgroundColor: "transparent",
+        legend: {
+          show: true,
+          itemGap: 5,
+          icon: "circle",
+          bottom: 0,
+          textStyle: {
+            fontSize: 12,
+            fontFamily: "roboto"
+          }
+        },
+        tooltip: {
+          trigger: "item",
+          formatter: "{a} <br/>{b}: {c} ({d}%)",
+          position: ['20%', '80%']
+        },
+        xAxis: [
+          {
+            axisLine: {
+              show: false
+            },
+            splitLine: {
+              show: false
+            }
+          }
+        ],
+        yAxis: [
+          {
+            axisLine: {
+              show: false
+            },
+            splitLine: {
+              show: false
+            }
+          }
+        ],
+
+        series: [
+          {
+            name: 'Pacientes',
+            type: 'pie',
+            radius: ["40%", "70%"],
+            avoidLabelOverlap: true,
+            label: {
+              show: false,
+              position: 'center'
+            },
+            emphasis: {
+              label: {
+                show: false,
+                fontSize: 12,
+                fontWeight: 'bold',
+                distance: 50
+              }
+            },
+            labelLine: {
+              show: true
+            },
+            data: response.result,
+          }
+        ],
+        graphic: [
+          {
+            type: 'text',
+            left: 'center',
+            top: 'middle',
+            style: {
+              text: total,
+              textAlign: 'center',
+              fill: '#333',
+              fontSize: 50
+            }
+          }
+        ]
+      };
+    })
   }
 }
