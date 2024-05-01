@@ -2,7 +2,8 @@ import {
   Component,
   OnInit,
   AfterViewInit,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  ViewChild
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { matxAnimations } from "app/shared/animations/matx-animations";
@@ -13,6 +14,9 @@ import { ChamadaSenhaModalComponent } from "./chamada-senha-modal/chamada-senha-
 import { ThemeService } from "app/shared/services/theme.service";
 import { AgendamentoService } from "app/shared/services/app-models/agendamento.service";
 import { PacienteService } from "app/shared/services/app-models/paciente.service";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
 
 @Component({
   selector: "app-analytics",
@@ -21,9 +25,16 @@ import { PacienteService } from "app/shared/services/app-models/paciente.service
   animations: matxAnimations
 })
 export class AnalyticsComponent implements OnInit, AfterViewInit {
+  date: string = new Date().toLocaleDateString();
   user: User = {}
   graficoAgendamento: any;
   graficoPacienteConvenio: any;
+  dispplayColuns: string[] = ['nomePaciente', 'horaAgendamento'];
+  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
+
+  
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private agendamentoService: AgendamentoService,
@@ -38,6 +49,7 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.IniciaGraficoAgendamentos();
     this.IniciaGraficoPacienteConvenio();
+    this.ListaAgendamentosDia();
   }
 
   openModalChamada() {
@@ -141,88 +153,99 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
       })
   }
 
-  IniciaGraficoPacienteConvenio(){
+  IniciaGraficoPacienteConvenio() {
     this.user = this.auth.getUser();
 
     this.pacienteService.GraficoPacienteConvenio(+this.user.idClinica)
-    .subscribe((response) => {
-      var total = response.result.reduce((acc, curr) => acc + curr.value, 0);
-      this.graficoPacienteConvenio = {
-        backgroundColor: "transparent",
-        legend: {
-          show: true,
-          itemGap: 5,
-          icon: "circle",
-          bottom: 0,
-          textStyle: {
-            fontSize: 12,
-            fontFamily: "roboto"
-          }
-        },
-        tooltip: {
-          trigger: "item",
-          formatter: "{a} <br/>{b}: {c} ({d}%)",
-          position: ['20%', '80%']
-        },
-        xAxis: [
-          {
-            axisLine: {
-              show: false
-            },
-            splitLine: {
-              show: false
+      .subscribe((response) => {
+        var total = response.result.reduce((acc, curr) => acc + curr.value, 0);
+        this.graficoPacienteConvenio = {
+          backgroundColor: "transparent",
+          legend: {
+            show: true,
+            itemGap: 5,
+            icon: "circle",
+            bottom: 0,
+            textStyle: {
+              fontSize: 12,
+              fontFamily: "roboto"
             }
-          }
-        ],
-        yAxis: [
-          {
-            axisLine: {
-              show: false
-            },
-            splitLine: {
-              show: false
+          },
+          tooltip: {
+            trigger: "item",
+            formatter: "{a} <br/>{b}: {c} ({d}%)",
+            position: ['20%', '80%']
+          },
+          xAxis: [
+            {
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                show: false
+              }
             }
-          }
-        ],
+          ],
+          yAxis: [
+            {
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                show: false
+              }
+            }
+          ],
 
-        series: [
-          {
-            name: 'Pacientes',
-            type: 'pie',
-            radius: ["40%", "70%"],
-            avoidLabelOverlap: true,
-            label: {
-              show: false,
-              position: 'center'
-            },
-            emphasis: {
+          series: [
+            {
+              name: 'Pacientes',
+              type: 'pie',
+              radius: ["40%", "70%"],
+              avoidLabelOverlap: true,
               label: {
                 show: false,
-                fontSize: 12,
-                fontWeight: 'bold',
-                distance: 50
-              }
-            },
-            labelLine: {
-              show: true
-            },
-            data: response.result,
-          }
-        ],
-        graphic: [
-          {
-            type: 'text',
-            left: 'center',
-            top: 'middle',
-            style: {
-              text: total,
-              textAlign: 'center',
-              fill: '#333',
-              fontSize: 50
+                position: 'center'
+              },
+              emphasis: {
+                label: {
+                  show: false,
+                  fontSize: 12,
+                  fontWeight: 'bold',
+                  distance: 50
+                }
+              },
+              labelLine: {
+                show: true
+              },
+              data: response.result,
             }
-          }
-        ]
-      };
-    })
+          ],
+          graphic: [
+            {
+              type: 'text',
+              left: 'center',
+              top: 'middle',
+              style: {
+                text: total,
+                textAlign: 'center',
+                fill: '#333',
+                fontSize: 50
+              }
+            }
+          ]
+        };
+      })
+  }
+
+  ListaAgendamentosDia() {
+    this.user = this.auth.getUser();
+
+    this.agendamentoService.AgendamentoPacienteDiario(+this.user.idClinica)
+      .subscribe((response) => {
+        this.dataSource = new MatTableDataSource(response.result);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      })
   }
 }

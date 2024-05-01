@@ -9,17 +9,33 @@
       <mat-card-title class="mb-0">Pacientes por Convênio</mat-card-title>
       <div echarts [options]="graficoPacienteConvenio" style="height: 280px"></div>
     </mat-card>
+    <mat-card fxFlex="40">
+      <mat-card-title class="mb-0">Próximos Horários</mat-card-title>
+      <span class="text-muted">Agendamentos confirmado do dia: {{date}}</span>
+      <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="nomePaciente">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome Paciente </th>
+          <td mat-cell *matCellDef="let row"> {{row.nomePaciente}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="horaAgendamento">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Horário Agendado </th>
+          <td mat-cell *matCellDef="let row"> {{row.horaAgendamento}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="dispplayColuns"></tr>
+        <tr mat-row *matRowDef="let row; columns: dispplayColuns;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4" style="text-align: center;">Nenhum agendamento encontrado </td>
+        </tr>
+      </table>
+      <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[5]" showFirstLastButtons
+        aria-label="Select page">
+      </mat-paginator>
+    </mat-card>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
 
 <button class="btn btn-secondary floating-button" matTooltip="Chamadas de Senhas" (click)="openModalChamada()">
   <mat-icon class="align-icon">wysiwyg</mat-icon>
