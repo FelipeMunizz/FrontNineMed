@@ -31,6 +31,7 @@ import { UtilityService } from './services/utility.service';
 import { EnumService } from './services/enum.service';
 import { AgendamentoService } from './services/app-models/agendamento.service';
 import { MidiaService } from './services/midia.service';
+import { AtendimentoService } from './services/app-models/atendimento.service';
 
 @NgModule({
   imports: [
@@ -64,7 +65,8 @@ import { MidiaService } from './services/midia.service';
     UtilityService,
     EnumService,
     AgendamentoService,
-    MidiaService
+    MidiaService,
+    AtendimentoService
   ],
   exports: [
     SharedComponentsModule,

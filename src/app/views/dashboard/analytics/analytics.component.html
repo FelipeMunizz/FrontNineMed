@@ -35,8 +35,14 @@
       </mat-paginator>
     </mat-card>
   </div>
+  <div fxLayout="row wrap">
+    <mat-card fxFlex="94">
+      <mat-card-title class="mb-0">Atendimentos</mat-card-title>
+      <small class="text-muted">Últimos 5 meses</small>
+      <div echarts [options]="graficoAtendimento" style="height: 280px"></div>
+    </mat-card>
+  </div>
 </div>
-
 <button class="btn btn-secondary floating-button" matTooltip="Chamadas de Senhas" (click)="openModalChamada()">
   <mat-icon class="align-icon">wysiwyg</mat-icon>
 </button>

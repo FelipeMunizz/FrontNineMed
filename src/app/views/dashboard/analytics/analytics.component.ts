@@ -17,6 +17,7 @@ import { PacienteService } from "app/shared/services/app-models/paciente.service
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
+import { AtendimentoService } from "app/shared/services/app-models/atendimento.service";
 
 @Component({
   selector: "app-analytics",
@@ -29,26 +30,29 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
   user: User = {}
   graficoAgendamento: any;
   graficoPacienteConvenio: any;
+  graficoAtendimento: any;
   dispplayColuns: string[] = ['nomePaciente', 'horaAgendamento'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
-  
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private agendamentoService: AgendamentoService,
     private pacienteService: PacienteService,
+    private atendimentoService: AtendimentoService,
     private auth: JwtAuthService,
     private enumService: EnumService,
     private dialog: MatDialog,
-    private themeService: ThemeService
+    private themeService: ThemeService,
   ) { }
 
   ngAfterViewInit() { }
   ngOnInit() {
     this.IniciaGraficoAgendamentos();
     this.IniciaGraficoPacienteConvenio();
+    this.IniciaGraficoAtendimentoMensal();
     this.ListaAgendamentosDia();
   }
 
@@ -236,6 +240,29 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
           ]
         };
       })
+  }
+
+  IniciaGraficoAtendimentoMensal() {
+    this.user = this.auth.getUser();
+    this.atendimentoService.GraficoAtendimentosMensal(+this.user.idClinica)
+    .subscribe((response) => {
+      this.graficoAtendimento = {
+        xAxis: {
+          type: 'category',
+          data: response.result.map(month => month.mes)
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            data: response.result.map(month => month.quantidadeAgendamento),
+            type: 'line',
+            smooth: true
+          }
+        ]
+      };
+    })
   }
 
   ListaAgendamentosDia() {
