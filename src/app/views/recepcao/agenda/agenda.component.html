@@ -1,61 +1,88 @@
-<div class="row text-center" style="margin-top: 3px;">
-    <div class="col-md-4">
-        <div class="btn-group">
-            <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()">
-                Anterior
+<div fxFlex="100" fxFlex.sm="100" fxFlex.gt-sm="100">
+    <div fxLayout="row wrap">
+        <mat-card fxFlex="20">
+            <div class="row">
+                <div class="col col-4">
+                    <a class="align-icon-calendar text-blue" mwlCalendarPreviousView [view]="view"
+                        [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()" matTooltip="Anterior">
+                        <mat-icon>arrow_back</mat-icon>
+                    </a>
+                </div>
+                <div class="col col-4">
+                    <a class="align-icon-calendar text-blue" mwlCalendarToday [(viewDate)]="viewDate"
+                        matTooltip="Atual">
+                        <mat-icon>more_horiz</mat-icon>
+                    </a>
+                </div>
+                <div class="col col-4">
+                    <a class="align-icon-calendar text-blue" mwlCalendarNextView [view]="view"
+                        [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()" matTooltip="Próximo">
+                        <mat-icon>arrow_forward</mat-icon>
+                    </a>
+                </div>
             </div>
-            <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
-                Atual
-            </div>
-            <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()">
-                Próximo
+        </mat-card>
+        <mat-card fxFlex="15">
+            <a (click)="CadastroPaciente()">
+                <div fxLayout="row">
+                    <mat-icon class="align-icon-calendar text-blue">add</mat-icon>
+                    <div class="ml-12">
+                        <p class="align-icon-calendar text-muted">Cadastrar Paciente</p>
+                    </div>
+                </div>
+            </a>
+        </mat-card>
+        <span fxFlex></span>
+        <div class="title-recepcao" fxFlex="15">
+            <div fxLayout="row">
+                <h1 class="text-muted">{{ viewDate | calendarDate:(view + 'ViewTitle'):'pt_BR' }}</h1>
             </div>
         </div>
-    </div>
-    <div class="col-md-4">
-        <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'pt_BR' }}</h3>
-    </div>
-    <div class="col-md-4">
-        <div class="btn-group">
-            <div class="btn btn-primary" (click)="setView(CalendarView.Month)"
-                [class.active]="view === CalendarView.Month">
-                Mês
+        <span fxFlex></span>
+        <mat-card fxFlex="15">
+            <a (click)="addEvent()">
+                <div fxLayout="row">
+                    <mat-icon class="align-icon-calendar text-blue">library_add</mat-icon>
+                    <div class="ml-12">
+                        <p class="align-icon-calendar text-muted">Agendamento</p>
+                    </div>
+                </div>
+            </a>
+        </mat-card>
+        <mat-card fxFlex="20">
+            <div class="row">
+                <div class="col col-4">
+                    <a class="align-icon-calendar text-blue" (click)="setView(CalendarView.Month)"
+                        [class.active]="view === CalendarView.Month">
+                        Mês
+                    </a>
+                </div>
+                <div class="col col-4">
+                    <a class="align-icon-calendar text-blue" (click)="setView(CalendarView.Week)"
+                        [class.active]="view === CalendarView.Week">
+                        Semanal
+                    </a>
+                </div>
+                <div class="col col-4">
+                    <a class="align-icon-calendar text-blue" (click)="setView(CalendarView.Day)"
+                        [class.active]="view === CalendarView.Day">
+                        Diário
+                    </a>
+                </div>
             </div>
-            <div class="btn btn-outline-secondary" (click)="setView(CalendarView.Week)"
-                [class.active]="view === CalendarView.Week">
-                Semanal
-            </div>
-            <div class="btn btn-primary" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
-                Diário
-            </div>
+        </mat-card>
+        <div fxFlex="100" [ngSwitch]="view">
+            <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
+                [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+                (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+            </mwl-calendar-month-view>
+            <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
+                [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+                (eventTimesChanged)="eventTimesChanged($event)">
+            </mwl-calendar-week-view>
+            <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+                (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+            </mwl-calendar-day-view>
         </div>
     </div>
 </div>
-<div [ngSwitch]="view">
-    <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
-        [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
-        (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
-    </mwl-calendar-month-view>
-    <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
-        [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-        (eventTimesChanged)="eventTimesChanged($event)">
-    </mwl-calendar-week-view>
-    <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
-        (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
-    </mwl-calendar-day-view>
-</div>
-
-<h3 class="m-2">
-    <button class="btn btn-primary" (click)="CadastroPaciente()">
-        Cadastrar Paciente
-    </button>
-    <button class="btn btn-primary float-end" (click)="addEvent()">
-        Agendar
-    </button>
-</h3>
-
-<button class="btn btn-secondary floating-button" matTooltip="Chamadas de Senhas" (click)="openModalChamada()">
-    <mat-icon class="align-icon">wysiwyg</mat-icon>
-  </button>

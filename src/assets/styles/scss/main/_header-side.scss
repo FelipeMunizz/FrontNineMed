@@ -1,11 +1,11 @@
 .topbar {
   &.mat-toolbar {
     position: relative;
-    height: 38px;
-   // min-height: 70px;
-    box-shadow: 0 10px 30px 0 rgba(47,60,74,.08);
+    min-height: 60px;
+    box-shadow: 0 10px 30px 0 rgba(47, 60, 74, .08);
     z-index: 1001;
   }
+
   .mat-select-value {
     font-weight: 400;
     color: #ffffff;
@@ -14,9 +14,10 @@
 
 .toggle-collapsed {
   transform: rotate(0deg);
-  -webkit-transition: transform .3s cubic-bezier(.35,0,.25,1);
-  transition: transform .3s cubic-bezier(.35,0,.25,1);
+  -webkit-transition: transform .3s cubic-bezier(.35, 0, .25, 1);
+  transition: transform .3s cubic-bezier(.35, 0, .25, 1);
 }
+
 .sidebar-compact .toggle-collapsed {
   transform: rotate(180deg);
 }
@@ -37,8 +38,9 @@
       top: 50%;
       left: 10px;
       margin-top: -12px;
-      color: rgba(0,0,0,.87);
+      color: rgba(0, 0, 0, .87);
     }
+
     input {
       font-size: 1rem;
       padding: .6rem .75rem;
@@ -53,4 +55,3 @@
   }
 
 }
-
