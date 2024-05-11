@@ -6,6 +6,9 @@ import { Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms
 import { Subject } from 'rxjs';
 import { JwtAuthService } from '../../../shared/services/auth/jwt-auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { User } from 'app/shared/models/user.model';
+import { FuncionarioService } from 'app/shared/services/app-models/funcionario.service';
+import { EnumService } from 'app/shared/services/enum.service';
 
 @Component({
   selector: 'app-signin',
@@ -13,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent implements OnInit, AfterViewInit, OnDestroy {
+  user: User = {}
   @ViewChild(MatProgressBar) progressBar: MatProgressBar;
   @ViewChild(MatButton) submitButton: MatButton;
 
@@ -25,7 +29,9 @@ export class SigninComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private jwtAuth: JwtAuthService,
     private router: Router,
-    private snac: MatSnackBar
+    private snac: MatSnackBar,
+    private funcionarioService: FuncionarioService,
+    private enumService: EnumService
   ) {
     this._unsubscribeAll = new Subject();
   }
@@ -49,15 +55,29 @@ export class SigninComponent implements OnInit, AfterViewInit, OnDestroy {
     const signinData = this.signinForm.value
     this.submitButton.disabled = true;
     this.progressBar.mode = 'indeterminate';
-    
+
     this.jwtAuth.signin(signinData.email, signinData.password)
-    .subscribe(response => {
-      this.router.navigateByUrl(this.jwtAuth.return);
-    }, err => {
-      this.submitButton.disabled = false;
-      this.progressBar.mode = 'determinate';
-      this.errorMsg = err.message;
-      this.snac.open(this.errorMsg, '',{duration: 3000})
-    });
+      .subscribe(response => {
+        this.user = this.jwtAuth.getUser();
+        this.funcionarioService.ObterFuncionarioEmail(this.user.displayName)
+          .subscribe((func) => {
+            this.user = new User();
+            this.user.displayName = func.email;
+            this.user.name = func.nome;
+            this.user.idClinica = func.idClinica;
+            this.user.idFuncionario = func.id;
+            let perfil = this.enumService.getPerfilUsuario().find((role) => role.value === func.perfil);
+            this.user.role = perfil.label;
+
+            this.jwtAuth.setUserAndToken(this.jwtAuth.getJwtToken(), this.user, this.jwtAuth.isLoggedIn())
+
+            this.router.navigateByUrl(this.jwtAuth.return);
+          });
+      }, err => {
+        this.submitButton.disabled = false;
+        this.progressBar.mode = 'determinate';
+        this.errorMsg = err.message;
+        this.snac.open(this.errorMsg, '', { duration: 3000 })
+      });
   }
 }

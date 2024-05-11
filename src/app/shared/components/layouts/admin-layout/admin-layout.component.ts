@@ -1,22 +1,23 @@
 import { Component, OnInit, AfterViewInit, ViewChild, HostListener, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { 
-  Router, 
-  NavigationEnd, 
-  RouteConfigLoadStart, 
-  RouteConfigLoadEnd, 
-  ResolveStart, 
-  ResolveEnd, 
+import {
+  Router,
+  NavigationEnd,
+  RouteConfigLoadStart,
+  RouteConfigLoadEnd,
+  ResolveStart,
+  ResolveEnd,
   ActivatedRoute
 } from '@angular/router';
-import { Subscription } from "rxjs";
+import { Subscription, throwError } from "rxjs";
 import { TranslateService } from '@ngx-translate/core';
 import { ThemeService } from '../../../services/theme.service';
 import { LayoutService } from '../../../services/layout.service';
-import { filter } from 'rxjs/operators';
+import { catchError, filter, map } from 'rxjs/operators';
 import { JwtAuthService } from '../../../services/auth/jwt-auth.service';
 import { User } from 'app/shared/models/user.model';
 import { FuncionarioService } from 'app/shared/services/app-models/funcionario.service';
 import { EnumService } from 'app/shared/services/enum.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-admin-layout',
@@ -27,19 +28,19 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
   private moduleLoaderSub: Subscription;
   private layoutConfSub: Subscription;
   private routerEventSub: Subscription;
-  private user: User = {  }
+  private user: User = {}
 
-  public  scrollConfig = {}
+  public scrollConfig = {}
   public layoutConf: any = {};
   public adminContainerClasses: any = {};
-  
+
   constructor(
     private router: Router,
     public translate: TranslateService,
     public themeService: ThemeService,
     private layout: LayoutService,
     private cdr: ChangeDetectorRef,
-    private route: ActivatedRoute,    
+    private route: ActivatedRoute,
     private funcionarioService: FuncionarioService,
     private auth: JwtAuthService,
     private enumService: EnumService
@@ -51,11 +52,11 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
     })
     // Close sidenav after route change in mobile
     this.routerEventSub = router.events.pipe(filter(event => event instanceof NavigationEnd))
-    .subscribe((routeChange: NavigationEnd) => {
-      this.layout.adjustLayout({ route: routeChange.url });
-      this.scrollToTop();
-    });
-    
+      .subscribe((routeChange: NavigationEnd) => {
+        this.layout.adjustLayout({ route: routeChange.url });
+        this.scrollToTop();
+      });
+
     // Translator init
     const browserLang: string = translate.getBrowserLang();
     translate.use(browserLang.match(/pt-BR|en|fr/) ? browserLang : 'en');
@@ -64,30 +65,28 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     // this.layoutConf = this.layout.layoutConf;
     this.layoutConfSub = this.layout.layoutConf$.subscribe((layoutConf) => {
-        this.layoutConf = layoutConf;
-        // console.log(this.layoutConf);
-        
-        this.adminContainerClasses = this.updateAdminContainerClasses(this.layoutConf);
-        this.cdr.markForCheck();
+      this.layoutConf = layoutConf;
+      // console.log(this.layoutConf);
+
+      this.adminContainerClasses = this.updateAdminContainerClasses(this.layoutConf);
+      this.cdr.markForCheck();
     });
 
     // FOR MODULE LOADER FLAG
     this.moduleLoaderSub = this.router.events.subscribe(event => {
-      if(event instanceof RouteConfigLoadStart || event instanceof ResolveStart) {
+      if (event instanceof RouteConfigLoadStart || event instanceof ResolveStart) {
         this.isModuleLoading = true;
       }
-      if(event instanceof RouteConfigLoadEnd || event instanceof ResolveEnd) {
+      if (event instanceof RouteConfigLoadEnd || event instanceof ResolveEnd) {
         this.isModuleLoading = false;
       }
     });
-
-    this.UserFuncionario();
   }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.layout.adjustLayout(event);
   }
-  
+
   ngAfterViewInit() {
 
   }
@@ -95,12 +94,12 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
   isTotenRoute(): boolean {
     return !this.router.url.includes('cadastros/toten') && this.router.url.includes('toten');
   }
-  
+
   scrollToTop() {
-    if(document) {
+    if (document) {
       setTimeout(() => {
         let element;
-        if(this.layoutConf.topbarFixed) {
+        if (this.layoutConf.topbarFixed) {
           element = <HTMLElement>document.querySelector('#rightside-content-hold');
         } else {
           element = <HTMLElement>document.querySelector('#main-content-wrap');
@@ -110,13 +109,13 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
     }
   }
   ngOnDestroy() {
-    if(this.moduleLoaderSub) {
+    if (this.moduleLoaderSub) {
       this.moduleLoaderSub.unsubscribe();
     }
-    if(this.layoutConfSub) {
+    if (this.layoutConfSub) {
       this.layoutConfSub.unsubscribe();
     }
-    if(this.routerEventSub) {
+    if (this.routerEventSub) {
       this.routerEventSub.unsubscribe();
     }
   }
@@ -128,18 +127,18 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
 
   sidebarMouseenter(e) {
     // console.log(this.layoutConf);
-    if(this.layoutConf.sidebarStyle === 'compact') {
-        this.layout.publishLayoutChange({sidebarStyle: 'full'}, {transitionClass: true});
+    if (this.layoutConf.sidebarStyle === 'compact') {
+      this.layout.publishLayoutChange({ sidebarStyle: 'full' }, { transitionClass: true });
     }
   }
 
   sidebarMouseleave(e) {
     // console.log(this.layoutConf);
     if (
-        this.layoutConf.sidebarStyle === 'full' &&
-        this.layoutConf.sidebarCompactToggle
+      this.layoutConf.sidebarStyle === 'full' &&
+      this.layoutConf.sidebarCompactToggle
     ) {
-        this.layout.publishLayoutChange({sidebarStyle: 'compact'}, {transitionClass: true});
+      this.layout.publishLayoutChange({ sidebarStyle: 'compact' }, { transitionClass: true });
     }
   }
 
@@ -155,23 +154,4 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
       'fixed-topbar': layoutConf.topbarFixed && layoutConf.navigationPos === 'side'
     }
   }
-
-  
-  //Atribui Funcionario ao User
-  UserFuncionario(){
-    this.user = this.auth.getUser();
-    this.funcionarioService.ObterFuncionarioEmail(this.user.displayName)
-    .subscribe((func) => {
-      this.user = new User();
-      this.user.displayName = func.email;
-      this.user.name = func.nome;
-      this.user.idClinica = func.idClinica;
-      this.user.idFuncionario = func.id;
-      let perfil = this.enumService.getPerfilUsuario().find((role) => role.value === func.perfil);
-      this.user.role = perfil.label;
-
-      this.auth.setUserAndToken(this.auth.getJwtToken(), this.user, this.auth.isLoggedIn())
-    })
-  }
-  
 }

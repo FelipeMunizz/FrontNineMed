@@ -48,12 +48,13 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
     private themeService: ThemeService,
   ) { }
 
-  ngAfterViewInit() { }
-  ngOnInit() {
+  ngAfterViewInit() {     
     this.IniciaGraficoAgendamentos();
     this.IniciaGraficoPacienteConvenio();
     this.IniciaGraficoAtendimentoMensal();
     this.ListaAgendamentosDia();
+  }
+  ngOnInit() {
   }
 
   openModalChamada() {
