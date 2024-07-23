@@ -4,10 +4,11 @@
     </mat-card-title>
     <div class="container cnt">
         <div class="row row-card">        
-            <div class="col col-lg-10 col-md-10 col-sm-10">
+            <div class="col col-lg-8 col-md-8 col-sm-8">
                 <h1 class="text-muted">Clinicas e Consultórios</h1>
             </div>
-            <div class="col col-lg-2 col-md-2 col-sm-2" *ngIf="isAutorizado">
+            <span fxFlex></span>
+            <div class="col col-lg-1 col-md-1 col-sm-1" *ngIf="isAutorizado">
                 <div class="demo-button-container" *ngIf="tipoTela == 1">
                     <button mat-raised-button color="primary" class="btn-card" matTooltip="Adicionar nova Clinica" matTooltipPosition="below" (click)="TelaCadastro()">
                         <mat-icon>add</mat-icon>
