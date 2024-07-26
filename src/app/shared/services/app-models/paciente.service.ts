@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { config } from "config";
-import { AdicionarPaciente, ContatoPaciente, ConvenioPaciente, EnderecoPaciente, FamiliarPaciente, Paciente } from './../../models/paciente.model';
+import { AdicionarPaciente, ContatoPaciente, ConvenioPaciente, EnderecoPaciente, FamiliarPaciente, Paciente, ProntuarioPaciente } from './../../models/paciente.model';
 import { Observable } from "rxjs";
 
 @Injectable({
@@ -147,6 +147,38 @@ export class PacienteService {
     //Deletar Familiar Paciente
     public DeletarFamiliarPaciente(idEndereco: number): Observable<any> {
         const url = `${this.baseUrl}/DeletarFamiliarPaciente/${idEndereco}`;
+        return this.httpClient.delete<any>(url)
+    }
+
+    //Prontuario
+
+    //Listar Prontuario Paciente
+    public ObterPacienteProntuario(idPaciente: number): Observable<any> {
+        const url = `${this.baseUrl}/ObterPacienteProntuario/${idPaciente}`;
+        return this.httpClient.get<any>(url);
+    }
+
+    //Listar Prontuario Paciente
+    public ObterProntuario(idProntuario: number): Observable<any> {
+        const url = `${this.baseUrl}/ObterProntuario/${idProntuario}`;
+        return this.httpClient.get<any>(url);
+    }
+
+    //Adicionar Prontuario Paciente
+    public AdicionarProntuarioPaciente(item: ProntuarioPaciente): Observable<any> {
+        const url = `${this.baseUrl}/AdicionarProntuarioPaciente`;
+        return this.httpClient.post<any>(url, item);
+    }
+
+    //Atualizar Prontuario Paciente
+    public AtualizarProntuarioPaciente(item: ProntuarioPaciente): Observable<any> {
+        const url = `${this.baseUrl}/AtualizarProntuarioPaciente`;
+        return this.httpClient.put<any>(url, item);
+    }
+
+    //Deletar Prontuario Paciente
+    public DeletarProntuarioPaciente(idEndereco: number): Observable<any> {
+        const url = `${this.baseUrl}/DeletarProntuarioPaciente/${idEndereco}`;
         return this.httpClient.delete<any>(url)
     }
 }

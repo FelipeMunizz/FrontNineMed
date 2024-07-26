@@ -44,7 +44,7 @@ export class ProntuarioComponent implements OnInit {
   }
 
   NavigateAtendimento(idPaciente: number){
-    this.router.navigateByUrl(`atendimento/atendimento?idPaciente=${idPaciente}`)
+    this.router.navigateByUrl(`atendimento/atendimento?cd=${idPaciente}`)
   }
 
 
