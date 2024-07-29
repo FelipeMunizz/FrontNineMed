@@ -49,9 +49,8 @@
             </div>
         </mat-card>
         <mat-card fxFlex="98">
-            <div class="row">
-                
-            </div>
+            <mat-card-title>{{this.paciente.nome}}</mat-card-title>
+            <p>Idade: <span class="text-muted">{{CalcularIdade(this.paciente.dataNascimento)}}</span></p>
         </mat-card>
     </div>
 </div>

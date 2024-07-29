@@ -67,4 +67,8 @@ export class AgendamentoService{
     public AgendamentoPacienteDiario(idClinica: number): Observable<any>{
         return this.httpClient.get<any>(`${this.baseUrl}/AgendamentoPacienteDiario/${idClinica}`)
     }
+
+    public AgendamentosAtendimento(idFuncionario: number): Observable<any>{
+        return this.httpClient.get<any>(`${this.baseUrl}/AgendamentosAtendimento/${idFuncionario}`)
+    }
 }

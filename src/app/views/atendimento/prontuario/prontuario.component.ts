@@ -3,9 +3,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { Atendimento } from 'app/shared/models/atendimento.model';
 import { Paciente } from 'app/shared/models/paciente.model';
 import { User } from 'app/shared/models/user.model';
-import { PacienteService } from 'app/shared/services/app-models/paciente.service';
+import { AgendamentoService } from 'app/shared/services/app-models/agendamento.service';
+import { AtendimentoService } from 'app/shared/services/app-models/atendimento.service';
 import { JwtAuthService } from 'app/shared/services/auth/jwt-auth.service';
 
 @Component({
@@ -15,7 +17,7 @@ import { JwtAuthService } from 'app/shared/services/auth/jwt-auth.service';
 })
 export class ProntuarioComponent implements OnInit {
   user: User = {}
-  dispplayColuns: string[] = ['id', 'nome', 'rg', 'cpf'];
+  dispplayColuns: string[] = ['id', 'nome', 'rg', 'cpf', 'agendamento', 'acao'];
   dataSource: MatTableDataSource<Paciente> = new MatTableDataSource<Paciente>();
   tipoTela: number;
 
@@ -25,7 +27,8 @@ export class ProntuarioComponent implements OnInit {
   constructor(
     private auth: JwtAuthService,
     private router: Router,
-    private pacienteService: PacienteService
+    private agendamentoService: AgendamentoService,
+    private atendimentoService: AtendimentoService
   ) { }
 
   ngOnInit(): void {
@@ -35,9 +38,9 @@ export class ProntuarioComponent implements OnInit {
 
   ListaPaciente() {
     this.tipoTela = 1;
-    this.pacienteService.ListaPacientesClinica(+this.user.idClinica)
-      .subscribe((pacientes) => {
-        this.dataSource = new MatTableDataSource(pacientes);
+    this.agendamentoService.AgendamentosAtendimento(+this.user.idFuncionario)
+      .subscribe((agendamentos) => {
+        this.dataSource = new MatTableDataSource(agendamentos.result);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       })
@@ -45,6 +48,18 @@ export class ProntuarioComponent implements OnInit {
 
   NavigateAtendimento(idPaciente: number){
     this.router.navigateByUrl(`atendimento/atendimento?cd=${idPaciente}`)
+  }
+
+  AdicionarAtendimento(agendamento: any){
+    var atendimento = new Atendimento();
+    atendimento.idAgendamento = agendamento.IdAgendamento;   
+    const idPaciente = agendamento.CodCliente;
+
+    this.atendimentoService.AdicionarAtendimento(atendimento).subscribe(
+      (response) => {
+        this.NavigateAtendimento(idPaciente)
+      }
+    );
   }
 
 
