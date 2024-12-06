@@ -27,6 +27,7 @@ import { QuillModule } from "ngx-quill";
 import { AtendimentoRoutes } from "./atendimento.routing";
 import { ProntuarioComponent } from './prontuario/prontuario.component';
 import { AtendimentoComponent } from './atendimento/atendimento.component';
+import { ModalProcedimentoComponent } from './modal-procedimento/modal-procedimento.component';
 
 @NgModule({
     imports: [
@@ -60,7 +61,7 @@ import { AtendimentoComponent } from './atendimento/atendimento.component';
       { provide: MatPaginatorIntl, useClass: CustomPaginator }
     ],
     declarations: [    
-    ProntuarioComponent, AtendimentoComponent
+    ProntuarioComponent, AtendimentoComponent, ModalProcedimentoComponent
   ],
   })
   export class AtendimentoModule {}

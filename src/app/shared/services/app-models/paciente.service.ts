@@ -158,6 +158,11 @@ export class PacienteService {
         return this.httpClient.get<any>(url);
     }
 
+    public ObtemProntuarioTelaAtendimento(idPaciente: number): Observable<any> {
+        const url = `${this.baseUrl}/ObtemProntuarioTelaAtendimento/${idPaciente}`;
+        return this.httpClient.get<any>(url);
+    }
+
     //Listar Prontuario Paciente
     public ObterProntuario(idProntuario: number): Observable<any> {
         const url = `${this.baseUrl}/ObterProntuario/${idProntuario}`;

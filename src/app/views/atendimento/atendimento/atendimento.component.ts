@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { AtendimentoPaciente } from 'app/shared/models/atendimento.model';
 import { Paciente, ProntuarioPaciente } from 'app/shared/models/paciente.model';
 import { AppLoaderService } from 'app/shared/services/app-loader/app-loader.service';
 import { PacienteService } from 'app/shared/services/app-models/paciente.service';
@@ -14,14 +17,16 @@ import { UtilityService } from 'app/shared/services/utility.service';
 export class AtendimentoComponent implements OnInit {
   idPaciente: number;
   prontuario: ProntuarioPaciente;
-  paciente: Paciente = new Paciente();
+  paciente: AtendimentoPaciente = new AtendimentoPaciente();
+  atendimentoFrom: UntypedFormGroup;
 
-  constructor(    
+  constructor(
     private route: ActivatedRoute,
     private pacienteService: PacienteService,
     private authService: JwtAuthService,
     private utilityService: UtilityService,
-    private loaderService: AppLoaderService
+    private loaderService: AppLoaderService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -29,17 +34,13 @@ export class AtendimentoComponent implements OnInit {
     this.LoadDadosProntuario(this.idPaciente);
   }
 
-  LoadDadosProntuario(idPaciente: number){
+  LoadDadosProntuario(idPaciente: number) {
     this.loaderService.open('aguarde...')
 
-    this.pacienteService.ObterPacienteProntuario(idPaciente).subscribe(
+    this.pacienteService.ObtemProntuarioTelaAtendimento(idPaciente).subscribe(
       (response) => {
-        this.prontuario = response;
-        this.pacienteService.ObterPaciente(idPaciente).subscribe(
-          (response) => {
-            this.paciente = response
-          }
-        )
+        this.paciente = response;
+        console.log(response)
       }
     );
 
@@ -51,12 +52,11 @@ export class AtendimentoComponent implements OnInit {
     const nascimento = new Date(dataNascimento);
     let idade = hoje.getFullYear() - nascimento.getFullYear();
     const mes = hoje.getMonth() - nascimento.getMonth();
-    
-    if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
-        idade--;
-    }
-    
-    return idade;
-}
 
+    if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
+      idade--;
+    }
+
+    return idade;
+  }
 }

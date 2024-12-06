@@ -10,3 +10,19 @@ export class Atendimento {
     finalizado: boolean;
     idAgendamento: number;
 }
+
+export class AtendimentoPaciente {
+    nome: string;
+    dataNascimento: string;
+    convenio: string;
+    anteClinicos: string;
+    anteCirurgicos: string;
+    anteFamiliares: string;
+    habitos: string;
+    alergia: string;
+    medcUso: string;
+    primeiraConsulta: string;   
+    antecedenteClinico: string;
+    antecedenteCirurgico: string;
+    antecedenteFamiliares: string;
+}
