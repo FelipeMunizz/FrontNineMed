@@ -36,7 +36,7 @@
                     <input matInput [matDatepicker]="picker" placeholder="Escolha a data"
                         formControlName="dataAgendamento">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker touchUi #picker></mat-datepicker>
+                    <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
                 <small *ngIf="agendamentoForm.controls['dataAgendamento'].touched" class="form-error-msg"> </small>
             </div>

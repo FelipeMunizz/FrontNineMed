@@ -1,12 +1,13 @@
 <mat-card class="p0">
     <mat-card-title>
         <div class="row">
-            <div class="col col-lg-10 col-md-10 col-sm-10">
+            <div class="col col-lg-8 col-md-8 col-sm-8">
                 <mat-card-title class="text-muted">
                     Procedimentos
                 </mat-card-title>
             </div>
-            <div class="col col-lg-2 col-md-2 col-sm-2" *ngIf="isAutorizado">
+            <span fxFlex></span>
+            <div class="col col-lg-1 col-md-1 col-sm-1" *ngIf="isAutorizado">
                 <div class="demo-button-container" *ngIf="tipoTela == 1">
                     <button mat-raised-button color="primary" class="btn-card" matTooltip="Adicionar novo Procedimento"
                         TooltipPosition="below" (click)="TelaCadastro()">

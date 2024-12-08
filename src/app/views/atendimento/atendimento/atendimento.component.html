@@ -1,0 +1,97 @@
+<div fxFlex="100" fxFlex.sm="100" fxFlex.gt-sm="100">
+    <div fxLayout="row wrap">
+        <mat-card fxFlex="23">
+            <div class="row">
+                <div class="col col-4">
+                    <span class="text-blue">
+                        <mat-icon>summarize</mat-icon>
+                    </span>
+                </div>
+                <div class="col col-8">
+                    <h2 class="text-muted"><a>Exames</a></h2>
+                </div>
+            </div>
+        </mat-card>
+        <mat-card fxFlex="23">
+            <div class="row">
+                <div class="col col-4">
+                    <span class="text-blue">
+                        <mat-icon>description</mat-icon>
+                    </span>
+                </div>
+                <div class="col col-8">
+                    <h2 class="text-muted"><a>Atestados</a></h2>
+                </div>
+            </div>
+        </mat-card>
+        <mat-card fxFlex="23">
+            <div class="row">
+                <div class="col col-4">
+                    <span class="text-blue">
+                        <mat-icon>post_add</mat-icon>
+                    </span>
+                </div>
+                <div class="col col-8">
+                    <h2 class="text-muted"><a>Prescrições</a></h2>
+                </div>
+            </div>
+        </mat-card>
+        <mat-card fxFlex="23">
+            <div class="row">
+                <div class="col col-4">
+                    <span class="text-blue">
+                        <mat-icon>upload_file</mat-icon>
+                    </span>
+                </div>
+                <div class="col col-8">
+                    <h2 class="text-muted"><a>Anexos</a></h2>
+                </div>
+            </div>
+        </mat-card>
+        <mat-card fxFlex="98">
+            <mat-card-title>{{this.paciente.nome}}</mat-card-title>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col col-lg-3 col-md-3 col-sm-3">
+                        <strong>Idade: </strong> <span
+                            class="text-muted">{{CalcularIdade(this.paciente.dataNascimento)}}</span>
+                    </div>
+                    <div class="col col-lg-3 col-md-3 col-sm-3">
+                        <strong>Convênio: </strong> <span class="text-muted">{{this.paciente.convenio}}</span>
+                    </div>
+                    <div class="col col-lg-3 col-md-3 col-sm-3">
+                        <strong>Primeira Consulta: </strong> <span
+                            class="text-muted">{{this.paciente.primeiraConsulta}}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-lg-4 col-md-4 col-sm-4" *ngIf="this.paciente.antecedenteClinico">
+                        <strong>Antec. Clinico: </strong> <span
+                            class="text-muted">{{this.paciente.antecedenteClinico}}</span>
+                    </div>
+                    <div class="col col-lg-4 col-md-4 col-sm-4" *ngIf="this.paciente.antecedenteCirurgico">
+                        <strong>Antec. Cirurgico: </strong> <span
+                            class="text-muted">{{this.paciente.antecedenteCirurgico}}</span>
+                    </div>
+                    <div class="col col-lg-4 col-md-4 col-sm-4" *ngIf="this.paciente.antecedenteFamiliares">
+                        <strong>Antec. Familiares: </strong> <span
+                            class="text-muted">{{this.paciente.antecedenteFamiliares}}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-lg-4 col-md-4 col-sm-4" *ngIf="this.paciente.alergia">
+                        <strong>Alergia: </strong> <span class="text-muted">{{this.paciente.alergia}}</span>
+                    </div>
+                    <div class="col col-lg-4 col-md-4 col-sm-4" *ngIf="this.paciente.habitos">
+                        <strong>Habitos: </strong> <span class="text-muted">{{this.paciente.habitos}}</span>
+                    </div>
+                </div>
+            </mat-card-content>
+            <mat-card-footer>
+                <!--Botao para alterar prontuario-->
+            </mat-card-footer>
+        </mat-card>
+    </div>
+</div>

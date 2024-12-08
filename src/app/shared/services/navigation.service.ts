@@ -50,6 +50,12 @@ export class NavigationService {
       ]
     },
     {
+      name: 'Atendimento',
+      state: 'atendimento/prontuario',
+      type: 'link',
+      icon: 'medical_services'
+    },
+    {
       name: 'Recepção',
       state: 'recepcao/agenda',
       type: 'link',
