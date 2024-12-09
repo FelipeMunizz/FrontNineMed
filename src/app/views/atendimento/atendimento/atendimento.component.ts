@@ -8,6 +8,7 @@ import { AppLoaderService } from 'app/shared/services/app-loader/app-loader.serv
 import { PacienteService } from 'app/shared/services/app-models/paciente.service';
 import { JwtAuthService } from 'app/shared/services/auth/jwt-auth.service';
 import { UtilityService } from 'app/shared/services/utility.service';
+import { ModalAtendimentoComponent } from '../modal-atendimento/modal-atendimento.component';
 
 @Component({
   selector: 'app-atendimento',
@@ -58,5 +59,20 @@ export class AtendimentoComponent implements OnInit {
     }
 
     return idade;
+  }
+
+  openLancamentoModal(atendimento: AtendimentoPaciente) {
+    const dialogRef = this.dialog.open(ModalAtendimentoComponent, {
+      width: '50%',
+      height: 'auto',
+      data: { 
+        atendimentoPaciente: atendimento,
+        idPaciente: this.idPaciente
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+        //this.LoadDadosIniciais();
+    });
   }
 }

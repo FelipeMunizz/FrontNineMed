@@ -41,7 +41,7 @@
 
                 <ng-container matColumnDef="agendamento">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Agendamento </th>
-                    <td mat-cell *matCellDef="let row"> {{row.Agendamento}}</td>
+                    <td mat-cell *matCellDef="let row"> {{formatDate(row.Agendamento)}}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="acao">

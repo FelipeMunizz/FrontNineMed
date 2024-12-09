@@ -72,4 +72,11 @@ export class ProntuarioComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  public formatDate(dateString: string): string {
+
+    const cleanDateString = dateString.split('.')[0];
+
+    return cleanDateString
+}
 }

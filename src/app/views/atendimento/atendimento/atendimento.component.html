@@ -89,8 +89,9 @@
                     </div>
                 </div>
             </mat-card-content>
-            <mat-card-footer>
-                <!--Botao para alterar prontuario-->
+            <mat-card-footer style="padding: 10px; color: blue; display: flex; justify-content: end; cursor: pointer;">
+                <mat-icon matTooltip="Editar dados do prontuário" matTooltipPosition="below"
+                    (click)="openLancamentoModal(this.paciente)">edit</mat-icon>
             </mat-card-footer>
         </mat-card>
     </div>
