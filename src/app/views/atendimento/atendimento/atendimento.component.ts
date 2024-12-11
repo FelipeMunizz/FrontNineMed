@@ -66,13 +66,13 @@ export class AtendimentoComponent implements OnInit {
       width: '50%',
       height: 'auto',
       data: { 
-        atendimentoPaciente: atendimento,
+        nomePaciente: atendimento.nome,
         idPaciente: this.idPaciente
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-        //this.LoadDadosIniciais();
+        this.ngOnInit();
     });
   }
 }

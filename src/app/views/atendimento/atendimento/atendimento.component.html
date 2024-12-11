@@ -49,7 +49,7 @@
             </div>
         </mat-card>
         <mat-card fxFlex="98">
-            <mat-card-title>{{this.paciente.nome}}</mat-card-title>
+            <mat-card-title  class="text-center">{{this.paciente.nome}}</mat-card-title>
             <mat-card-content>
                 <div class="row">
                     <div class="col col-lg-3 col-md-3 col-sm-3">
@@ -86,6 +86,9 @@
                     </div>
                     <div class="col col-lg-4 col-md-4 col-sm-4" *ngIf="this.paciente.habitos">
                         <strong>Habitos: </strong> <span class="text-muted">{{this.paciente.habitos}}</span>
+                    </div>                    
+                    <div class="col col-lg-4 col-md-4 col-sm-4" *ngIf="this.paciente.medicamentoUso">
+                        <strong>Medicamentos em uso: </strong> <span class="text-muted">{{this.paciente.medicamentoUso}}</span>
                     </div>
                 </div>
             </mat-card-content>
