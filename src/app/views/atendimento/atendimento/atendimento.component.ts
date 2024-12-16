@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { FormControl, FormGroup, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { AtendimentoPaciente } from 'app/shared/models/atendimento.model';
@@ -33,6 +33,21 @@ export class AtendimentoComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(param => this.idPaciente = +param['cd']);
     this.LoadDadosProntuario(this.idPaciente);
+    this.IniciaForm();
+  }
+
+  IniciaForm() {
+    this.atendimentoFrom = new FormGroup({
+      queixaPrinciapal: new FormControl(),
+      historiaMolestiaAtual: new FormControl(),
+      historicoAntecedentes: new FormControl(),
+      exameFisico: new FormControl(),
+      peso: new FormControl(),
+      altura: new FormControl(),
+      imc: new FormControl(),
+      diagnostico: new FormControl(),
+      finalizado: new FormControl()
+    })
   }
 
   LoadDadosProntuario(idPaciente: number) {
@@ -41,11 +56,26 @@ export class AtendimentoComponent implements OnInit {
     this.pacienteService.ObtemProntuarioTelaAtendimento(idPaciente).subscribe(
       (response) => {
         this.paciente = response;
-        console.log(response)
       }
     );
 
     this.loaderService.close();
+  }
+
+  SalvarClick() {
+
+  }
+
+  CalculoImc(){
+    debugger
+    var dados = this.dadosForm();
+
+    var altura = parseFloat(dados["altura"].value);
+    var peso = parseFloat(dados["peso"].value);
+
+    var imc = peso / (altura * altura)
+
+    dados["imc"].setValue(imc);
   }
 
   CalcularIdade(dataNascimento: string): number {
@@ -65,14 +95,25 @@ export class AtendimentoComponent implements OnInit {
     const dialogRef = this.dialog.open(ModalAtendimentoComponent, {
       width: '50%',
       height: 'auto',
-      data: { 
+      data: {
         nomePaciente: atendimento.nome,
         idPaciente: this.idPaciente
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-        this.ngOnInit();
+      this.ngOnInit();
     });
+  }
+
+  autoResize(event: Event): void {
+    const textarea = event.target as HTMLTextAreaElement;
+    textarea.style.height = 'auto';
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  }
+
+  
+  private dadosForm() {
+    return this.atendimentoFrom.controls;
   }
 }
