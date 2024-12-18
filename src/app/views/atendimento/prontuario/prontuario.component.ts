@@ -46,8 +46,8 @@ export class ProntuarioComponent implements OnInit {
       })
   }
 
-  NavigateAtendimento(idPaciente: number){
-    this.router.navigateByUrl(`atendimento/atendimento?cd=${idPaciente}`)
+  NavigateAtendimento(idPaciente: number, idAtendimento: number){
+    this.router.navigateByUrl(`atendimento/atendimento?cd=${idPaciente}&cdAtend=${idAtendimento}`)
   }
 
   AdicionarAtendimento(agendamento: any){
@@ -57,7 +57,8 @@ export class ProntuarioComponent implements OnInit {
 
     this.atendimentoService.AdicionarAtendimento(atendimento).subscribe(
       (response) => {
-        this.NavigateAtendimento(idPaciente)
+        atendimento = response.result;
+        this.NavigateAtendimento(idPaciente, atendimento.id)
       }
     );
   }
