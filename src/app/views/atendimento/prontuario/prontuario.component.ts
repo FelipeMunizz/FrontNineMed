@@ -46,13 +46,13 @@ export class ProntuarioComponent implements OnInit {
       })
   }
 
-  NavigateAtendimento(idPaciente: number, idAtendimento: number){
+  NavigateAtendimento(idPaciente: number, idAtendimento: number) {
     this.router.navigateByUrl(`atendimento/atendimento?cd=${idPaciente}&cdAtend=${idAtendimento}`)
   }
 
-  AdicionarAtendimento(agendamento: any){
+  AdicionarAtendimento(agendamento: any) {
     var atendimento = new Atendimento();
-    atendimento.idAgendamento = agendamento.IdAgendamento;   
+    atendimento.idAgendamento = agendamento.IdAgendamento;
     const idPaciente = agendamento.CodCliente;
 
     this.atendimentoService.AdicionarAtendimento(atendimento).subscribe(
@@ -79,5 +79,5 @@ export class ProntuarioComponent implements OnInit {
     const cleanDateString = dateString.split('.')[0];
 
     return cleanDateString
-}
+  }
 }

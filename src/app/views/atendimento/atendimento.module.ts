@@ -28,6 +28,7 @@ import { AtendimentoRoutes } from "./atendimento.routing";
 import { ProntuarioComponent } from './prontuario/prontuario.component';
 import { AtendimentoComponent } from './atendimento/atendimento.component';
 import { ModalAtendimentoComponent } from './modal-atendimento/modal-atendimento.component';
+import { MatExpansionModule } from "@angular/material/expansion";
 
 @NgModule({
     imports: [
@@ -56,6 +57,8 @@ import { ModalAtendimentoComponent } from './modal-atendimento/modal-atendimento
       MatDialogModule,
       NgxMaskModule.forRoot(),
       MatSelectModule,
+      MatExpansionModule,
+      
     ],
     providers: [
       { provide: MatPaginatorIntl, useClass: CustomPaginator }

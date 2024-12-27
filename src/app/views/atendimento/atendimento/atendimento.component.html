@@ -93,12 +93,57 @@
                     </div>
                 </div>
             </mat-card-content>
-            <mat-card-footer style="padding: 10px; color: blue; display: flex; justify-content: end; cursor: pointer;">
-                <mat-icon matTooltip="Editar dados do prontuário" matTooltipPosition="below"
-                    (click)="openLancamentoModal(this.paciente)">edit</mat-icon>
+            <mat-card-footer>
+                <div class="row" style="padding: 10px;">
+                    <div class="col col-6" (click)="AlterPages()">
+                        <span style="display: flex; align-items: start; justify-content: start; cursor: pointer;">
+                            <mat-icon style="color: blue;"
+                                matTooltip="{{tipoTela == 1 ? 'Iniciar Atendimento' : 'Listar Evolução de prontuario'}}"
+                                matTooltipPosition="below">
+                                {{tipoTela == 1 ? 'add' : 'list'}}
+                            </mat-icon>
+                            &nbsp;
+                            {{tipoTela == 1 ? 'Iniciar Atendimento' : 'Listar Evolução de prontuario'}}
+                        </span>
+                    </div>
+                    <div class="col col-6" style="color: blue; display: flex; justify-content: end;">
+                        <mat-icon matTooltip="Editar dados do prontuário" matTooltipPosition="below"
+                            style="cursor: pointer;" (click)="openLancamentoModal(this.paciente)">edit</mat-icon>
+                    </div>
+
+                </div>
             </mat-card-footer>
         </mat-card>
-        <mat-card fxFlex="100">
+        <mat-card fxFlex="100" *ngIf="tipoTela === 1">
+            <h3 class="text-muted align-items-center" *ngIf="listEvolucaoPaciente.length == 0">Paciente sem histórico
+            </h3>
+            <div *ngIf="listEvolucaoPaciente.length != 0">
+                <div *ngFor="let evolucao of listEvolucaoPaciente;">
+                    <mat-accordion>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>{{evolucao.TipoRegistro}}</mat-panel-title>
+                                <mat-panel-description>{{formatDate(evolucao.DataRegistro)}}</mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <h3 *ngIf="evolucao.Descricao" class="text-muted align-items-center">Descrição do
+                                atendimento</h3>
+                            <div *ngIf="isBase64(evolucao.Descricao); else texto">
+                                <button class="btn btn-primary"
+                                    (click)="downloadBase64Pdf(evolucao.Descricao, evolucao.TipoRegistro)">Baixar
+                                    {{evolucao.TipoRegistro}} </button>
+                            </div>
+                            <ng-template #texto>
+                                <span>
+                                    {{evolucao.Descricao}}
+                                </span>
+                            </ng-template>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                    <br>
+                </div>
+            </div>
+        </mat-card>
+        <mat-card fxFlex="100" *ngIf="tipoTela === 2">
             <form [formGroup]="atendimentoFrom" (submit)="SalvarClick(false)">
                 <mat-card-content>
                     <div class="row">
@@ -159,7 +204,8 @@
                         <input type="submit" class="btn btn-outline-primary btn-clinica-submit" value="Salvar">
                     </div>
                     <div class="col d-flex justify-content-end">
-                        <a (click)="SalvarClick(true)" class="btn btn-outline-primary btn-clinica-submit">Finalizar Atendimento</a>
+                        <a (click)="SalvarClick(true)" class="btn btn-outline-primary btn-clinica-submit">Finalizar
+                            Atendimento</a>
                     </div>
                 </div>
             </form>

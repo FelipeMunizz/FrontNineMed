@@ -1,21 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Atendimento, AtendimentoPaciente } from 'app/shared/models/atendimento.model';
-import { Paciente, ProntuarioPaciente } from 'app/shared/models/paciente.model';
+import { ProntuarioPaciente } from 'app/shared/models/paciente.model';
 import { AppLoaderService } from 'app/shared/services/app-loader/app-loader.service';
 import { PacienteService } from 'app/shared/services/app-models/paciente.service';
 import { JwtAuthService } from 'app/shared/services/auth/jwt-auth.service';
 import { UtilityService } from 'app/shared/services/utility.service';
 import { ModalAtendimentoComponent } from '../modal-atendimento/modal-atendimento.component';
 import { AtendimentoService } from 'app/shared/services/app-models/atendimento.service';
-import { switchMap } from 'rxjs';
+import { EvolucaoPaciente } from 'app/shared/models/evolucao.paciente';
 
 @Component({
   selector: 'app-atendimento',
   templateUrl: './atendimento.component.html',
-  styleUrls: ['./atendimento.component.scss']
+  styleUrls: ['./atendimento.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AtendimentoComponent implements OnInit {
   idPaciente: number;
@@ -24,15 +25,17 @@ export class AtendimentoComponent implements OnInit {
   paciente: AtendimentoPaciente = new AtendimentoPaciente();
   atendimentoFrom: UntypedFormGroup;
   atendimentoEdit: Atendimento = new Atendimento();
+  tipoTela: number = 1;
+  listEvolucaoPaciente: Array<EvolucaoPaciente> = new Array<EvolucaoPaciente>();
 
   constructor(
     private route: ActivatedRoute,
     private pacienteService: PacienteService,
-    private authService: JwtAuthService,
     private utilityService: UtilityService,
     private loaderService: AppLoaderService,
     private dialog: MatDialog,
-    private atendimentoService: AtendimentoService
+    private atendimentoService: AtendimentoService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -43,6 +46,7 @@ export class AtendimentoComponent implements OnInit {
     this.IniciaForm();
     this.LoadDadosProntuario(this.idPaciente);
     this.LoadDadosAtendimento();
+    this.LoadEvolucaoPaciente(this.idPaciente);
   }
 
   IniciaForm() {
@@ -67,8 +71,30 @@ export class AtendimentoComponent implements OnInit {
         this.paciente = response;
       }
     );
-
     this.loaderService.close();
+  }
+
+  LoadEvolucaoPaciente(idPaciente: number) {
+    this.loaderService.open('Carregando evolução de prontuário do paciente');
+    this.atendimentoService.EvolucaoProntuarioByIdPaciente(idPaciente)
+      .subscribe((response) => {
+        if (response.success) {
+          this.listEvolucaoPaciente = response.result;
+          this.cdr.detectChanges();
+        }
+      })
+    this.loaderService.close();
+  }
+
+  AlterPages() {
+
+    if (this.tipoTela == 1) {
+      this.tipoTela = 2;
+      this.atendimentoFrom.reset();
+    } else {
+      this.tipoTela = 1
+      this.ngOnInit()
+    }
   }
 
   SalvarClick(finalizado: boolean) {
@@ -91,14 +117,14 @@ export class AtendimentoComponent implements OnInit {
   LoadDadosAtendimento() {
     var dados = this.dadosForm();
 
-      this.atendimentoService.ObterAtendimento(this.idAtendimento)
+    this.atendimentoService.ObterAtendimento(this.idAtendimento)
       .subscribe((result) => {
         this.atendimentoEdit = result
-        dados['queixaPrincipal'].setValue[this.atendimentoEdit.queixaPrincipal];
-        dados['historiaMolestiaAtual'].setValue[this.atendimentoEdit.historiaMolestiaAtual];
-        dados['historicoAntecedentes'].setValue[this.atendimentoEdit.historicoAntecedentes];
-        dados['exameFisico'].setValue[this.atendimentoEdit.exameFisico];
-        dados['diagnostico'].setValue[this.atendimentoEdit.diagnostico];
+        dados['queixaPrincipal'].setValue(this.atendimentoEdit.queixaPrincipal);
+        dados['historiaMolestiaAtual'].setValue(this.atendimentoEdit.historiaMolestiaAtual);
+        dados['historicoAntecedentes'].setValue(this.atendimentoEdit.historicoAntecedentes);
+        dados['exameFisico'].setValue(this.atendimentoEdit.exameFisico);
+        dados['diagnostico'].setValue(this.atendimentoEdit.diagnostico);
       })
 
   }
@@ -152,5 +178,52 @@ export class AtendimentoComponent implements OnInit {
 
   private dadosForm() {
     return this.atendimentoFrom.controls;
+  }
+
+  public formatDate(dateString: string): string {
+
+    const cleanDateString = dateString.split('.')[0];
+
+    return cleanDateString
+  }
+
+  downloadBase64Pdf(base64String: string, fileName: string): void {
+    const isBase64Pdf = (base64: string): boolean => {
+      try {
+        const regex = /^[A-Za-z0-9+/=]+$/;
+        return regex.test(base64) && base64.length % 4 === 0;
+      } catch {
+        return false;
+      }
+    };
+
+    if (isBase64Pdf(base64String)) {
+      // Converte Base64 para Blob
+      const byteCharacters = atob(base64String);
+      const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i));
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+      // Cria um link para download
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.href = url;
+      link.download = fileName || 'arquivo.pdf';
+      link.click();
+
+      // Libera o objeto criado
+      URL.revokeObjectURL(url);
+    } else {
+      console.warn('A string fornecida não é um Base64 válido.');
+    }
+  }
+
+  isBase64(base64String: string): boolean {
+    const regex = /^[A-Za-z0-9+/=]+$/; // Verifica caracteres válidos de Base64
+    try {
+      return regex.test(base64String) && base64String.length % 4 === 0;
+    } catch {
+      return false;
+    }
   }
 }

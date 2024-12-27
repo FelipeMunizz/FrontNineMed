@@ -41,4 +41,8 @@ export class AtendimentoService {
   public ObterAtendimento(idAtendimento: number): Observable<any> {
     return this.httpClient.get<any>(`${this.baseUrl}/ObterAtendimento/${idAtendimento}`)
   }
+
+  public EvolucaoProntuarioByIdPaciente(idPaciente: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.baseUrl}/EvolucaoProntuarioByIdPaciente/${idPaciente}`)
+  }
 }
