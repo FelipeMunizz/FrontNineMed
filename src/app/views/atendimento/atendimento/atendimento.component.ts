@@ -11,6 +11,7 @@ import { UtilityService } from 'app/shared/services/utility.service';
 import { ModalAtendimentoComponent } from '../modal-atendimento/modal-atendimento.component';
 import { AtendimentoService } from 'app/shared/services/app-models/atendimento.service';
 import { EvolucaoPaciente } from 'app/shared/models/evolucao.paciente';
+import { ModalAtestadoComponent } from '../modal-atestado/modal-atestado.component';
 
 @Component({
   selector: 'app-atendimento',
@@ -161,6 +162,20 @@ export class AtendimentoComponent implements OnInit {
       data: {
         nomePaciente: atendimento.nome,
         idPaciente: this.idPaciente
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
+    });
+  }
+
+  openAtestadoModal() {
+    const dialogRef = this.dialog.open(ModalAtestadoComponent, {
+      width: '50%',
+      height: 'auto',
+      data: {
+        idAtendimento: this.idAtendimento
       }
     });
 

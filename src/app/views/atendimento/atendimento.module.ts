@@ -29,6 +29,7 @@ import { ProntuarioComponent } from './prontuario/prontuario.component';
 import { AtendimentoComponent } from './atendimento/atendimento.component';
 import { ModalAtendimentoComponent } from './modal-atendimento/modal-atendimento.component';
 import { MatExpansionModule } from "@angular/material/expansion";
+import { ModalAtestadoComponent } from './modal-atestado/modal-atestado.component';
 
 @NgModule({
     imports: [
@@ -64,7 +65,7 @@ import { MatExpansionModule } from "@angular/material/expansion";
       { provide: MatPaginatorIntl, useClass: CustomPaginator }
     ],
     declarations: [    
-    ProntuarioComponent, AtendimentoComponent, ModalAtendimentoComponent
+    ProntuarioComponent, AtendimentoComponent, ModalAtendimentoComponent, ModalAtestadoComponent
   ],
   })
   export class AtendimentoModule {}

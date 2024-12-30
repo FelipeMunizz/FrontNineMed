@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Atendimento } from "app/shared/models/atendimento.model";
+import { Atendimento, AtestadoAtendimento } from "app/shared/models/atendimento.model";
 import { environment } from "environments/environment.prod";
 import { Observable } from "rxjs";
 
@@ -45,4 +45,26 @@ export class AtendimentoService {
   public EvolucaoProntuarioByIdPaciente(idPaciente: number): Observable<any> {
     return this.httpClient.get<any>(`${this.baseUrl}/EvolucaoProntuarioByIdPaciente/${idPaciente}`)
   }
+
+    //Adicionar Atestado
+    public AdicionarAtestado(atestado: AtestadoAtendimento): Observable<any> {
+      const url = `${this.baseUrl}/AdicionarAtestadoAtendimento`;
+      return this.httpClient.post<any>(url, atestado);
+    }
+  
+    //Atualizar Atendimento
+    public AtualizarAtestado(atestado: AtestadoAtendimento): Observable<any> {
+      const url = `${this.baseUrl}/AtualizarAtestadoAtendimento`;
+      return this.httpClient.put<any>(url, atestado);
+    }
+  
+    //Deletar Atendimento
+    public DeletarAtestado(id: number): Observable<any> {
+      const url = `${this.baseUrl}/DeletarAtestadoAtendimento/${id}`;
+      return this.httpClient.delete<any>(url)
+    }
+
+    public ObterAtestadoByIdAtendimento(idAtendimento: number): Observable<any> {
+      return this.httpClient.get<any>(`${this.baseUrl}/ObterAtestadoByIdAtendimento/${idAtendimento}`)
+    }
 }

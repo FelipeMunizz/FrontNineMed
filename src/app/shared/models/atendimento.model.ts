@@ -23,3 +23,11 @@ export class AtendimentoPaciente {
     antecedenteFamiliares: string;
     medicamentoUso: string;
 }
+
+export class AtestadoAtendimento{
+    id: number;
+    tipoAtestado: number = 0;
+    data: Date = new Date();
+    descricao: string;
+    idAtendimento: number;
+}
