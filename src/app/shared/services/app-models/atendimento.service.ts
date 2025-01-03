@@ -67,4 +67,8 @@ export class AtendimentoService {
     public ObterAtestadoByIdAtendimento(idAtendimento: number): Observable<any> {
       return this.httpClient.get<any>(`${this.baseUrl}/ObterAtestadoByIdAtendimento/${idAtendimento}`)
     }
+
+    public ObterAtestadoRelatorio(idAtendimento: number): Observable<any> {
+      return this.httpClient.get<any>(`${this.baseUrl}/ObterAtestadoRelatorio/${idAtendimento}`)
+    }
 }

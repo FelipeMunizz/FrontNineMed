@@ -31,3 +31,20 @@ export class AtestadoAtendimento{
     descricao: string;
     idAtendimento: number;
 }
+
+export class AtestadoReport{
+    nomePaciente: string;
+    nomeEmpresa: string;
+    nomeFuncionario: string;
+    dataInicial: string;
+    dataFinal: string;
+    endereco: string;
+    bairro: string;
+    cidade: string;
+    uf: string;
+    crm: string;
+    descricao: string;
+    telefone: string;
+    dataEmissao: string;
+    logoEmpresa: string;
+}

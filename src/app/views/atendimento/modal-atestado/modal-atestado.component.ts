@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AtestadoAtendimento } from 'app/shared/models/atendimento.model';
 import { AtendimentoService } from 'app/shared/services/app-models/atendimento.service';
 import { UtilityService } from 'app/shared/services/utility.service';
@@ -14,16 +15,20 @@ import { switchMap } from 'rxjs';
 })
 export class ModalAtestadoComponent implements OnInit {
   atestadoForm: UntypedFormGroup;
-  idAtendimento: number
+  idAtendimento: number;
+  idPaciente: number;
 
   constructor(
     private util: UtilityService,
     private atendimentoService: AtendimentoService,
+    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: {
       idAtendimento: number
+      idPaciente: number
     }
   ) {
-    this.idAtendimento = data.idAtendimento
+    this.idAtendimento = data.idAtendimento;
+    this.idPaciente = data.idPaciente;
   }
 
   ngOnInit() {
@@ -65,14 +70,10 @@ export class ModalAtestadoComponent implements OnInit {
       )
       .subscribe(
         (resultado) => {
-          const link = document.createElement('a');
-          link.href = resultado; 
-          link.target = '_blank'; 
-          link.rel = 'noopener noreferrer';
-          link.click();
+          this.router.navigateByUrl(`relatorios/atestado?cd=${this.idPaciente}&cdAtend=${this.idAtendimento}`);
         },
         (erro) => {
-          this.util.MostraToastr('Error', erro.message, 'erro')
+          this.util.MostraToastr('Error', erro.error, 'erro')
         }
       );
   }

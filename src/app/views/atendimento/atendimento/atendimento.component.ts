@@ -155,7 +155,7 @@ export class AtendimentoComponent implements OnInit {
     return idade;
   }
 
-  openLancamentoModal(atendimento: AtendimentoPaciente) {
+  openHistoricoModal(atendimento: AtendimentoPaciente) {
     const dialogRef = this.dialog.open(ModalAtendimentoComponent, {
       width: '50%',
       height: 'auto',
@@ -175,7 +175,8 @@ export class AtendimentoComponent implements OnInit {
       width: '50%',
       height: 'auto',
       data: {
-        idAtendimento: this.idAtendimento
+        idAtendimento: this.idAtendimento,
+        idPaciente: this.idPaciente
       }
     });
 

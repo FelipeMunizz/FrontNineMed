@@ -1,0 +1,79 @@
+/* Container principal ajustado para formato A4 */
+.a4-container {
+    width: 210mm;
+    height: 297mm;
+    padding: 20mm;
+    margin: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Ajustes de cabeçalho */
+  header {
+    margin-bottom: 20px;
+  }
+  
+  header h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  /* Estilo para o conteúdo principal */
+  main {
+    flex-grow: 1;
+  }
+  
+  #infoPaciente p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 10px;
+  }
+  
+  /* Espaçador para posicionamento do conteúdo */
+  .spacer {
+    flex-grow: 1;
+  }
+  
+  /* Assinatura */
+  #assinatura p {
+    font-size: 14px;
+    margin: 0;
+  }
+  
+  /* Rodapé e informações da clínica */
+  footer {
+    margin-top: 20px;
+  }
+  
+  #infoClinica p {
+    font-size: 12px;
+    line-height: 1.4;
+    margin: 5px 0;
+  }
+  
+  footer small {
+    font-size: 10px;
+  }
+  
+  /* Estilo para impressão */
+  @media print {
+    @page {
+      size: A4;
+      margin: 0;
+    }
+  
+    body {
+      margin: 0;
+      padding: 0;
+    }
+  
+    .a4-container {
+      box-shadow: none;
+      border: none;
+    }
+  }
+  
