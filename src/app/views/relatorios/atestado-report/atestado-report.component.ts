@@ -3,7 +3,7 @@ import { ReportService } from './../../../shared/services/report.service';
 import { AtestadoReport } from 'app/shared/models/atendimento.model';
 import { AtendimentoService } from 'app/shared/services/app-models/atendimento.service';
 import { UtilityService } from 'app/shared/services/utility.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -22,8 +22,14 @@ export class AtestadoReportComponent implements OnInit {
     private atendimentoService: AtendimentoService,
     private utility: UtilityService,    
     private router: Router,
+    private route: ActivatedRoute,
     private sanitizer: DomSanitizer
-  ) { }
+  ) {
+    this.route.queryParams.subscribe(param => {
+      this.idPaciente = +param['cd'];
+      this.idAtendimento = +param['cdAtend'];
+    });
+   }
 
   ngOnInit(): void {
     this.LoadDadosReport(1);
