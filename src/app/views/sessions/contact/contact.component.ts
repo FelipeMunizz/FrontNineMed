@@ -4,6 +4,7 @@ import {
   Validators,
   UntypedFormControl,
 } from "@angular/forms"
+import { JwtAuthService } from "app/shared/services/auth/jwt-auth.service"
 
 @Component({
   selector: "app-contact",
@@ -14,7 +15,7 @@ export class ContactComponent implements OnInit {
   sendContactForm: UntypedFormGroup
   errorMsg = ""
 
-  constructor() {}
+  constructor(private jwtAuth: JwtAuthService) {}
 
   ngOnInit() {
     this.sendContactForm = new UntypedFormGroup({
@@ -32,6 +33,7 @@ export class ContactComponent implements OnInit {
     if (this.sendContactForm.valid) {
       const formData = this.sendContactForm.value
       console.log("Form Data: ", formData)
+      this.jwtAuth.sendEmailToContact(formData.name, formData.email, formData.subject, formData.message)
     } else {
       this.errorMsg = "Por favor, preencha todos os campos obrigatórios."
     }

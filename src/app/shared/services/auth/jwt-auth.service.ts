@@ -120,4 +120,19 @@ export class JwtAuthService {
     this.ls.setItem(this.JWT_TOKEN, token);
     this.ls.setItem(this.APP_USER, user);
   }
+
+  sendEmailToContact(name, email, subject, message) {
+    return this.http
+      .post(`${environment.apiURL}/SendEmail`, {
+        name,
+        email,
+        subject,
+        message,
+      })
+      .pipe(
+        catchError((error) => {
+          return throwError(error)
+        })
+      )
+  }
 }
