@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild } from "@angular/core"
-import {MatSelectModule} from '@angular/material/select';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { Component, OnInit } from "@angular/core"
+import {
+  UntypedFormGroup,
+  Validators,
+  UntypedFormControl,
+} from "@angular/forms"
 
 @Component({
   selector: "app-contact",
@@ -9,11 +11,29 @@ import {MatFormFieldModule} from '@angular/material/form-field';
   styleUrls: ["./contact.component.css"],
 })
 export class ContactComponent implements OnInit {
-  @ViewChild(MatSelectModule) select: MatSelectModule;
-  @ViewChild(MatInputModule) input: MatInputModule;
-  @ViewChild(MatFormFieldModule) formField: MatFormFieldModule;
-  
+  sendContactForm: UntypedFormGroup
+  errorMsg = ""
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    this.sendContactForm = new UntypedFormGroup({
+      name: new UntypedFormControl("", [Validators.required]),
+      email: new UntypedFormControl("", [
+        Validators.required,
+        Validators.email,
+      ]),
+      subject: new UntypedFormControl("", [Validators.required]),
+      message: new UntypedFormControl("", [Validators.required]),
+    })
+  }
+
+  sendContact() {
+    if (this.sendContactForm.valid) {
+      const formData = this.sendContactForm.value
+      console.log("Form Data: ", formData)
+    } else {
+      this.errorMsg = "Por favor, preencha todos os campos obrigatórios."
+    }
+  }
 }
