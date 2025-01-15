@@ -1,5 +1,56 @@
 @import url('https://fonts.googleapis.com/css2?family=Doppio+One&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
+.navbar {
+  background-color: hsl(0, 0%, 100%);
+  display: flex;
+  justify-content: space-between;
+  padding: 1% 20% 1% 20%;
+  box-shadow: inset 0 -1px 0 0 hsla(0, 0%, 0%, 0.11);
+}
+
+h1 {
+  font-size: 2rem;
+  font-family: "Doppio One", serif;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 10%;
+  color: hsl(240, 100%, 50%);
+}
+
+.landpage__menu {
+  display: flex;
+  justify-content: space-between;
+  gap: 20%;
+  align-items: center;
+}
+
+.landpage__menu a:first-of-type {
+  border-bottom: 1px solid hsl(0, 0%, 0%);
+}
+
+.landpage__menu a:first-of-type:hover {
+  scale: 1.1;
+}
+
+.landpage__menu a:last-of-type {
+  display: flex;
+  gap: 5%;
+  background-color: hsl(210, 100%, 50%);
+  text-align: center;
+  width: max-content;
+  gap: 10px;
+  padding: 10px 40px 10px 20px;
+  color: hsl(0, 0%, 100%);
+  white-space: nowrap;
+  border-radius: 10px;
+  font-weight: bold;
+  letter-spacing: 10%;
+}
+
+.landpage__menu a:last-of-type:hover {
+  background-color: hsl(210, 98%, 19%);
+}
+
 .contactPage {
   font-family: "Inter", serif;
   background-color: hsla(226, 33%, 20%, 0.10);

@@ -1,5 +1,16 @@
+<div>
+<div class="navbar">
+  <a href="/sessions/landpage">
+    <h1>NineMed</h1>
+  </a>
+  <div class="landpage__menu">
+    <a href="/sessions/contact">Contato</a>
+    <a href="/sessions/signin"><img src="assets/svg/user.svg" alt="User SVG">
+      Meu NineMed</a>
+  </div>
+</div>
 <div class="d-flex flex-column justify-content-center align-items-center vh-100 vw-100 text-dark contactPage">
-  <h1 class="mb-4">Dados de Contato</h1>
+  <h2 class="mb-4">Dados de Contato</h2>
   <form [formGroup]="sendContactForm" (ngSubmit)="sendContact()" class="d-flex flex-column align-items-center w-50">
     <mat-form-field appearance="outline" class="w-100 mb-3">
       <mat-label>Nome</mat-label>
@@ -44,4 +55,5 @@
   <div *ngIf="errorMsg" class="alert alert-danger mt-3 w-50">
     {{ errorMsg }}
   </div>
+</div>
 </div>

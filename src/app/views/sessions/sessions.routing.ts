@@ -11,7 +11,7 @@ export const SessionsRoutes: Routes = [
       {
         path: "landpage",
         component: LandpageComponent,
-        data: { title: "Landpage" },
+        data: { title: "Home" },
       },
       {
         path: "signin",
