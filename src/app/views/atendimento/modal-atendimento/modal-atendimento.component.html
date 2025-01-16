@@ -1,0 +1,61 @@
+<h2 matDialogTitle class="text-center">{{nomePaciente}}</h2>
+
+<form [formGroup]="atendimentoForm">
+    <mat-dialog-content>
+        <div class="row">
+            <div class="col col-lg-12 col-md-12 col-sm-12">
+                <mat-form-field class="full-width">
+                    <input matInput name="habitos" formControlName="habitos"
+                        placeholder="Habitos">
+                </mat-form-field>
+                <small *ngIf="atendimentoForm.controls['habitos'].touched" class="form-error-msg">
+                </small>
+            </div>
+            <div class="col col-lg-12 col-md-12 col-sm-12">
+                <mat-form-field class="full-width">
+                    <input matInput name="alergias" formControlName="alergias"
+                        placeholder="Alergias">
+                </mat-form-field>
+                <small *ngIf="atendimentoForm.controls['alergias'].touched" class="form-error-msg">
+                </small>
+            </div>
+            <div class="col col-lg-12 col-md-12 col-sm-12">
+                <mat-form-field class="full-width">
+                    <textarea matInput name="antecedenteClinico" formControlName="antecedenteClinico"
+                        placeholder="Antecedentes Clinicos"></textarea>
+                </mat-form-field>
+                <small *ngIf="atendimentoForm.controls['antecedenteClinico'].touched" class="form-error-msg">
+                </small>
+            </div>
+            <div class="col col-lg-12 col-md-12 col-sm-12">
+                <mat-form-field class="full-width">
+                    <textarea matInput name="antecedenteCirurgico" formControlName="antecedenteCirurgico"
+                        placeholder="Antecedentes Cirurgicos"></textarea>
+                </mat-form-field>
+                <small *ngIf="atendimentoForm.controls['antecedenteCirurgico'].touched" class="form-error-msg">
+                </small>
+            </div>
+            <div class="col col-lg-12 col-md-12 col-sm-12">
+                <mat-form-field class="full-width">
+                    <textarea matInput name="antecedenteFamiliares" formControlName="antecedenteFamiliares"
+                        placeholder="Antecedentes Familiares"></textarea>
+                </mat-form-field>
+                <small *ngIf="atendimentoForm.controls['antecedenteFamiliares'].touched" class="form-error-msg">
+                </small>
+            </div>
+            <div class="col col-lg-12 col-md-12 col-sm-12">
+                <mat-form-field class="full-width">
+                    <textarea matInput name="medicamentoUso" formControlName="medicamentoUso"
+                        placeholder="Medicamentos em uso"></textarea>
+                </mat-form-field>
+                <small *ngIf="atendimentoForm.controls['medicamentoUso'].touched" class="form-error-msg">
+                </small>
+            </div>
+        </div>
+    </mat-dialog-content>
+</form>
+<mat-dialog-actions align="end">
+    <button type="button" mat-button [mat-dialog-close]="false">Cancelar</button>
+    <span fxFlex></span>
+    <button class="btn btn-primary" [mat-dialog-close]="true" (click)="SalvarClick()" cdkFocusInitial>Salvar</button>
+</mat-dialog-actions>

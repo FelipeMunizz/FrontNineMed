@@ -53,9 +53,18 @@ export const rootRouterConfig: Routes = [
       {
         path: 'toten',
         loadChildren: () => import('./views/toten/toten.module').then(m => m.TotenModule),
-        data: {title: 'Toten', breadcrumb: 'Toten'}
+        data: { title: 'Toten', breadcrumb: 'Toten' }
+      },
+      {
+        path: 'atendimento',
+        loadChildren: () => import('./views/atendimento/atendimento.module').then(m => m.AtendimentoModule),
+        data: {title: 'Atendimento', breadcrumb: 'Atendimento'}
+      },
+      {
+        path: 'relatorios',
+        loadChildren: () => import('./views/relatorios/relatorios.module').then(m => m.RelatoriosModule),
+        data: { title: 'Relatórios', breadcrumb: 'Relatórios' }
       }
-
     ]
   },
   {

@@ -1,12 +1,13 @@
 <mat-card class="p0">
     <mat-card-title>
         <div class="row">
-            <div class="col col-lg-10 col-md-10 col-sm-10">
+            <div class="col col-lg-8 col-md-8 col-sm-8">
                 <mat-card-title class="text-muted">
                     Paciente
                 </mat-card-title>
             </div>
-            <div class="col col-lg-2 col-md-2 col-sm-2">
+            <span fxFlex></span>
+            <div class="col col-lg-1 col-md-1 col-sm-1">
                 <div class="demo-button-container" *ngIf="tipoTela == 1">
                     <button mat-raised-button color="primary" class="btn-card" matTooltip="Adicionar novo Paciente"
                         TooltipPosition="below" (click)="TelaCadastro()">
@@ -111,7 +112,7 @@
                                     <input matInput [matDatepicker]="picker" placeholder="Data de Nascimento"
                                     formControlName="dataNascimento">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-datepicker touchUi #picker></mat-datepicker>
+                                    <mat-datepicker #picker></mat-datepicker>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -301,7 +302,7 @@
                                 <mat-form-field class="full-width">
                                     <input matInput [matDatepicker]="picker" placeholder="Validade" formControlName="validade">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-datepicker touchUi #picker></mat-datepicker>
+                                    <mat-datepicker #picker></mat-datepicker>
                                 </mat-form-field>
                             </div>
                         </div>

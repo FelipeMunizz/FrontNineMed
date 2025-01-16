@@ -41,6 +41,8 @@
     "flag-icons": "^6.6.6",
     "highlight.js": "^11.6.0",
     "hopscotch": "^0.3.1",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.2",
     "moment": "^2.29.4",
     "ng-qrcode": "^7.0.0",
     "ng2-charts": "^4.0.0",

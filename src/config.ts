@@ -7,4 +7,3 @@ export const config = {
     recepcao: ['Administrador', 'Recpcao'], 
   }
 }
-

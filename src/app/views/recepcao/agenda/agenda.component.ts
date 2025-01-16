@@ -177,6 +177,7 @@ export class AgendaComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
     });
   }
 }

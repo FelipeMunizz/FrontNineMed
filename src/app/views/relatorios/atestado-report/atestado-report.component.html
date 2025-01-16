@@ -1,0 +1,62 @@
+<div style="margin-bottom: 20px;">
+    <button class="btn btn-outline-primary" (click)="exportarPDF()">Imprimir</button>
+</div>
+<div id="relatorio" class="a4-container">
+    <header class="mb-4">
+        <div class="text-center row">
+            <div class="col col-3">
+                <img [src]="SanitizeImage(atestado.logoEmpresa)" alt="Logo" />
+            </div>
+            <div class="col col-9">
+                <h3>{{atestado.nomeEmpresa}}</h3>
+            </div>
+        </div>
+        <br>
+        <div class="row mb-4">
+            <div class="col col-12 text-center">
+                <h1><strong>Atestado Médico</strong></h1>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="infoPaciente">
+            <p>
+                Atesto que o(a) Sr. (Sra.) <strong>{{atestado.nomePaciente}}</strong>, encontra-se sob
+                meus cuidados profissionais necessitando de afastamento de suas atividades
+                pelo período de <strong>{{atestado.dataInicial}}</strong> a <strong>{{atestado.dataFinal}}</strong>.
+            </p>
+            <p><strong>Observações:</strong> {{atestado.descricao}}</p>
+        </section>
+
+        <div class="spacer"></div>
+    </main>
+
+    <footer>
+        <section id="assinatura" class="text-center">
+            <p>____________________________________________</p>
+            <p>{{atestado.nomeFuncionario}}</p>
+        </section>
+
+        <section id="infoClinica">
+            <p><strong>Médico:</strong> {{atestado.nomeFuncionario}}</p>
+            <p><strong>Local de Atendimento:</strong> {{atestado.nomeEmpresa}}</p>
+            <p>
+                <strong>Endereço:</strong> {{atestado.endereco}} {{atestado.bairro}}
+            </p>
+            <p>
+                <strong>Cidade:</strong> {{atestado.cidade}} <strong>Contato: </strong> {{atestado.telefone}}
+            </p>
+            <p><strong>Data Emissão:</strong> {{atestado.dataEmissao}}</p>
+        </section>
+
+        <div class="row">
+            <div class="col col-6">
+                <small>Desenvolvido por NineTec - Soluções em Informática</small>
+            </div>
+            <div class="col col-6 text-end">
+                <small>Page 1</small>
+            </div>
+        </div>
+    </footer>
+</div>

@@ -1,0 +1,69 @@
+<mat-card class="p04">
+    <mat-card-title class="text-muted">Prontuário</mat-card-title>
+
+    <!--tela listagem-->
+    <mat-card-content *ngIf="this.tipoTela == 1">
+        <div class="row">
+            <div class="col col-lg-10 col-md-10 col-sm-10">
+                <mat-form-field>
+                    <mat-label>Pesquisar</mat-label>
+                    <input matInput (keyup)="AplicaFiltro($event)" placeholder="Ex. João" #input>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Cod. Paciente </th>
+                    <td mat-cell *matCellDef="let row"> {{row.CodCliente}} </td>
+                </ng-container>
+
+                <!-- Nome Column -->
+                <ng-container matColumnDef="nome">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
+                    <td mat-cell *matCellDef="let row">{{row.Nome}}</td>
+                </ng-container>
+
+                <!-- RG Column -->
+                <ng-container matColumnDef="rg">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> RG </th>
+                    <td mat-cell *matCellDef="let row"> {{row.RG}} </td>
+                </ng-container>
+
+                <!-- CPF Column -->
+                <ng-container matColumnDef="cpf">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> CPF </th>
+                    <td mat-cell *matCellDef="let row"> {{row.CPF}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="agendamento">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Agendamento </th>
+                    <td mat-cell *matCellDef="let row"> {{formatDate(row.Agendamento)}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="acao">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Ação </th>
+                    <td mat-cell *matCellDef="let row"> <a matTooltip="Iniciar Atendimento" (click)="AdicionarAtendimento(row)"><mat-icon class="text-blue">play_circle</mat-icon></a> </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="dispplayColuns"></tr>
+                <tr mat-row *matRowDef="let row; columns: dispplayColuns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4" style="text-align: center;">Nenhum dado Encontrado </td>
+                </tr>
+            </table>
+
+            <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons
+                aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="this.tipoTela == 2">
+        
+    </mat-card-content>
+</mat-card>

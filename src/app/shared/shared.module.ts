@@ -32,6 +32,7 @@ import { EnumService } from './services/enum.service';
 import { AgendamentoService } from './services/app-models/agendamento.service';
 import { MidiaService } from './services/midia.service';
 import { AtendimentoService } from './services/app-models/atendimento.service';
+import { ReportService } from './services/report.service';
 
 @NgModule({
   imports: [
@@ -66,7 +67,8 @@ import { AtendimentoService } from './services/app-models/atendimento.service';
     EnumService,
     AgendamentoService,
     MidiaService,
-    AtendimentoService
+    AtendimentoService,
+    ReportService
   ],
   exports: [
     SharedComponentsModule,
