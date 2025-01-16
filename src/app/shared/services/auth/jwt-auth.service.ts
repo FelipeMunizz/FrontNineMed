@@ -120,4 +120,6 @@ export class JwtAuthService {
     this.ls.setItem(this.JWT_TOKEN, token);
     this.ls.setItem(this.APP_USER, user);
   }
+
+  
 }

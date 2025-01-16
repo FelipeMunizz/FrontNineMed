@@ -10,7 +10,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SigninComponent } from './signin/signin.component';
 import { SessionsRoutes } from "./sessions.routing";
 import { NotFoundComponent } from './not-found/not-found.component';
-
+import { LandpageComponent } from './landpage/landpage.component';
+import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
   imports: [
@@ -20,8 +21,13 @@ import { NotFoundComponent } from './not-found/not-found.component';
     ReactiveFormsModule,
     SharedMaterialModule,
     FlexLayoutModule,
-    RouterModule.forChild(SessionsRoutes)
+    RouterModule.forChild(SessionsRoutes),
   ],
-  declarations: [SigninComponent, NotFoundComponent]
+  declarations: [
+    LandpageComponent,
+    SigninComponent,
+    NotFoundComponent,
+    ContactComponent,
+  ],
 })
-export class SessionsModule { }
+export class SessionsModule {}

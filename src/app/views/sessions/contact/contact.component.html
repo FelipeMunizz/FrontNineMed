@@ -1,0 +1,59 @@
+<div>
+<div class="navbar">
+  <a href="/sessions/landpage">
+    <h1>NineMed</h1>
+  </a>
+  <div class="landpage__menu">
+    <a href="/sessions/contact">Contato</a>
+    <a href="/sessions/signin"><img src="assets/svg/user.svg" alt="User SVG">
+      Meu NineMed</a>
+  </div>
+</div>
+<div class="d-flex flex-column justify-content-center align-items-center vh-100 vw-100 text-dark contactPage">
+  <h2 class="mb-4">Dados de Contato</h2>
+  <form [formGroup]="sendContactForm" (ngSubmit)="sendContact()" class="d-flex flex-column align-items-center w-50">
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="name" placeholder="Digite seu nome" />
+      <mat-error *ngIf="sendContactForm.get('name')?.invalid && sendContactForm.get('name')?.touched">
+        Nome é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" placeholder="Digite seu email" />
+      <mat-error *ngIf="sendContactForm.get('email')?.invalid && sendContactForm.get('email')?.touched">
+        Email é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Motivo</mat-label>
+      <mat-select formControlName="subject" placeholder="Selecione o motivo">
+        <mat-option value="sales">Vendas</mat-option>
+        <mat-option value="info">Informações</mat-option>
+      </mat-select>
+      <mat-error *ngIf="sendContactForm.get('subject')?.invalid && sendContactForm.get('subject')?.touched">
+        Motivo é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Escreva sua mensagem...</mat-label>
+      <textarea matInput formControlName="message" placeholder="Digite sua mensagem"></textarea>
+      <mat-error *ngIf="sendContactForm.get('message')?.invalid && sendContactForm.get('message')?.touched">
+        Mensagem é obrigatória
+      </mat-error>
+    </mat-form-field>
+
+    <button type="submit" class="btn btn-primary btn-lg w-100" [disabled]="sendContactForm.invalid">
+      Enviar
+    </button>
+  </form>
+
+  <div *ngIf="errorMsg" class="alert alert-danger mt-3 w-50">
+    {{ errorMsg }}
+  </div>
+</div>
+</div>
