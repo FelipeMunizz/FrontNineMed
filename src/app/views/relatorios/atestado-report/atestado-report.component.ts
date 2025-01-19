@@ -32,7 +32,7 @@ export class AtestadoReportComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.LoadDadosReport(1);
+    this.LoadDadosReport(this.idAtendimento);
   }
 
   LoadDadosReport(idAtendimento: number) {
